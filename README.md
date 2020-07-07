@@ -121,10 +121,8 @@ I plan to use a general bottom navigation bar
     * Settings
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="https://github.com/patrice99/Patrice-MusicApp/blob/6e13930d88362d0401c53593d5748d72e435cb05/Wireframes1.png?raw=true" width=600>
-<img src="https://github.com/patrice99/Patrice-MusicApp/blob/6e13930d88362d0401c53593d5748d72e435cb05/Wireframes2.png?raw=true" width=600>
-
+<img src="https://github.com/patrice99/Patrice-MusicApp/blob/6e13930d88362d0401c53593d5748d72e435cb05/Wireframes1.png?raw=true" width=700>
+<img src="https://github.com/patrice99/Patrice-MusicApp/blob/6e13930d88362d0401c53593d5748d72e435cb05/Wireframes2.png?raw=true" width=700>
 
 
 ### [BONUS] Digital Wireframes & Mockups
