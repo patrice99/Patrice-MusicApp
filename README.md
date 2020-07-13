@@ -49,9 +49,7 @@ This app helps to connect musicians to jobs and gigs in their area.
     * Your app use an animation (doesn’t have to be fancy) (e.g. fade in/out, e.g. animating a view growing and shrinking)
     * Your app incorporates an external library to add visual polish
 
-
 * A login page
-    * you can either log in with Facebook/Google or without 
 * A user profile
     * unique screenName and a more flexible name 
     * Profile pic
@@ -63,77 +61,218 @@ This app helps to connect musicians to jobs and gigs in their area.
     * Common genres played 
     * Bio
     * Hourly rate
+    * Public Email
     * Portfolio
-        * Import videos or MP3 from device 
+        * Users Portfolio consists of their feed and additional material.
         * Import videos from Youtube
         * Display any music certificates/authorizations
-    * Followers
-    * Following
 * A "near you" Map
+    * Notices/Events/Artist location is put on map
 * Search Activity
     * Search by location
     * Search by hourly rate 
     * Search by genre
     * Search by instrument 
     * Search by band/solo
+* Feed/Stream - User can either post videos/music and images of their performances or post notices looking for jobs/hire.
+    * Posts can be liked
+* User can follow people/ see their followers.
+
 
 
 **Optional Nice-to-have Stories**
-
-* Import MP3s from Soundcloud for Portfolio
-* Feed tab
-    * Liked posts(from FeedTab)
+* User can log in with Facebook and Google
+* User can import MP3s from Soundcloud for Portfolio
+* Notification Fragment
+    * Has a chat screen and user can chat with potential employers/employees
+* Posts can have comments.
+* Users can see their reviews and add reviews on other profiles
 
 ### 2. Screen Archetypes
-   * Splash Pages
    * Login Screen
    * Sign Up Screen
    * Stream
    * Map View
    * Search Screen
    * Profile Screen
-   * Notifications Screen
    * Detail Sceen
    * Settings
+
+#### Optional Screen Archetypes
+   * Splash Pages
+   * Notifications Screen
+   * Chat Screen
 
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 I plan to use a general bottom navigation bar 
-
 * Feed
 * Profile
 * Search/Discover
+* Map
+
+#### Optional Tab Navigation
+* Notifications Screen
 
 **Flow Navigation** (Screen to Screen)
 
 * Feed
-   * Details
-* Search
-   * Maps
-   * Events
-   * Genres
+   * Details of post
+* Discover
+   * Notices
+   * Search
 * Profile 
     * Band groups
     * Feed posts - Videos/MP3s
     * Portfolio (different to feed)
-    * Liked posts
     * Settings
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+
+<img src="https://github.com/patrice99/Patrice-MusicApp/blob/6e13930d88362d0401c53593d5748d72e435cb05/Wireframes1.png?raw=true" width=600>
+
+
+<img src="https://github.com/patrice99/Patrice-MusicApp/blob/6e13930d88362d0401c53593d5748d72e435cb05/Wireframes2.png?raw=true" width=600>
+
+
+
 
 ### [BONUS] Digital Wireframes & Mockups
 
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+Post
+| Property        | Type                | Description                                          |
+|:--------------- |:------------------- |:---------------------------------------------------- |
+| objectId        | String              | unique id for the user post   (Default)              |
+| author          | Pointer to User     | post author                                          |
+| image           | File                | image to be attached to post                         |
+| MP3             | File                | MP3 to be attached to post                           |
+| video           | File                | Video to be attached to post                         |
+| title           | String              | short Title to be attached to the post               |
+| caption         | String              | description that the author attaches to the post.    |
+| location        | Pointer to Location | location of the user/location of the post taken      |
+| timeStamp       | DateTime            | date when the post is created (Default)              |
+| * commentsCount | Number              | number of comments the post receives                 |
+| * comments      | JSONObject          | JSONObject that contains an array of Comment Objects |
+| isNotice        | boolean             | true if the post is a notice, false if not.          |
+| likesCount      | Number              | number of likes the post receives                    |
+
+
+User
+| Property        | Type                  | Description                                                      |
+|:--------------- |:--------------------- |:---------------------------------------------------------------- |
+| userId          | String                | unique id for the user   (Default)                               |
+| username        | String                | username chosen by the user                                      |
+| password        | String                | password chosen by the user                                      |
+| emailAddress    | String                | email Address chosen by the user when registering                |
+| pubEmailAddress | String                | email address to be displayed on profile. Default - emailAddress |
+| profileImage    | File                  | profile image of the user                                        |
+| bio             | String                | Bio of the user chosen by the user when customizing profile      |
+| location        | Location              | location that the user usually operates                          |
+| createdAt       | DateTime              | date when the user account is created (Default)                  |
+| postCount       | Number                | number of posts the user created                                 |
+| followers       | Number                | number of followers the user has                                 |
+| following       | Number                | number of users the user follows                                 |
+| bandGroups      | Pointer to Band Group | bands that this user is a member                                 |
+| instruments     | ENUM                  | instruments the user plays                                       |
+| genres          | ENUM                  | genres the user usually plays                                    |
+| rate            | Float                 | hourly rate for billing purposes                                 |
+| artistType      | boolean               | true for solo, false for band                                    |
+| * review          | String                | reviews left by other users                                    |
+
+
+Portfolio
+
+| Property     | Type            | Description                                   |
+|:------------ |:--------------- |:--------------------------------------------- |
+| portfolioId  | String          | unique id for the user's portfolio  (Default) |
+| author       | Pointer to User | porfolio author                               |
+| image        | File            | image to be attached to portfolio             |
+| MP3          | File            | MP3 to be attached to portofolio              |
+| video        | File            | Video to be attached to portofolio            |
+| certificates | File            | Certificate to be attached to portfolio       |
+| title        | String          | short Title to be attached to the post        |
+
+## Optional Features
+Chat
+| Property    | Type            | Description                                               |
+|:----------- |:--------------- |:--------------------------------------------------------- |
+| chatId      | String          | unique id for the chat  (Default)                         |
+| userIdOther | Pointer to User | other user in chat                                        |
+| createdAt   | DateTime        | date when the chat is created (Default)                   |
+| messages    | JSONObject      | a JSONObject that contains a JSONArray of message objects |
+
+
+Message
+| Property  | Type            | Description                                |
+|:--------- |:--------------- |:------------------------------------------ |
+| messageId | String          | unique id for the message  (Default)       |
+| author    | Pointer to User | author of the message                      |
+| body      | String          | message body                               |
+| createdAt | DateTime        | date when the message is created (Default) |
+
+
+Comments 
+| Property  | Type            | Description                                |
+|:--------- |:--------------- |:------------------------------------------ |
+| commentId | String          | unique id for each comment (Default)       |
+| userId    | Pointer to User | user commenting                            |
+| body      | String          | comment body                               |
+| createdAt | DateTime        | date when the comment is created (Default) |
+
+
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+- Login Screen
+- Sign Up Screen
+- Home
+    * (Read/GET) Query all posts for feed timeline
+       ```ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                for(Post post: posts){
+                    Log.i(TAG, "Post: " + post.getDescription() + " Username: " + post.getUser().getUsername());
+                }
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+            }
+        });```
+        
+    * (Create/POST) Create a new like on a post
+    * (Delete) Delete existing like
+    * (Create/POST) Create a new comment on a post (Optional)
+    * (Delete) Delete existing comment (Optional)
+    * (Create/POST) Create a new post
+    * (Delete) Delete an existing post
+- Map View
+    - (Read/GET) Get following artists locations, notices by following on map.
+- Search Screen
+    - (Read/GET) Get notices or artists through complex search algorithm.
+- Profile Screen
+    - (Update/PUT) Update User's Profile Image
+    - (Update/PUT) Update User's Profile Name
+    - (Update/PUT) Update User's screenName
+    - (Update/PUT) Update User's email
+    - (Update/PUT) Update User's genres
+        - etc. 
+- Detail Sceen
+    (Create/POST) Create a new like on a post
+    * (Delete) Delete existing like
+    * (Create/POST) Create a new comment on a post (Optional)
+    * (Delete) Delete existing comment (Optional)
+- Settings
+    (Logout)
 
