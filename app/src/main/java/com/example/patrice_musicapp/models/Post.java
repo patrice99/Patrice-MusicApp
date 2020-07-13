@@ -1,9 +1,12 @@
 package com.example.patrice_musicapp.models;
 
 
+import android.location.Location;
+
 import com.parse.ParseACL;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -79,6 +82,14 @@ public class Post extends ParseObject {
 
     public void setIsNotice(boolean bool){
         put(KEY_IS_NOTICE, bool);
+    }
+
+    public ParseGeoPoint getLocation(){
+        return getParseGeoPoint(KEY_LOCATION);
+    }
+
+    public void setLocation(ParseGeoPoint parseGeoPoint){
+        put(KEY_LOCATION, parseGeoPoint);
     }
 
 
