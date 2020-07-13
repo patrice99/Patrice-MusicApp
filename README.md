@@ -183,15 +183,8 @@ User
 | genres          | ENUM                  | genres the user usually plays                                    |
 | rate            | Float                 | hourly rate for billing purposes                                 |
 | artistType      | boolean               | true for solo, false for band                                    |
-| * review          | String                | reviews left by other users                                      |
+| * review          | String                | reviews left by other users                                    |
 
-Comments 
-| Property  | Type            | Description                                |
-|:--------- |:--------------- |:------------------------------------------ |
-| commentId | String          | unique id for each comment (Default)       |
-| userId    | Pointer to User | user commenting                            |
-| body      | String          | comment body                               |
-| createdAt | DateTime        | date when the comment is created (Default) |
 
 Portfolio
 
@@ -222,6 +215,15 @@ Message
 | author    | Pointer to User | author of the message                      |
 | body      | String          | message body                               |
 | createdAt | DateTime        | date when the message is created (Default) |
+
+
+Comments 
+| Property  | Type            | Description                                |
+|:--------- |:--------------- |:------------------------------------------ |
+| commentId | String          | unique id for each comment (Default)       |
+| userId    | Pointer to User | user commenting                            |
+| body      | String          | comment body                               |
+| createdAt | DateTime        | date when the comment is created (Default) |
 
 
 
@@ -273,6 +275,4 @@ Message
     * (Delete) Delete existing comment (Optional)
 - Settings
     (Logout)
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
-
 
