@@ -6,6 +6,13 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class User extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_BIO = "bio";
@@ -77,20 +84,47 @@ public class User extends ParseObject {
         put(KEY_FOLLOWING, following);
     }
 
-    public String[] getGenre(){
-        return (String[]) get(KEY_GENRE);
+    public List<Genres> getGenres() throws JSONException {
+       //get the JSONArray and parse through it to make a list
+        List<Genres> genres = new ArrayList<>();
+        JSONArray jsonArray = getJSONArray(KEY_GENRE);
+        for (int i = 0 ; i < jsonArray.length(); i++){
+             genres.add(Genres.valueOf(jsonArray.getString(i)));
+        }
+        return genres;
+
     }
 
-    public void setGenre(){
-        //TODO: pass in enumerated genre type
+    public void setGenre(Genres genre){
+        //get the existing genre JSONArray and add a genre to the end of it
+        JSONArray jsonArray = getJSONArray(KEY_GENRE);
+        //check to see if null
+        if (jsonArray == null){
+            jsonArray = new JSONArray();
+        }
+        jsonArray.put(genre.toString());
+
     }
 
-    public String[] getInstrument(){
-        return (String[]) get(KEY_INSTRUMENT);
+    public List<Instruments> getInstruments() throws JSONException {
+        //get the JSONArray and parse through it to make a list
+        List<Instruments> instruments = new ArrayList<>();
+        JSONArray jsonArray = getJSONArray(KEY_INSTRUMENT);
+        for (int i = 0 ; i < jsonArray.length(); i++){
+            instruments.add(Instruments.valueOf(jsonArray.getString(i)));
+        }
+        return instruments;
+
     }
 
-    public void setInstrument(){
-        //TODO: pass in enumerated instrument type
+    public void setInstrument(Instruments instrument){
+        //get the existing instrument JSONArray and add a genre to the end of it
+        JSONArray jsonArray = getJSONArray(KEY_INSTRUMENT);
+        //check to see if null
+        if (jsonArray == null){
+            jsonArray = new JSONArray();
+        }
+        jsonArray.put(instrument.toString());
     }
 
     public float getHourRate() {
