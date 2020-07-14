@@ -9,6 +9,7 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -69,36 +70,45 @@ public class User extends ParseObject {
         return (int) getNumber(KEY_FOLLOWING_COUNT);
     }
 
-    public List<User> getFollowing() throws JSONException {
-        List<User> following = new ArrayList<>();
+    public List<String> getFollowingIds() throws JSONException {
+        List<String> following = new ArrayList<>();
         //get the JSONArray of followers and make a list of users
         JSONArray jsonArray = getJSONArray(KEY_FOLLOWING);
         for (int i = 0; i < jsonArray.length(); i++){
-            following.add((User) jsonArray.get(i));
+            //get the IDs
+            following.add(jsonArray.getString(i));
         }
         return following;
     }
 
+    //takes in parameters of the person who the current user just followed
     public void addFollowing(ParseUser parseUser){
         //get JSONArray of Users and add the passed in user to the array
         JSONArray jsonArray = getJSONArray(KEY_FOLLOWING);
-        jsonArray.put(parseUser);
+        if (jsonArray == null){
+            jsonArray = new JSONArray();
+        }
+        jsonArray.put(parseUser.getObjectId());
     }
 
-    public List<User> getFollowers() throws JSONException {
-        List<User> followers = new ArrayList<>();
+    public List<String> getFollowersIds() throws JSONException {
+        List<String> followers = new ArrayList<>();
         //get the JSONArray of followers and make a list of users
         JSONArray jsonArray = getJSONArray(KEY_FOLLOWERS);
         for (int i = 0; i < jsonArray.length(); i++){
-            followers.add((User) jsonArray.get(i));
+            followers.add(jsonArray.getString(i));
         }
         return followers;
     }
 
+    //takes in parameters of the person who just followed the current user
     public void addFollowers(ParseUser parseUser){
         //get JSONArray of Users and add the passed in user to the array
         JSONArray jsonArray = getJSONArray(KEY_FOLLOWERS);
-        jsonArray.put(parseUser);
+        if (jsonArray == null){
+            jsonArray = new JSONArray();
+        }
+        jsonArray.put(parseUser.getObjectId());
     }
 
 
@@ -160,6 +170,7 @@ public class User extends ParseObject {
     public void setSoloArtist(boolean bool) {
         put(KEY_SOLO_ARTIST, bool);
     }
-    
+
+
 
 }
