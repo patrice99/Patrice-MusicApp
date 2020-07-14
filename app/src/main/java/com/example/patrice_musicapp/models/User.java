@@ -16,13 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("User")
-public class User extends ParseObject {
+public class User extends ParseUser {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_BIO = "bio";
     public static final String KEY_POST_COUNT = "postCount";
     public static final String KEY_LOCATION = "location";
-    public static final String KEY_FOLLOWER_COUNT = "followerCount";
-    public static final String KEY_FOLLOWING_COUNT= "followingCount";
     public static final String KEY_FOLLOWERS = "followers";
     public static final String KEY_FOLLOWING = "following";
     public static final String KEY_GENRE = "genre";
@@ -48,6 +46,7 @@ public class User extends ParseObject {
 
     public int getPostCount() {
         return (int) getNumber(KEY_POST_COUNT);
+
     }
 
     public void setPostCount(int postCount) {
