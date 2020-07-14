@@ -1,9 +1,10 @@
-package com.example.patrice_musicapp;
+package com.example.patrice_musicapp.utils;
 
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
+import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Portfolio;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;

@@ -1,4 +1,4 @@
-package com.example.patrice_musicapp;
+package com.example.patrice_musicapp.adapters;
 
 import android.content.Context;
 import android.view.View;
