@@ -95,8 +95,10 @@ This app helps to connect musicians to jobs and gigs in their area.
    * Map View
    * Search Screen
    * Profile Screen
-   * Detail Sceen
-   * Settings
+   * Detail Sceens
+      * Edit Profile Screen
+      * Compose Screen
+      * Settings
 
 #### Optional Screen Archetypes
    * Splash Pages
