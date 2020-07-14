@@ -35,6 +35,7 @@ public class ParseApplication extends Application {
         //register m model classes
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Portfolio.class);
+        ParseObject.registerSubclass(User.class);
 
 
         // set applicationId, and server server based on the values in the Heroku settings.
@@ -45,19 +46,6 @@ public class ParseApplication extends Application {
                 .clientKey(getResources().getString(R.string.MASTER_KEY))  // set explicitly unless clientKey is explicitly configured on Parse server
                 .clientBuilder(builder)
                 .server("https://patrice-music-app.herokuapp.com/parse").build());
-
-
-
-
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e("ParseApplication", "Error", e);
-                }
-            }
-        });
+        
     }
 }
