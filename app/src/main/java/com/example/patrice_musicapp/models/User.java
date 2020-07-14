@@ -69,6 +69,22 @@ public class User extends ParseObject {
         return (int) getNumber(KEY_FOLLOWING_COUNT);
     }
 
+    public List<User> getFollowing() throws JSONException {
+        List<User> following = new ArrayList<>();
+        //get the JSONArray of followers and make a list of users
+        JSONArray jsonArray = getJSONArray(KEY_FOLLOWING);
+        for (int i = 0; i < jsonArray.length(); i++){
+            following.add((User) jsonArray.get(i));
+        }
+        return following;
+    }
+
+    public void addFollowing(ParseUser parseUser){
+        //get JSONArray of Users and add the passed in user to the array
+        JSONArray jsonArray = getJSONArray(KEY_FOLLOWING);
+        jsonArray.put(parseUser);
+    }
+
     public List<User> getFollowers() throws JSONException {
         List<User> followers = new ArrayList<>();
         //get the JSONArray of followers and make a list of users
@@ -79,17 +95,12 @@ public class User extends ParseObject {
         return followers;
     }
 
-    public void setFollowers(ParseUser[] followers){
-        put(KEY_FOLLOWERS, followers);
+    public void addFollowers(ParseUser parseUser){
+        //get JSONArray of Users and add the passed in user to the array
+        JSONArray jsonArray = getJSONArray(KEY_FOLLOWERS);
+        jsonArray.put(parseUser);
     }
 
-    public ParseUser[] getFollowing(){
-        return (ParseUser[]) get(KEY_FOLLOWING);
-    }
-
-    public void setFollowing(ParseUser[] following){
-        put(KEY_FOLLOWING, following);
-    }
 
     public List<Genres> getGenres() throws JSONException {
        //get the JSONArray and parse through it to make a list
@@ -149,5 +160,6 @@ public class User extends ParseObject {
     public void setSoloArtist(boolean bool) {
         put(KEY_SOLO_ARTIST, bool);
     }
+    
 
 }

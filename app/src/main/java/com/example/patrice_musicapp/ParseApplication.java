@@ -46,6 +46,6 @@ public class ParseApplication extends Application {
                 .clientKey(getResources().getString(R.string.MASTER_KEY))  // set explicitly unless clientKey is explicitly configured on Parse server
                 .clientBuilder(builder)
                 .server("https://patrice-music-app.herokuapp.com/parse").build());
-        
+
     }
 }
