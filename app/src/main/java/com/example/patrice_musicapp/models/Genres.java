@@ -1,0 +1,35 @@
+package com.example.patrice_musicapp.models;
+
+public enum Genres {
+    BLUES,
+    CLASSICAL_MUSIC,
+    COUNTRY,
+    DANCEHALL,
+    DISCO,
+    DUB,
+    DUBSTEP,
+    ELECTRONIC_MUSIC,
+    FOLK,
+    FUNK,
+    GOSPEL,
+    HEAVY_METAL,
+    HIP_HOP,
+    HOUSE_MUSIC,
+    INSTRUMENTAL,
+    JAZZ,
+    MUSICAL_THEATRE,
+    OPERA,
+    ORCHESTRA,
+    POP,
+    PUNK_ROCK,
+    REGGAE,
+    RHYTHM_AND_BLUES,
+    ROCK,
+    SINGING,
+    SKA,
+    SOCA,
+    SOUL_MUSIC,
+    SWING,
+    TECHNO
+
+    }
