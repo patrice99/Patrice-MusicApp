@@ -63,11 +63,12 @@ public class User extends ParseObject {
     }
 
     public int getFollowersCount() {
-        return (int) getNumber(KEY_FOLLOWER_COUNT);
+        //length of the followersArray
+        return getJSONArray(KEY_FOLLOWERS).length();
     }
 
     public int getFollowingCount() {
-        return (int) getNumber(KEY_FOLLOWING_COUNT);
+        return getJSONArray(KEY_FOLLOWING).length();
     }
 
     public List<String> getFollowingIds() throws JSONException {
@@ -170,6 +171,7 @@ public class User extends ParseObject {
     public void setSoloArtist(boolean bool) {
         put(KEY_SOLO_ARTIST, bool);
     }
+
 
 
 
