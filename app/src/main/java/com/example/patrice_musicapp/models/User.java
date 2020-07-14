@@ -67,9 +67,15 @@ public class User extends ParseObject {
         return (int) getNumber(KEY_FOLLOWING_COUNT);
     }
 
-    public ParseUser[] getFollowers(){
-        //TODO: initialize followers Array
-        return (ParseUser[]) get(KEY_FOLLOWERS);
+    public List<User> getFollowers() throws JSONException {
+        List<User> followers = new ArrayList<>();
+        //get the JSONArray of followers and make a list of users
+        JSONArray jsonArray = getJSONArray(KEY_FOLLOWERS);
+        for (int i = 0; i < jsonArray.length(); i++){
+            followers.add((User) jsonArray.get(i));
+        }
+
+        return followers;
     }
 
     public void setFollowers(ParseUser[] followers){
