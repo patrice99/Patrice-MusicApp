@@ -24,6 +24,11 @@ public class Post extends ParseObject {
     public static final String KEY_LIKES_COUNT = "likesCount";
     public static final String KEY_IS_NOTICE = "isNotice";
 
+    //constructor
+    public Post() {
+
+    }
+
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
     }
