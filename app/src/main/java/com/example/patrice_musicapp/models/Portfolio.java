@@ -1,7 +1,9 @@
 package com.example.patrice_musicapp.models;
 
+import com.parse.ParseClassName;
 import com.parse.ParseFile;
 
+@ParseClassName("Portfolio")
 public class Portfolio extends Post {
     public static final String KEY_CERTIFICATES = "certificates";
     public Portfolio() {

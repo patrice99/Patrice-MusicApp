@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.patrice_musicapp.R;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 

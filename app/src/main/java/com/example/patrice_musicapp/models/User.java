@@ -1,6 +1,7 @@
 package com.example.patrice_musicapp.models;
 
 import com.parse.Parse;
+import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -13,6 +14,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+@ParseClassName("User")
 public class User extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_BIO = "bio";
@@ -74,7 +76,6 @@ public class User extends ParseObject {
         for (int i = 0; i < jsonArray.length(); i++){
             followers.add((User) jsonArray.get(i));
         }
-
         return followers;
     }
 
