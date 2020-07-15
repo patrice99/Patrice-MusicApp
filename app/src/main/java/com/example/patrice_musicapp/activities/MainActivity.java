@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_map:
                         fragment = new MapFragment();
+                        break;
                     case R.id.action_profile:
                     default:
                         fragment = new ProfileFragment();
