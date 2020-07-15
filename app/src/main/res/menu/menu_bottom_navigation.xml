@@ -12,7 +12,7 @@
         <item
             android:id="@+id/action_map"
             android:enabled="true"
-            android:icon="@drawable/ic_outline_location_on_24"
+            android:icon="@drawable/ic_notice_icon_small"
             app:showAsAction="always"
             tools:ignore="MenuTitle" />
         <item

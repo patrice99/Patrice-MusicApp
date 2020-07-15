@@ -12,20 +12,20 @@ import android.view.ViewGroup;
 
 import com.example.patrice_musicapp.R;
 
-public class MapFragment extends Fragment {
+public class EventsFragment extends Fragment {
     private Toolbar toolbar;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        View view = inflater.inflate(R.layout.fragment_events, container, false);
 
-        toolbar =view.findViewById(R.id.toolbar_map);
+        toolbar =view.findViewById(R.id.toolbar_events);
         if(toolbar != null){
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         }
-        toolbar.setTitle("Map");
+        toolbar.setTitle("Events");
 
         return view;
     }

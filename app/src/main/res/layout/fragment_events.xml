@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.MapFragment">
+    tools:context=".fragments.EventsFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_map"
+        android:id="@+id/toolbar_events"
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

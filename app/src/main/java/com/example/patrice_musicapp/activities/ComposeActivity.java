@@ -15,7 +15,6 @@ public class ComposeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
         toolbar = (Toolbar) findViewById(R.id.toolbar_compose);
-        setSupportActionBar(toolbar);
         toolbar.setTitle("Make a feed post!");
     }
 }

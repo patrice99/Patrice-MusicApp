@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.fragments.DiscoverFragment;
 import com.example.patrice_musicapp.fragments.FeedFragment;
-import com.example.patrice_musicapp.fragments.MapFragment;
+import com.example.patrice_musicapp.fragments.EventsFragment;
 import com.example.patrice_musicapp.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new DiscoverFragment();
                         break;
                     case R.id.action_map:
-                        fragment = new MapFragment();
+                        fragment = new EventsFragment();
                         break;
                     case R.id.action_profile:
                     default:
