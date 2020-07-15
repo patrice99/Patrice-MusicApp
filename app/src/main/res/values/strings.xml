@@ -13,4 +13,6 @@
     <string name="events">Events</string>
     <string name="map">Map</string>
     <string name="search_for_anything">Search for anything...</string>
+    <string name="posts">Posts</string>
+    <string name="portfolio">Portfolio</string>
 </resources>
