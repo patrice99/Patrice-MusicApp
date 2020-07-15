@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 public class EventsFragment extends Fragment {
     private Toolbar toolbar;
     private TabLayout tabLayout;
+    FragmentManager fragmentManager;
 
 
     @Override
@@ -29,24 +31,32 @@ public class EventsFragment extends Fragment {
         if(toolbar != null){
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         }
-        toolbar.setTitle("Events");
+        if (toolbar != null) {
+            toolbar.setTitle("Events");
+        }
+
+        return view;
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fragmentManager = getFragmentManager();
         tabLayout = view.findViewById(R.id.tabLayout);
-        Fragment fragmentEventPosts = new EventsPostsFragment();
-        Fragment fragmentMap = new MapFragment();
+        final Fragment fragmentEventPosts = new EventsPostsFragment();
+        final Fragment fragmentMap = new MapsFragment();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
                     //Events positionSelected
+                    //go to EventsPost Fragment
+                    fragmentManager.beginTransaction().replace(R.id.flContainer2, fragmentEventPosts).commit();
                 } else {
                     //Maps Position Selected
+                    fragmentManager.beginTransaction().replace(R.id.flContainer2, fragmentMap).commit();
                 }
             }
 
@@ -59,9 +69,12 @@ public class EventsFragment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
 
-        return view;
+
+        });
+        tabLayout.getTabAt(1).select();
+        tabLayout.getTabAt(0).select();
+
 
 
     }
