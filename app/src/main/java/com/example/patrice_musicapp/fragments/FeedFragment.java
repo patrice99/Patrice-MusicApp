@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.ComposeActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FeedFragment extends Fragment {
@@ -32,7 +34,9 @@ public class FeedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //respond to fab click
-                // go to Compose Activity
+                //go to compose Activity
+                Intent intent = new Intent(getContext(), ComposeActivity.class);
+                startActivity(intent);
             }
         });
 
