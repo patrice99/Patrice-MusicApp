@@ -31,11 +31,23 @@ public class EventsFragment extends Fragment {
         }
         toolbar.setTitle("Events");
 
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tabLayout = view.findViewById(R.id.tabLayout);
+        Fragment fragmentEventPosts = new EventsPostsFragment();
+        Fragment fragmentMap = new MapFragment();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                int position = tab.getPosition();
+                if (position == 0) {
+                    //Events positionSelected
+                } else {
+                    //Maps Position Selected
+                }
             }
 
             @Override
@@ -50,11 +62,6 @@ public class EventsFragment extends Fragment {
         });
 
         return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
 
     }
