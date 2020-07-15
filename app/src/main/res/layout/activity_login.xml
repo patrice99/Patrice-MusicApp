@@ -59,6 +59,7 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="#03A9F4"
         android:text="@string/login"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:textColor="#FFFFFF" />
 
 
