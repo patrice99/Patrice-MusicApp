@@ -27,9 +27,6 @@ public class FeedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
         toolbar = (Toolbar) view.findViewById(R.id.toolbar_feed);
-        if (toolbar != null) {
-            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        }
         toolbar.setTitle("Feed");
         return view;
     }
