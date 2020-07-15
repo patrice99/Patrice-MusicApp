@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,5 +13,8 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+
+        ActionBar actionBar = getSupportActionBar(); // or getActionBar();
+        getSupportActionBar().setTitle("Make a new feed post"); // set the top title
     }
 }

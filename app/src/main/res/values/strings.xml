@@ -5,4 +5,9 @@
     <string name="profile_pic">Profile Pic</string>
     <string name="username">username</string>
     <string name="postedimage">PostedImage</string>
+    <string name="password">password</string>
+    <string name="applogo">applogo</string>
+    <string name="login">Login</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
