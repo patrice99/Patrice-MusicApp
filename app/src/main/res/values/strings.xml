@@ -2,4 +2,7 @@
     <string name="app_name">Patrice-MusicApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_pic">Profile Pic</string>
+    <string name="username">username</string>
+    <string name="postedimage">PostedImage</string>
 </resources>
