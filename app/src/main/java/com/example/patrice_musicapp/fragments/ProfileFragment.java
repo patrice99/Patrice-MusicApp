@@ -17,15 +17,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.SettingsActivity;
+import com.example.patrice_musicapp.models.User;
+import com.parse.ParseUser;
 
 
 public class ProfileFragment extends Fragment {
+    private User user;
     private Toolbar toolbar;
     private RecyclerView rvProfilePosts;
+    private TextView tvUsername;
+    private ImageView ivProfilePic;
+    private TextView tvName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +52,19 @@ public class ProfileFragment extends Fragment {
         toolbar.setTitle("Profile");
 
         rvProfilePosts = view.findViewById(R.id.rvProfilePosts);
+
+        user = new User();
+
+        ivProfilePic = view.findViewById(R.id.ivProfilePic);
+        tvUsername = view.findViewById(R.id.tvUsername);
+        tvName = view.findViewById(R.id.tvName);
+
+
+        tvUsername.setText(user.getUsername());
+        tvName.setText(user.getName());
+
+
+
 
     }
 

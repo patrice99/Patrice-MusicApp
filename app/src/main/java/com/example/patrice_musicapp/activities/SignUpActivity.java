@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.patrice_musicapp.R;
 import com.parse.ParseException;
@@ -55,13 +56,13 @@ public class SignUpActivity extends AppCompatActivity {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
+                    Toast.makeText(SignUpActivity.this, "Sign up Successful!", Toast.LENGTH_SHORT).show();
                     goMainActivity();
                 } else {
                     Log.e(TAG, "Sign Up Failed", e);
                 }
             }
         });
-
 
     }
 
