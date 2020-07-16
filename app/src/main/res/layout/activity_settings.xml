@@ -16,7 +16,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/toolbar_settings"
