@@ -5,116 +5,110 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/rlProfileDetails"
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvInstruments"
+        android:layout_alignEnd="@+id/tvInstruments"
+        android:layout_alignBottom="@+id/ivProfilePic"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        android:textAlignment="textEnd"
+        android:textColor="#2196F3"
+        tools:text="Seattle, Washington" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".fragments.ProfileFragment">
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@android:color/white"/>
 
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvInstruments"
-            android:layout_alignEnd="@+id/tvInstruments"
-            android:layout_alignBottom="@+id/ivProfilePic"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_toEndOf="@+id/ivProfilePic"
-            android:textAlignment="textEnd"
-            android:textColor="#2196F3"
-            tools:text="Seattle, Washington" />
+    <ImageView
+        android:id="@+id/ivProfilePic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_profile"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="16dp"
+        tools:src="@tools:sample/avatars" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@android:color/white"></androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_profile"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        tools:text="Patrice Gill" />
 
-        <ImageView
-            android:id="@+id/ivProfilePic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar_profile"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginBottom="16dp"
-            tools:src="@tools:sample/avatars" />
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_profile"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="25dp"
+        android:layout_toEndOf="@+id/tvName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:text="3cmel" />
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar_profile"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Patrice Gill" />
-
-        <TextView
-            android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar_profile"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="25dp"
-            android:layout_toEndOf="@+id/tvName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="3cmel" />
-
-        <TextView
-            android:id="@+id/tvBio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvUsername"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:layout_toEndOf="@+id/ivProfilePic"
-            android:textAlignment="textStart"
-            android:textSize="16sp"
-            tools:text="Here is my bio, I would probably look a little about myself here" />
-
-        <TextView
-            android:id="@+id/tvGenres"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBio"
-            android:layout_alignStart="@+id/tvBio"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:textAlignment="textStart"
-            android:textSize="15sp"
-            tools:text="Genres: RnB , Pop, Reggae, Soca" />
-
-        <TextView
-            android:id="@+id/tvInstruments"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGenres"
-            android:layout_alignStart="@+id/tvGenres"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:textAlignment="textStart"
-            tools:text="Piano, Organ, Flute" />
-
-    </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/flContainer3"
+    <TextView
+        android:id="@+id/tvBio"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUsername"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        android:textAlignment="textStart"
+        android:textSize="16sp"
+        tools:text="Here is my bio, I would probably look a little about myself here" />
+
+    <TextView
+        android:id="@+id/tvGenres"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBio"
+        android:layout_alignStart="@+id/tvBio"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:textAlignment="textStart"
+        android:textSize="15sp"
+        tools:text="Genres: RnB , Pop, Reggae, Soca" />
+
+    <TextView
+        android:id="@+id/tvInstruments"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvGenres"
+        android:layout_alignStart="@+id/tvGenres"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:textAlignment="textStart"
+        tools:text="Piano, Organ, Flute" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProfilePosts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/ivProfilePic"/>
 
 </RelativeLayout>
 
