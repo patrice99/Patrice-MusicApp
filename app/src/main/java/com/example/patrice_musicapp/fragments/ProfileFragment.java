@@ -21,9 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.SettingsActivity;
 import com.example.patrice_musicapp.models.User;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 
@@ -62,6 +64,18 @@ public class ProfileFragment extends Fragment {
 
         tvUsername.setText(user.getUsername());
         tvName.setText(user.getName());
+        ParseFile image = user.getImage();
+        if (image == null){
+            Glide.with(getContext())
+                    .load(getResources().getString(R.string.DEFAULT_PROFILE_PIC))
+                    .circleCrop()
+                    .into(ivProfilePic);
+        } else {
+            Glide.with(getContext())
+                    .load(image.getUrl())
+                    .circleCrop()
+                    .into(ivProfilePic);
+        }
 
 
 

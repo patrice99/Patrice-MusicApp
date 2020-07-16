@@ -11,11 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvInstruments"
         android:layout_alignEnd="@+id/tvInstruments"
-        android:layout_alignBottom="@+id/ivProfilePic"
         android:layout_marginStart="10dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
         android:layout_toEndOf="@+id/ivProfilePic"
         android:textAlignment="textEnd"
         android:textColor="#2196F3"
@@ -31,8 +29,8 @@
 
     <ImageView
         android:id="@+id/ivProfilePic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/toolbar_profile"
         android:layout_alignParentStart="true"
         android:layout_marginStart="12dp"
@@ -107,8 +105,8 @@
         android:id="@+id/rvProfilePosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/ivProfilePic"/>
+        android:layout_below="@id/ivProfilePic"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
 

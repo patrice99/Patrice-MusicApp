@@ -16,4 +16,5 @@
     <string name="posts">Posts</string>
     <string name="portfolio">Portfolio</string>
     <string name="logout">LOGOUT</string>
+    <string name="DEFAULT_PROFILE_PIC">https://www.sackettwaconia.com/wp-content/uploads/default-profile.png</string>
 </resources>
