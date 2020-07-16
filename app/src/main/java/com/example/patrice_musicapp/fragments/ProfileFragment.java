@@ -20,7 +20,6 @@ import com.google.android.material.tabs.TabLayout;
 
 public class ProfileFragment extends Fragment {
     private Toolbar toolbar;
-    private TabLayout tabLayout;
     FragmentManager fragmentManager;
 
 
@@ -40,40 +39,6 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        fragmentManager = getFragmentManager();
-        tabLayout = view.findViewById(R.id.tabLayout2);
-        final Fragment fragmentProfilePosts = new ProfilePostsFragment();
-        final Fragment fragmentPortfolio = new PortfolioFragment();
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                if (position == 0) {
-                    //Events positionSelected
-                    //go to EventsPost Fragment
-                    fragmentManager.beginTransaction().replace(R.id.flContainer3, fragmentProfilePosts).commit();
-                } else {
-                    //Maps Position Selected
-                    fragmentManager.beginTransaction().replace(R.id.flContainer3, fragmentPortfolio).commit();
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-
-
-        });
-        tabLayout.getTabAt(1).select();
-        tabLayout.getTabAt(0).select();
-
 
 
     }
