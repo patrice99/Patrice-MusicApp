@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcel;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,16 +18,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.SettingsActivity;
 import com.example.patrice_musicapp.models.User;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 
 public class ProfileFragment extends Fragment {
@@ -36,6 +41,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvUsername;
     private ImageView ivProfilePic;
     private TextView tvName;
+    private Button btnEditProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +66,7 @@ public class ProfileFragment extends Fragment {
         ivProfilePic = view.findViewById(R.id.ivProfilePic);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
+        btnEditProfile = view.findViewById(R.id.btnEditProfile);
 
 
         tvUsername.setText(user.getUsername());
@@ -76,6 +83,19 @@ public class ProfileFragment extends Fragment {
                     .circleCrop()
                     .into(ivProfilePic);
         }
+
+
+        //set on click listeners
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //When clicked, it launches the EditProfile Activity
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                //pass info from that post into Details Activity
+                intent.putExtra("user", Parcels.wrap(user));
+                getContext().startActivity(intent);
+            }
+        });
 
 
 

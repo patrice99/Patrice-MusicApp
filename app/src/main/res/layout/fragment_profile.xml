@@ -12,7 +12,7 @@
         android:layout_below="@+id/tvInstruments"
         android:layout_alignEnd="@+id/tvInstruments"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="0dp"
         android:layout_toEndOf="@+id/ivProfilePic"
         android:textAlignment="textEnd"
@@ -33,9 +33,9 @@
         android:layout_height="100dp"
         android:layout_below="@+id/toolbar_profile"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="0dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -43,9 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_profile"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         tools:text="Patrice Gill" />
 
@@ -53,10 +53,11 @@
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_profile"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="25dp"
-        android:layout_toEndOf="@+id/tvName"
+        android:layout_below="@+id/ivProfilePic"
+        android:layout_alignEnd="@+id/ivProfilePic"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="3cmel" />
 
@@ -64,7 +65,7 @@
         android:id="@+id/tvBio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUsername"
+        android:layout_below="@+id/tvName"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
@@ -84,7 +85,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="16dp"
-        android:textAlignment="textStart"
+        android:textAlignment="textEnd"
         android:textSize="15sp"
         tools:text="Genres: RnB , Pop, Reggae, Soca" />
 
@@ -98,15 +99,30 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="16dp"
-        android:textAlignment="textStart"
+        android:textAlignment="textEnd"
         tools:text="Piano, Organ, Flute" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProfilePosts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/ivProfilePic"
-        android:layout_marginTop="10dp" />
+        android:layout_height="462dp"
+        android:layout_below="@+id/btnEditProfile"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp" />
+
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:layout_width="266dp"
+        android:layout_height="38dp"
+        android:layout_below="@+id/tvLocation"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        android:backgroundTint="#FFFFFF"
+        android:text="@string/edit_profile"
+        android:textAllCaps="false"
+        android:textColor="#000000" />
 
 </RelativeLayout>
 
