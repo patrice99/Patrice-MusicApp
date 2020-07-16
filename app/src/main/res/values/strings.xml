@@ -17,4 +17,9 @@
     <string name="portfolio">Portfolio</string>
     <string name="logout">LOGOUT</string>
     <string name="DEFAULT_PROFILE_PIC">https://www.sackettwaconia.com/wp-content/uploads/default-profile.png</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_profile_photo">Change Profile Photo</string>
+    <string name="name">name</string>
+    <string name="done">Done</string>
+    <string name="bio">bio</string>
 </resources>
