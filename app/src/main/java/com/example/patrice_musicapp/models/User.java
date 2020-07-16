@@ -1,11 +1,15 @@
 package com.example.patrice_musicapp.models;
 
+import android.util.Log;
+
 import com.parse.Parse;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +41,11 @@ public class User {
 
     public String getUsername() { return user.getUsername(); }
 
+    public void setUsername(String username) {user.setUsername(username);}
+
     public String getEmail() { return user.getEmail(); }
+
+    public void setEmail(String email) {user.setEmail(email);}
 
     public ParseFile getImage() {
         return user.getParseFile(KEY_IMAGE);
@@ -183,6 +191,18 @@ public class User {
 
     public void setSoloArtist(boolean bool) {
         user.put(KEY_SOLO_ARTIST, bool);
+    }
+
+    public void save(){
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(User.class.getSimpleName(), "Issue with save", e);
+                }
+                Log.i(User.class.getSimpleName(), "Save complete");
+            }
+        });
     }
 
 
