@@ -8,11 +8,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,21 +30,32 @@ import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.SettingsActivity;
+import com.example.patrice_musicapp.adapters.PostAdapter;
+import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProfileFragment extends Fragment {
     private User user;
     private Toolbar toolbar;
     private RecyclerView rvProfilePosts;
+    private PostAdapter userAdapter;
+    private List<Post> userPosts;
     private TextView tvUsername;
     private ImageView ivProfilePic;
     private TextView tvName;
     private Button btnEditProfile;
+    public static final int DISPLAY_LIMIT= 20;
+    public static final String TAG = ProfileFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,9 +73,25 @@ public class ProfileFragment extends Fragment {
         }
         toolbar.setTitle("Profile");
 
+        user = new User();
+
         rvProfilePosts = view.findViewById(R.id.rvProfilePosts);
 
-        user = new User();
+        userPosts = new ArrayList<>();
+
+        //instantiate adapter
+        userAdapter = new PostAdapter(getContext(), userPosts);
+        //set adapter on recycler view
+        rvProfilePosts.setAdapter(userAdapter);
+
+        //set layout manager on recycler view
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvProfilePosts.setLayoutManager(linearLayoutManager);
+
+        //query posts
+        queryPosts(0);
+
+
 
         ivProfilePic = view.findViewById(R.id.ivProfilePic);
         tvUsername = view.findViewById(R.id.tvUsername);
@@ -121,6 +150,27 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         }
         return true;
+    }
+
+    protected void queryPosts(final int page) {
+        Post.query(page, DISPLAY_LIMIT, user.parseUser, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+
+                }
+                for(Post post: posts){
+                    Log.i(TAG, "Post: " + post.getCaption() + " Username: " + post.getUser().getUsername());
+                }
+                if(page == 0) {
+                    userAdapter.clear();
+                }
+                userPosts.addAll(posts);
+                userAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 }
