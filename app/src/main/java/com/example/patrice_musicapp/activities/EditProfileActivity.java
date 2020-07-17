@@ -20,6 +20,8 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
 public class EditProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     private User user;
@@ -40,7 +42,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
         //get intent
-        user = getIntent().getParcelableExtra("user");
+        user = (User) Parcels.unwrap(getIntent().getParcelableExtra("user"));
 
         //find views
         ivProfilePic = findViewById(R.id.ivProfilePic);
