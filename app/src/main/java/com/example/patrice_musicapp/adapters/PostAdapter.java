@@ -80,10 +80,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
 
             //check if the user has a valid profilePic
-            ParseFile image2 = post.getUser().getParseFile("profilePic");
+            ParseFile image2 = post.getUser().getParseFile("profileImage");
             if (image2 != null) {
                 Glide.with(context)
-                        .load(post.getUser().getParseFile("profilePic").getUrl())
+                        .load(post.getUser().getParseFile("profileImage").getUrl())
                         .circleCrop()
                         .into(ivProfilePic);
             } else {

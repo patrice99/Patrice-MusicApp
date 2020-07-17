@@ -49,7 +49,7 @@
                 tools:text="event Location" />
 
             <ImageView
-                android:id="@+id/ivHost"
+                android:id="@+id/ivHostProfilePic"
                 android:layout_width="49dp"
                 android:layout_height="42dp"
                 android:layout_below="@+id/tvEventLocation"
