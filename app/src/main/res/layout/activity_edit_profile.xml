@@ -151,7 +151,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="16dp"
-        android:layout_toEndOf="@+id/tvGenres" />
+        android:layout_toEndOf="@+id/tvInstruments" />
 
 
 </RelativeLayout>
