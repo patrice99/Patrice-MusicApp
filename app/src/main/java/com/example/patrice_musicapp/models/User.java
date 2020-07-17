@@ -65,7 +65,7 @@ public class User {
 
     public String getName(){return user.getString(KEY_NAME);}
 
-    public void setName(String name) { user.put (KEY_BIO, name);}
+    public void setName(String name) { user.put(KEY_NAME, name);}
 
     public int getPostCount() {
         return (int) user.getNumber(KEY_POST_COUNT);

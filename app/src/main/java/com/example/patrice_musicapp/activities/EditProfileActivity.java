@@ -88,7 +88,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 user.setName(etName.getText().toString());
                 user.setBio( etBio.getText().toString());
                 user.save();
-                //finish();
+                finish();
 
             }
         });

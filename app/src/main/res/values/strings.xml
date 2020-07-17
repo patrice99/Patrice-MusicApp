@@ -22,4 +22,8 @@
     <string name="name">name</string>
     <string name="done">Done</string>
     <string name="bio">bio</string>
+    <string name="posted_image">Posted Image</string>
+    <string name="caption">caption</string>
+    <string name="post">post</string>
+    <string name="camera">camera</string>
 </resources>
