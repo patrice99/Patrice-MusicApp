@@ -1,6 +1,8 @@
 package com.example.patrice_musicapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.PostDetailsActivity;
 import com.example.patrice_musicapp.models.Post;
 import com.parse.ParseFile;
 
@@ -46,7 +49,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return posts.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivProfilePic;
         private ImageView ivPostImage;
         private TextView tvTitle;
@@ -55,7 +59,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private TextView tvLocation;
         private TextView tvTimeStamp;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder (@NonNull View itemView){
             super(itemView);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
@@ -64,6 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvLocation = itemView.findViewById(R.id.tvLocation);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Post post) {
@@ -94,7 +99,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
 
         }
+
+        @Override
+        public void onClick(View view) {
+            //get post position
+            int position = getAdapterPosition();
+            //get the post at that position
+            Post post = posts.get(position);
+            Log.i(PostAdapter.class.getSimpleName(), "Post at Position " + position + "clicked.");
+            //if any post clicked, take to the PostDetailsActivity with the post
+            Intent intent = new Intent(context, PostDetailsActivity.class);
+            //pass post into PostDetailsActivity
+            intent.putExtra("post", post);
+            context.startActivity(intent);
+        }
     }
+
 
     public void clear() {
         posts.clear();
