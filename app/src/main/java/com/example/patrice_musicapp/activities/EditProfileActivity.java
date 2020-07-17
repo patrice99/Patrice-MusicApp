@@ -6,13 +6,16 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.models.Genres;
 import com.example.patrice_musicapp.models.User;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
@@ -31,6 +34,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etBio;
     private Button btnDone;
+    private Spinner genresSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etBio = findViewById(R.id.etBio);
         btnDone = findViewById(R.id.btnDone);
+        genresSpinner = findViewById(R.id.genres_spinner);
 
         //bind views with data from user
         //check to see if user has image
@@ -79,6 +84,9 @@ public class EditProfileActivity extends AppCompatActivity {
         if (bio != null){
             etBio.setText(bio);
         }
+
+        genresSpinner.setAdapter(new ArrayAdapter<Genres>(this, android.R.layout.simple_spinner_item, Genres.values()));
+
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override

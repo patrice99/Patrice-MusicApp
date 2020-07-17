@@ -88,14 +88,20 @@
             android:inputType="textLongMessage" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <Spinner
+        android:id="@+id/genres_spinner"
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tlBio"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 
 
     <Button
         android:id="@+id/btnDone"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/tlBio"
+        android:layout_below="@+id/genres_spinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
         android:backgroundTint="#FFFFFF"
