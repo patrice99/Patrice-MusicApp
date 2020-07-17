@@ -15,7 +15,7 @@ import com.example.patrice_musicapp.R;
 
 
 public class EventsPostsFragment extends Fragment {
-    RecyclerView rvPosts;
+    RecyclerView rvEventPosts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,6 +27,13 @@ public class EventsPostsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        rvEventPosts = view.findViewById(R.id.rvEventPosts);
+
+        //set adapter on rvEventPosts
+        //set Layout manager on rvEventPosts
+
+
 
     }
 }
