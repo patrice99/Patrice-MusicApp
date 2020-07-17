@@ -49,7 +49,7 @@ public class Post extends ParseObject {
         put(KEY_VIDEO, video);
     }
 
-    public String getKeyTitle() {
+    public String getTitle() {
         return getString(KEY_TITLE);
     }
 
