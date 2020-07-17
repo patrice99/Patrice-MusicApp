@@ -12,14 +12,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
+import com.example.patrice_musicapp.adapters.PostAdapter;
+import com.example.patrice_musicapp.models.Post;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FeedFragment extends Fragment {
     private FloatingActionButton fab;
     private Toolbar toolbar;
+    private RecyclerView rvFeedPosts;
+    private PostAdapter adapter;
+    private List<Post> allPosts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +56,18 @@ public class FeedFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        rvFeedPosts = view.findViewById(R.id.rvFeedPosts);
+
+        allPosts = new ArrayList<>();
+        //instantiate the adapter
+        adapter = new PostAdapter(getContext(), allPosts);
+        //set adapter on recycler view
+        rvFeedPosts.setAdapter(adapter);
+        //set layout manager on recycler view
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvFeedPosts.setLayoutManager(linearLayoutManager);
+
 
     }
 
