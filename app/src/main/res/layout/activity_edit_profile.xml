@@ -88,28 +88,70 @@
             android:inputType="textLongMessage" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <Spinner
-        android:id="@+id/genres_spinner"
+        android:id="@+id/spinnerGenres"
         android:layout_width="161dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tlBio"
+        android:layout_alignEnd="@+id/tlName"
+        android:layout_marginStart="5dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" />
-
+        android:layout_marginTop="-11dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@+id/tvGenres" />
 
     <Button
         android:id="@+id/btnDone"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/genres_spinner"
+        android:layout_below="@+id/spinnerInstruments"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#FFFFFF"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:text="@string/done"
         android:textColor="#2196F3" />
+
+    <TextView
+        android:id="@+id/tvGenres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tlBio"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="false"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-11dp"
+        android:text="Genres: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <TextView
+        android:id="@+id/tvInstruments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvGenres"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="false"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:text="Instruments: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <Spinner
+        android:id="@+id/spinnerInstruments"
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerGenres"
+        android:layout_alignEnd="@+id/tlName"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@+id/tvGenres" />
 
 
 </RelativeLayout>

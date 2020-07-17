@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Genres;
+import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
@@ -34,7 +35,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etBio;
     private Button btnDone;
-    private Spinner genresSpinner;
+    private Spinner spinnerGenres;
+    private Spinner spinnerInstruments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,8 @@ public class EditProfileActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etBio = findViewById(R.id.etBio);
         btnDone = findViewById(R.id.btnDone);
-        genresSpinner = findViewById(R.id.genres_spinner);
+        spinnerGenres = findViewById(R.id.spinnerGenres);
+        spinnerInstruments = findViewById(R.id.spinnerInstruments);
 
         //bind views with data from user
         //check to see if user has image
@@ -85,7 +88,8 @@ public class EditProfileActivity extends AppCompatActivity {
             etBio.setText(bio);
         }
 
-        genresSpinner.setAdapter(new ArrayAdapter<Genres>(this, android.R.layout.simple_spinner_item, Genres.values()));
+        spinnerGenres.setAdapter(new ArrayAdapter<Genres>(this, android.R.layout.simple_spinner_item, Genres.values()));
+        spinnerInstruments.setAdapter(new ArrayAdapter<Instruments>(this, android.R.layout.simple_spinner_item, Instruments.values()));
 
 
         btnDone.setOnClickListener(new View.OnClickListener() {
