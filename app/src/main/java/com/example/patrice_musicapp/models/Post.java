@@ -3,11 +3,13 @@ package com.example.patrice_musicapp.models;
 
 import android.location.Location;
 
+import com.parse.FindCallback;
 import com.parse.ParseACL;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.text.SimpleDateFormat;
@@ -90,6 +92,18 @@ public class Post extends ParseObject {
 
     public void setLocation(ParseGeoPoint parseGeoPoint){
         put(KEY_LOCATION, parseGeoPoint);
+    }
+
+    public static void query(int page, int limit, ParseUser filterForUser, FindCallback callback){
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        if(filterForUser != null) {
+            query.whereEqualTo(Post.KEY_USER, filterForUser);
+        }
+        query.setLimit(limit);
+        query.setSkip(page * limit);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(callback);
     }
 
 }

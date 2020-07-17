@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +21,23 @@ import com.example.patrice_musicapp.activities.ComposeActivity;
 import com.example.patrice_musicapp.adapters.PostAdapter;
 import com.example.patrice_musicapp.models.Post;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FeedFragment extends Fragment {
+    public static final int DISPLAY_LIMIT = 20;
+    public static final String TAG = FeedFragment.class.getSimpleName();
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private RecyclerView rvFeedPosts;
     private PostAdapter adapter;
     private List<Post> allPosts;
+    private ParseUser filterForUser;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,8 +76,31 @@ public class FeedFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvFeedPosts.setLayoutManager(linearLayoutManager);
 
+        //get the posts from the parse dashboard
+        queryPosts(0);
 
     }
 
-    
+    private void queryPosts(final int page) {
+        Post.query(page, DISPLAY_LIMIT, filterForUser, new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+
+                }
+                for(Post post: posts){
+                    Log.i(TAG, "Post: " + post.getCaption() + " Username: " + post.getUser().getUsername());
+                }
+                if(page == 0) {
+                    adapter.clear();
+                }
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+
 }
