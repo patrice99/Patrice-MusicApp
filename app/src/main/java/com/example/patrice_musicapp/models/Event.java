@@ -7,6 +7,8 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.Date;
+
 @ParseClassName("Event")
 public class Event extends ParseObject {
     public static final String KEY_HOST= "host";
@@ -14,13 +16,14 @@ public class Event extends ParseObject {
     public static final String KEY_NAME = "name";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCATION = "location";
+    public static final String KEY_DATE = "date";
 
     public ParseUser getHost() {
         return getParseUser(KEY_HOST);
     }
 
     public void setHost(ParseUser parseUser){
-        put(KEY_HOST, parseUser)
+        put(KEY_HOST, parseUser);
     }
 
     public ParseFile getImage() {
@@ -54,6 +57,14 @@ public class Event extends ParseObject {
     public void setLocation(ParseGeoPoint location){
         put(KEY_LOCATION, location);
 
+    }
+
+    public Date getDate() {
+        return getDate(KEY_DATE);
+    }
+
+    public void setDate(Date date){
+        put(KEY_DATE, date);
     }
 
 
