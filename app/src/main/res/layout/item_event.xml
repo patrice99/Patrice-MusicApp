@@ -15,7 +15,7 @@
             >
 
             <ImageView
-                android:id="@+id/eventImage"
+                android:id="@+id/ivEventImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -24,29 +24,50 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/eventName"
+                android:id="@+id/tvEventName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/eventImage"
+                android:layout_toRightOf="@+id/ivEventImage"
                 android:textSize="30sp"
                 tools:text="Event Name" />
 
             <TextView
-                android:id="@+id/eventDate"
+                android:id="@+id/tvEventDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/eventName"
-                android:layout_toRightOf="@+id/eventImage"
+                android:layout_below="@+id/tvEventName"
+                android:layout_toRightOf="@+id/ivEventImage"
                 tools:text="Event Date" />
 
             <TextView
-                android:id="@+id/eventLocation"
+                android:id="@+id/tvEventLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/eventDate"
-                android:layout_toRightOf="@+id/eventImage"
+                android:layout_below="@+id/tvEventDate"
+                android:layout_toRightOf="@+id/ivEventImage"
                 tools:text="event Location" />
+
+            <ImageView
+                android:id="@+id/ivHost"
+                android:layout_width="49dp"
+                android:layout_height="42dp"
+                android:layout_below="@+id/tvEventLocation"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/tvHostUsername"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvHostUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvEventLocation"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="10dp"
+                tools:text="user123" />
 
 
         </RelativeLayout>
