@@ -1,18 +1,13 @@
 package com.example.patrice_musicapp.utils;
 
 import android.app.Application;
-import android.content.pm.ApplicationInfo;
-import android.util.Log;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Portfolio;
 import com.example.patrice_musicapp.models.Post;
-import com.example.patrice_musicapp.models.User;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -36,6 +31,7 @@ public class ParseApplication extends Application {
         //register m model classes
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Portfolio.class);
+        ParseObject.registerSubclass(Event.class);
 
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured
