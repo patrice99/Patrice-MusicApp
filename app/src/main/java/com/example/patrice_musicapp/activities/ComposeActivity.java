@@ -33,6 +33,8 @@ import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ComposeActivity extends AppCompatActivity {
@@ -122,37 +124,6 @@ public class ComposeActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) { //make sure a photo was taken
-                // by this point we have the camera photo on disk
-                //decode the file
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // Load the taken image into a preview
-                ivPostImage.setImageBitmap(takenImage);
-            } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        } else if ((data != null) && requestCode == PICK_PHOTO_CODE) {
-            Uri photoUri = data.getData();
-            // Load the image located at photoUri into selectedImage
-            Bitmap selectedImage = loadFromUri(photoUri);
-
-            // Load the selected image into a preview
-            ivPostImage.setImageBitmap(selectedImage);
-
-            //save the Image to Parse by converting it to byte Array
-            // Configure byte output stream
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
-            //Compress the image further 
-            selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-            byte[] image = bytes.toByteArray();
-
-        }
-    }
 
     private File getPhotoFileUri(String fileName) {
         // Get safe storage directory for photos
@@ -169,33 +140,15 @@ public class ComposeActivity extends AppCompatActivity {
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
 
-    private void savePosts(String caption, ParseUser currentUser, File photoFile) {
-        Post post = new Post();
-        post.setCaption(caption);
-        post.setImage(new ParseFile(photoFile));
-        post.setUser(currentUser);
-        //post.setImage();
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(ComposeActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
-                }
-
-                Log.i(TAG, "Post save was successful!");
-                etCaption.setText(""); // clear out edit text so user does not save the same post twice
-                ivPostImage.setImageResource(0); //clear the image view
-            }
-        });
-    }
 
     //chosing photo from gallery
     private void onChoosePhoto() {
-        //code for user to select a photo from their gallery or to take a picture
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        // Create a File reference for future access
+        photoFile = getPhotoFileUri(photoFilename);
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             // Bring up gallery to select a photo
@@ -220,6 +173,63 @@ public class ComposeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return image;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) { //make sure a photo was taken
+                // by this point we have the camera photo on disk
+                //decode the file
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                // Load the taken image into a preview
+                ivPostImage.setImageBitmap(takenImage);
+            } else { // Result was a failure
+                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        } else if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+            // Load the image located at photoUri into selectedImage
+            Bitmap selectedImage = loadFromUri(photoUri);
+
+            // Load the selected image into a preview
+            ivPostImage.setImageBitmap(selectedImage);
+
+            //save the Image to Parse by converting it to byte Array
+            // Configure byte output stream
+            FileOutputStream outStream = null;
+            try {
+                outStream = new FileOutputStream(photoFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            //Compress the image further 
+            selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+
+        }
+    }
+
+    private void savePosts(String caption, ParseUser currentUser, File photoFile) {
+        Post post = new Post();
+        post.setCaption(caption);
+        post.setImage(new ParseFile(photoFile));
+        post.setUser(currentUser);
+        //post.setImage();
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(ComposeActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
+                }
+
+                Log.i(TAG, "Post save was successful!");
+                etCaption.setText(""); // clear out edit text so user does not save the same post twice
+                ivPostImage.setImageResource(0); //clear the image view
+            }
+        });
     }
 
 
