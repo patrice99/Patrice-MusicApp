@@ -94,6 +94,13 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChoosePhoto();
+            }
+        });
+
 
     }
 
