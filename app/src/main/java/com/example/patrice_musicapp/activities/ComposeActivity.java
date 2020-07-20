@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,13 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.fragments.FeedFragment;
 import com.example.patrice_musicapp.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -41,6 +41,7 @@ public class ComposeActivity extends AppCompatActivity {
     private ImageView ivPostImage;
     private EditText etCaption;
     private ImageButton btnCaptureImage;
+    private Button btnSubmit;
 
 
     @Override
@@ -54,6 +55,7 @@ public class ComposeActivity extends AppCompatActivity {
         ivPostImage = findViewById(R.id.ivPostImage);
         etCaption = findViewById(R.id.etCaption);
         btnCaptureImage = findViewById(R.id.btnCaptureImage);
+        btnSubmit = findViewById(R.id.btnSubmit);
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +64,29 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
-
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //collect all three pieces of info and make a post out of it
+                //get the description
+                String description = etCaption.getText().toString();
+                if (description.isEmpty()){
+                    Toast.makeText(ComposeActivity.this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //get the user
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if(photoFile == null || ivPostImage.getDrawable() == null) {
+                    Toast.makeText(ComposeActivity.this, "There is no image", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //save the post into
+                savePosts(description, currentUser, photoFile);
+                //go back to post fragment(which is in MainActivity)
+                Intent intent = new Intent(ComposeActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -76,7 +100,7 @@ public class ComposeActivity extends AppCompatActivity {
         photoFile = getPhotoFileUri(photoFilename);
 
         // wrap File object into a content provider
-        Uri fileProvider = FileProvider.getUriForFile(ComposeActivity.this, "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(ComposeActivity.this, "com.musicApp.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
