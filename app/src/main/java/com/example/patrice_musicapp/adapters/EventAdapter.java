@@ -49,6 +49,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         return events.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivEventImage;
         private ImageView ivHostProfilePic;
@@ -110,5 +111,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             intent.putExtra("event", event);
             context.startActivity(intent);
         }
+    }
+
+    public void clear() {
+        events.clear();
+        notifyDataSetChanged();
     }
 }

@@ -1,10 +1,12 @@
 package com.example.patrice_musicapp.models;
 
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Date;
@@ -65,6 +67,15 @@ public class Event extends ParseObject {
 
     public void setDate(Date date){
         put(KEY_DATE, date);
+    }
+
+    public static void query(int page, int limit, FindCallback callback){
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.include(Event.KEY_HOST);
+        query.setLimit(limit);
+        query.setSkip(page * limit);
+        query.addDescendingOrder(Event.KEY_CREATED_AT);
+        query.findInBackground(callback);
     }
 
 

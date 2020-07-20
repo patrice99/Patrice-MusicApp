@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,17 @@ import android.view.ViewGroup;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.adapters.EventAdapter;
 import com.example.patrice_musicapp.models.Event;
+import com.example.patrice_musicapp.models.Post;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class EventsPostsFragment extends Fragment {
+    private static final int DISPLAY_LIMIT = 20;
+    public static final String TAG = EventsPostsFragment.class.getSimpleName();
     RecyclerView rvEventPosts;
     EventAdapter adapter;
     List<Event> events;
@@ -45,9 +51,32 @@ public class EventsPostsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvEventPosts.setLayoutManager(linearLayoutManager);
 
+        //queryEvents(0);
 
 
 
 
+
+    }
+
+    private void queryEvents(final int page) {
+        Event.query(page, DISPLAY_LIMIT, new FindCallback<Event>() {
+            @Override
+            public void done(List<Event> events, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+
+                }
+                for(Event event: events){
+                    Log.i(TAG, "Post: " + event.getDescription() + " Username: " + event.getHost().getUsername());
+                }
+                if(page == 0) {
+                    adapter.clear();
+                }
+                events.addAll(events);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
