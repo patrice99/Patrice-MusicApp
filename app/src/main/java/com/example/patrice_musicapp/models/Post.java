@@ -63,6 +63,10 @@ public class Post extends ParseObject {
         return getString(KEY_CAPTION);
     }
 
+    public void setCaption(String caption){
+        put(KEY_CAPTION, caption);
+    }
+
 
     public String getTimeStamp() {
         Date date = getCreatedAt();
