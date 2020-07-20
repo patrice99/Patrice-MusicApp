@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,7 +22,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.fragments.FeedFragment;
@@ -30,18 +31,22 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 public class ComposeActivity extends AppCompatActivity {
     private Toolbar toolbar;
     public String photoFilename = "photo.jpg";
     private File photoFile;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public final static int PICK_PHOTO_CODE = 1046;
     public static final String TAG = ComposeActivity.class.getSimpleName();
     private ImageView ivPostImage;
     private EditText etCaption;
     private ImageButton btnCaptureImage;
     private Button btnSubmit;
+    private Button btnGallery;
 
 
     @Override
@@ -56,6 +61,7 @@ public class ComposeActivity extends AppCompatActivity {
         etCaption = findViewById(R.id.etCaption);
         btnCaptureImage = findViewById(R.id.btnCaptureImage);
         btnSubmit = findViewById(R.id.btnSubmit);
+        btnGallery = findViewById(R.id.btnGallery);
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +93,6 @@ public class ComposeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
 
     }
@@ -124,6 +128,22 @@ public class ComposeActivity extends AppCompatActivity {
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
+        } else if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+            // Load the image located at photoUri into selectedImage
+            Bitmap selectedImage = loadFromUri(photoUri);
+
+            // Load the selected image into a preview
+            ivPostImage.setImageBitmap(selectedImage);
+
+            //save the Image to Parse by converting it to byte Array
+            // Configure byte output stream
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+            //Compress the image further 
+            selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            byte[] image = bytes.toByteArray();
+
         }
     }
 
@@ -162,5 +182,40 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
     }
+
+    //chosing photo from gallery
+    private void onChoosePhoto() {
+        //code for user to select a photo from their gallery or to take a picture
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            // Bring up gallery to select a photo
+            startActivityForResult(intent, PICK_PHOTO_CODE);
+        }
+    }
+
+
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+
+
 
 }
