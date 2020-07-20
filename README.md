@@ -138,6 +138,10 @@ I plan to use a general bottom navigation bar
 <img src="https://github.com/patrice99/Patrice-MusicApp/blob/6e13930d88362d0401c53593d5748d72e435cb05/Wireframes2.png?raw=true" width=600>
 
 
+### Sprint Progress 
+#### Sprint1
+<img src = "https://github.com/patrice99/Patrice-MusicApp/blob/master/Kapture%202020-07-20%20at%2011.50.30.gif?raw=true" width=600>
+
 
 
 ### [BONUS] Digital Wireframes & Mockups
