@@ -92,6 +92,7 @@ public class EditProfileActivity extends AppCompatActivity {
         spinnerInstruments.setAdapter(new ArrayAdapter<Instruments>(this, android.R.layout.simple_spinner_item, Instruments.values()));
 
 
+        //set on click listeners
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +109,7 @@ public class EditProfileActivity extends AppCompatActivity {
         ivProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //onChoosePhoto();
+
             }
         });
 
