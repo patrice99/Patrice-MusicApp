@@ -39,6 +39,10 @@ public class User {
         parseUser = (ParseUser) user;
     }
 
+    public ParseUser getParseUser(){
+        return parseUser;
+    }
+
     public String getUsername() { return parseUser.getUsername(); }
 
     public void setUsername(String username) {

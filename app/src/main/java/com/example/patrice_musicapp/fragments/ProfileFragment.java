@@ -121,18 +121,23 @@ public class ProfileFragment extends Fragment {
                     .into(ivProfilePic);
         }
 
-
         //set on click listeners
-        btnEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //When clicked, it launches the EditProfile Activity
-                Intent intent = new Intent(getContext(), EditProfileActivity.class);
-                //pass info from that post into Details Activity
-                intent.putExtra("user", Parcels.wrap(user));
-                getContext().startActivity(intent);
-            }
-        });
+        if (user.getParseUser() == ParseUser.getCurrentUser()) {
+            btnEditProfile.setVisibility(View.VISIBLE);
+            //some EditProfile functionality
+            btnEditProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //When clicked, it launches the EditProfile Activity
+                    Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                    //pass info from that post into Details Activity
+                    intent.putExtra("user", Parcels.wrap(user));
+                    getContext().startActivity(intent);
+                }
+            });
+        } else {
+            btnEditProfile.setVisibility(View.GONE);
+        }
 
 
 
