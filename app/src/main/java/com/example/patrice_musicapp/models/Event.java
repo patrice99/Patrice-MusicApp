@@ -13,7 +13,7 @@ import java.util.Date;
 
 @ParseClassName("Event")
 public class Event extends ParseObject {
-    public static final String KEY_HOST= "host";
+    public static final String KEY_HOST= "Host";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_NAME = "name";
     public static final String KEY_DESCRIPTION = "description";

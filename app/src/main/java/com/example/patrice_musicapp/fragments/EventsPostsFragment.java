@@ -29,7 +29,7 @@ public class EventsPostsFragment extends Fragment {
     public static final String TAG = EventsPostsFragment.class.getSimpleName();
     RecyclerView rvEventPosts;
     EventAdapter adapter;
-    List<Event> events;
+    List<Event> allEvents;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,15 +43,15 @@ public class EventsPostsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvEventPosts = view.findViewById(R.id.rvEventPosts);
-        events = new ArrayList<>();
+        allEvents = new ArrayList<>();
         //set adapter on rvEventPosts
-        adapter = new EventAdapter(getContext(), events);
+        adapter = new EventAdapter(getContext(), allEvents);
         rvEventPosts.setAdapter(adapter);
         //set Layout manager on rvEventPosts
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvEventPosts.setLayoutManager(linearLayoutManager);
 
-        //queryEvents(0);
+        queryEvents(0);
 
 
 
@@ -66,7 +66,6 @@ public class EventsPostsFragment extends Fragment {
                 if (e != null){
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
-
                 }
                 for(Event event: events){
                     Log.i(TAG, "Post: " + event.getDescription() + " Username: " + event.getHost().getUsername());
@@ -74,7 +73,7 @@ public class EventsPostsFragment extends Fragment {
                 if(page == 0) {
                     adapter.clear();
                 }
-                events.addAll(events);
+                allEvents.addAll(events);
                 adapter.notifyDataSetChanged();
             }
         });
