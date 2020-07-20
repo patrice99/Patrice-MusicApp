@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.models;
 
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.parse.ParseException;
@@ -32,6 +33,10 @@ public class User {
 
     public User() {
         parseUser = ParseUser.getCurrentUser();
+    }
+
+    public User(Parcelable user){
+        parseUser = (ParseUser) user;
     }
 
     public String getUsername() { return parseUser.getUsername(); }

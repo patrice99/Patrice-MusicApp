@@ -73,14 +73,21 @@ public class ProfileFragment extends Fragment {
         }
         toolbar.setTitle("Profile");
 
-        user = new User();
+
+        //Get the bundle to determine user
+        Bundle bundle = this.getArguments();
+        if (bundle == null){
+            user = new User();
+        } else {
+            user = new User(bundle.getParcelable("user"));
+        }
 
         rvProfilePosts = view.findViewById(R.id.rvProfilePosts);
 
         userPosts = new ArrayList<>();
 
         //instantiate adapter
-        userAdapter = new PostAdapter(getContext(), userPosts);
+        userAdapter = new PostAdapter(getContext(), userPosts, onClickListener);
         //set adapter on recycler view
         rvProfilePosts.setAdapter(userAdapter);
 
@@ -172,5 +179,27 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+    PostAdapter.onClickListener onClickListener = new PostAdapter.onClickListener() {
+        @Override
+        public void onProfilePicAction(int position) {
+            //do nothing
+        }
+
+        @Override
+        public void onUsernameAction(int position) {
+            //do nothing
+        }
+
+        @Override
+        public void onLikeAction(int position) {
+
+        }
+
+        @Override
+        public void onCommentAction(int position) {
+
+        }
+    };
 
 }

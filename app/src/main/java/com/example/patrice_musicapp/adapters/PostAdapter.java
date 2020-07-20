@@ -22,13 +22,23 @@ import com.parse.ParseFile;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
-    Context context;
-    List<Post> posts;
+    private Context context;
+    private List<Post> posts;
+    private onClickListener clickListener;
+
+    //interface for click actions
+    public interface onClickListener {
+        void onProfilePicAction(int position);
+        void onUsernameAction(int position);
+        void onLikeAction(int position);
+        void onCommentAction(int position);
+    }
 
     //constructor
-    public PostAdapter(Context context, List<Post> posts){
+    public PostAdapter(Context context, List<Post> posts, onClickListener clickListener){
         this.context = context;
         this.posts = posts;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -97,6 +107,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .circleCrop()
                         .into(ivProfilePic);
             }
+
+
+            //set onclickListeners
+            ivProfilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onProfilePicAction(getAdapterPosition());
+                }
+            });
+
 
         }
 

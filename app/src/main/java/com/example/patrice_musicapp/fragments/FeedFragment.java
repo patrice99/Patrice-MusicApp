@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,7 +71,7 @@ public class FeedFragment extends Fragment {
 
         allPosts = new ArrayList<>();
         //instantiate the adapter
-        adapter = new PostAdapter(getContext(), allPosts);
+        adapter = new PostAdapter(getContext(), allPosts, onClickListener);
         //set adapter on recycler view
         rvFeedPosts.setAdapter(adapter);
         //set layout manager on recycler view
@@ -101,6 +103,42 @@ public class FeedFragment extends Fragment {
             }
         });
     }
+
+    PostAdapter.onClickListener onClickListener = new PostAdapter.onClickListener() {
+        @Override
+        public void onProfilePicAction(int position) {
+            //get user of that specific post
+            ParseUser user = allPosts.get(position).getUser();
+
+            //pass this info to profile fragment
+            Fragment fragment = new ProfileFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("user", user);
+            fragment.setArguments(bundle);
+
+            //Go from this fragment to profile fragment
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContainer, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
+        @Override
+        public void onUsernameAction(int position) {
+
+        }
+
+        @Override
+        public void onLikeAction(int position) {
+
+        }
+
+        @Override
+        public void onCommentAction(int position) {
+
+        }
+    };
 
 
 }
