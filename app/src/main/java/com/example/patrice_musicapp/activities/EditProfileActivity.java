@@ -3,6 +3,7 @@ package com.example.patrice_musicapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +15,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cocosw.bottomsheet.BottomSheet;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Genres;
 import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
+import com.example.patrice_musicapp.utils.ImageUtil;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -109,7 +112,16 @@ public class EditProfileActivity extends AppCompatActivity {
         ivProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //bring up bottom sheet
+                new BottomSheet.Builder(this, R.style.BottomSheet_Dialog)
+                        .title("New")
+                        .sheet(R.menu.menu_bottom_sheet)
+                        .listener(new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO
+                            }
+                        }).show();
             }
         });
 
