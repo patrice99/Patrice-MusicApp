@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +23,8 @@ import com.example.patrice_musicapp.models.Genres;
 import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.ImageUtil;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -40,6 +44,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button btnDone;
     private Spinner spinnerGenres;
     private Spinner spinnerInstruments;
+    private LinearLayout bottomSheet;
+    private BottomSheetBehavior bottomSheetBehavior;
+    private TextView tvTakePhoto;
+    private TextView tvChoosePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,13 @@ public class EditProfileActivity extends AppCompatActivity {
         btnDone = findViewById(R.id.btnDone);
         spinnerGenres = findViewById(R.id.spinnerGenres);
         spinnerInstruments = findViewById(R.id.spinnerInstruments);
+
+        bottomSheet = findViewById(R.id.bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        tvTakePhoto = findViewById(R.id.tvTakePhoto);
+        tvChoosePhoto = findViewById(R.id.tvChoosePhoto);
 
         //bind views with data from user
         //check to see if user has image
@@ -113,7 +128,14 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //bring up bottom sheet
-                
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+
+        tvTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImageUtil.onLaunchCamera(EditProfileActivity.this);
             }
         });
 
@@ -123,6 +145,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 //onChoosePhoto();
             }
         });
+
+
+        
 
 
 

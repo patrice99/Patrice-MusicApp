@@ -157,14 +157,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_gravity="bottom"
-            app:navigationIcon="@drawable/ic_baseline_menu_24"/>
-
         <include layout="@layout/bottom_sheet"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
