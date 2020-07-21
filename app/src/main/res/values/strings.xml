@@ -29,4 +29,6 @@
     <string name="choose_from_gallery">Choose from Gallery</string>
     <string name="take_a_photo_from_camera">Take a photo from Camera</string>
     <string name="choose_a_photo_from_gallery">Choose a photo from Gallery</string>
+    <string name="camera_icon">camera icon</string>
+    <string name="gallery_icon">gallery icon</string>
 </resources>
