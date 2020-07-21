@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,8 +54,11 @@ public class EventsPostsFragment extends Fragment {
 
         queryEvents(0);
 
-
-
+        //pass events to the Map Fragment
+        Fragment fragment = new MapsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("events", (Parcelable) allEvents);
+        fragment.setArguments(bundle);
 
 
     }

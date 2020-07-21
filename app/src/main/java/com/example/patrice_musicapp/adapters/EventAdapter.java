@@ -23,8 +23,8 @@ import com.parse.ParseFile;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
-    Context context;
-    List<Event> events;
+    public Context context;
+    public List<Event> events;
 
     public EventAdapter(Context context, List<Event> events){
         this.context = context;
@@ -36,6 +36,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public EventAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_event, parent, false);
         return new ViewHolder(view);
+
     }
 
     @Override

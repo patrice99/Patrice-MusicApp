@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.adapters.EventAdapter;
 import com.example.patrice_musicapp.models.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -67,7 +68,6 @@ public class MapsFragment extends Fragment {
 
         events = new ArrayList<>();
 
-        //get the events from the EventPostFragment
-
+        //get events from EventPostFragment
     }
 }
