@@ -69,20 +69,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/bottom_sheet" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlBio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_below="@+id/tlName"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:hint="@string/bio"
-        app:errorEnabled="true">
+        app:errorEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textLongMessage" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/tlBio"
+        android:layout_marginRight="16dp"
+        android:hint="@string/location"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textLongMessage" />
@@ -93,7 +118,7 @@
         android:id="@+id/spinnerGenres"
         android:layout_width="161dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tlBio"
+        android:layout_below="@+id/tlLocation"
         android:layout_alignEnd="@+id/tlName"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="16dp"
@@ -120,7 +145,7 @@
         android:id="@+id/tvGenres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tlBio"
+        android:layout_below="@+id/tlLocation"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="false"
         android:layout_marginStart="16dp"
@@ -152,14 +177,6 @@
         android:layout_marginEnd="0dp"
         android:layout_marginRight="16dp"
         android:layout_toEndOf="@+id/tvInstruments" />
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/bottom_sheet"/>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </RelativeLayout>
