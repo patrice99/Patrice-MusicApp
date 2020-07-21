@@ -142,10 +142,12 @@ public class ProfileFragment extends Fragment {
             btnEditProfile.setVisibility(View.GONE);
         }
 
-        try {
-            tvLocation.setText(User.getStringFromLocation(user.getLocation(), getContext()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (user.getLocation()!= null && (user.getLocation().getLatitude() != 0.0 && user.getLocation().getLongitude() != 0.0)) {
+            try {
+                tvLocation.setText(User.getStringFromLocation(user.getLocation(), getContext()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 

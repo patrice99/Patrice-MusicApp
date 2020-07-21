@@ -218,8 +218,6 @@ public class User {
     }
 
 
-
-
     public static ParseGeoPoint getLocationFromString(String location, Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context, Locale.US);
         List<Address> addresses = geocoder.getFromLocationName(location, 5);
@@ -233,7 +231,6 @@ public class User {
         Geocoder geocoder = new Geocoder(context, Locale.US);
         List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
         Address address = addresses.get(0); //get the first address for right now
-
         return address.getLocality();
     }
 
