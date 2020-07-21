@@ -1,5 +1,7 @@
 package com.example.patrice_musicapp.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,10 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.ComposeActivity;
+import com.example.patrice_musicapp.activities.SettingsActivity;
 import com.google.android.material.tabs.TabLayout;
 
 public class EventsFragment extends Fragment {
@@ -34,6 +41,7 @@ public class EventsFragment extends Fragment {
         if (toolbar != null) {
             toolbar.setTitle("Events");
         }
+
 
         return view;
 
@@ -77,5 +85,26 @@ public class EventsFragment extends Fragment {
 
 
 
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_events, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.addEventButton) {
+            //go to settings activity
+            Intent intent = new Intent(getContext(), ComposeActivity.class);
+            startActivity(intent);
+        }
+        return true;
     }
 }

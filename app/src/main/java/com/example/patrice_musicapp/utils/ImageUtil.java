@@ -27,7 +27,7 @@ public class ImageUtil {
 
 
 
-    public static void onLaunchCamera(Context context) {
+    public static void onLaunchCamera(Context context){
         //create an implicit intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Create a File reference for future access
