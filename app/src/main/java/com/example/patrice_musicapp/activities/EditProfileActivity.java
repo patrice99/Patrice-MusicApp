@@ -113,8 +113,8 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //bring up bottom sheet
-                new BottomSheet.Builder(this, R.style.BottomSheet_Dialog)
-                        .title("New")
+                new BottomSheet.Builder(EditProfileActivity.this, R.style.BottomSheet_Dialog)
+                        .title("Change Profile Photo")
                         .sheet(R.menu.menu_bottom_sheet)
                         .listener(new DialogInterface.OnClickListener() {
                             @Override
