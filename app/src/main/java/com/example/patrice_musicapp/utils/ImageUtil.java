@@ -68,6 +68,9 @@ public class ImageUtil {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
+        // Create a File reference for future access
+        photoFile = getPhotoFileUri(photoFilename, context);
+
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             // Bring up gallery to select a photo
             ((Activity) context).startActivityForResult(intent, PICK_PHOTO_CODE);

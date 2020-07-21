@@ -19,7 +19,7 @@ import java.util.List;
 @Parcel
 public class User {
     public ParseUser parseUser;
-    public static final String KEY_IMAGE = "image";
+    public static final String KEY_PROFILE_IMAGE = "profileImage";
     public static final String KEY_BIO = "bio";
     public static final String KEY_POST_COUNT = "postCount";
     public static final String KEY_LOCATION = "location";
@@ -54,11 +54,11 @@ public class User {
         parseUser.setEmail(email);}
 
     public ParseFile getImage() {
-        return parseUser.getParseFile(KEY_IMAGE);
+        return parseUser.getParseFile(KEY_PROFILE_IMAGE);
     }
 
     public void setImage(ParseFile image) {
-        parseUser.put(KEY_IMAGE, image);
+        parseUser.put(KEY_PROFILE_IMAGE, image);
     }
 
     public String getBio() {
