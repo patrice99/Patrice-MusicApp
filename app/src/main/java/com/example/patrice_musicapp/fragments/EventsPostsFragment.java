@@ -57,7 +57,7 @@ public class EventsPostsFragment extends Fragment {
         //pass events to the Map Fragment
         Fragment fragment = new MapsFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("events", (Parcelable) allEvents);
+        bundle.putParcelableArrayList("events", (ArrayList<? extends Parcelable>) allEvents);
         fragment.setArguments(bundle);
 
 

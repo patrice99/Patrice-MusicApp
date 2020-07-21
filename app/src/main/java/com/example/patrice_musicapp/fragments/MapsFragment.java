@@ -39,15 +39,20 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            //for each event location, add Markers
-            for (Event event: events){
-                LatLng latLng = new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude());
-                googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker for " + event.getName()));
-
+            if (events.size()> 0) {
+                addMarkers(googleMap);
             }
         }
 
     };
+
+    private void addMarkers(GoogleMap googleMap) {
+        //for each event location, add Markers
+        for (Event event: events){
+            LatLng latLng = new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker for " + event.getName()));
+        }
+    }
 
     @Nullable
     @Override
@@ -69,5 +74,9 @@ public class MapsFragment extends Fragment {
         events = new ArrayList<>();
 
         //get events from EventPostFragment
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            events = bundle.getParcelable("events");
+        }
     }
 }
