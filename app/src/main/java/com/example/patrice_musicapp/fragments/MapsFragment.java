@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.models.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,7 +19,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapsFragment extends Fragment {
+    List<Event> events;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -33,10 +38,14 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            //for each event location, add Markers
+            for (Event event: events){
+                LatLng latLng = new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude());
+                googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker for " + event.getName()));
+
+            }
         }
+
     };
 
     @Nullable
@@ -55,6 +64,10 @@ public class MapsFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
-    }
 
+        events = new ArrayList<>();
+
+        //get the events from the EventPostFragment
+
+    }
 }
