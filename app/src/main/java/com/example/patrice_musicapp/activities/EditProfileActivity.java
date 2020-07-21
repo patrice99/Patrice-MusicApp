@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,7 @@ import com.parse.LogOutCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -43,6 +46,9 @@ import org.parceler.Parcels;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class EditProfileActivity extends AppCompatActivity {
     public static final String TAG = EditProfileActivity.class.getSimpleName();
@@ -53,6 +59,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText etName;
     private EditText etUsername;
     private EditText etBio;
+    private EditText etLocation;
     private Button btnDone;
     private Spinner spinnerGenres;
     private Spinner spinnerInstruments;
@@ -79,6 +86,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etUsername = findViewById(R.id.etUsername);
         etBio = findViewById(R.id.etBio);
+        etLocation = findViewById(R.id.etLocation);
         btnDone = findViewById(R.id.btnDone);
         spinnerGenres = findViewById(R.id.spinnerGenres);
         spinnerInstruments = findViewById(R.id.spinnerInstruments);
@@ -118,6 +126,15 @@ public class EditProfileActivity extends AppCompatActivity {
             etBio.setText(bio);
         }
 
+        try {
+            String location = getStringFromLocation(user.getLocation());
+            if(location!= null){
+                etLocation.setText(location);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         spinnerGenres.setAdapter(new ArrayAdapter<Genres>(this, android.R.layout.simple_spinner_item, Genres.values()));
         spinnerInstruments.setAdapter(new ArrayAdapter<Instruments>(this, android.R.layout.simple_spinner_item, Instruments.values()));
 
@@ -130,6 +147,11 @@ public class EditProfileActivity extends AppCompatActivity {
                 user.setUsername(etUsername.getText().toString());
                 user.setName(etName.getText().toString());
                 user.setBio( etBio.getText().toString());
+                try {
+                    user.setLocation(getLocationFromString(etLocation.getText().toString()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 user.save();
                 finish();
 
@@ -173,6 +195,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
 
     }
 
@@ -229,6 +253,24 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+
+
+    public ParseGeoPoint getLocationFromString(String location) throws IOException {
+        Geocoder geocoder = new Geocoder(EditProfileActivity.this, Locale.US);
+        List<Address> addresses = geocoder.getFromLocationName(location, 5);
+        Address address = addresses.get(0); //get the first address for right now
+
+        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
+
+    }
+
+    public String getStringFromLocation(ParseGeoPoint parseGeoPoint) throws IOException {
+        Geocoder geocoder = new Geocoder(EditProfileActivity.this, Locale.US);
+        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
+        Address address = addresses.get(0); //get the first address for right now
+
+        return address.getAddressLine(0); //city
+    }
 
 
 
