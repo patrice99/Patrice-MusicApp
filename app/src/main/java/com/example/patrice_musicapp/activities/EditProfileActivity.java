@@ -126,9 +126,10 @@ public class EditProfileActivity extends AppCompatActivity {
             etBio.setText(bio);
         }
 
+        //make sure the location isn't null or [0,0]
         try {
-            String location = getStringFromLocation(user.getLocation());
-            if(location!= null){
+            if (user.getLocation()!= null && (user.getLocation().getLatitude() != 0.0 && user.getLocation().getLongitude() != 0.0)){
+                String location = User.getStringFromLocation(user.getLocation(), EditProfileActivity.this);
                 etLocation.setText(location);
             }
         } catch (IOException e) {
@@ -148,9 +149,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 user.setName(etName.getText().toString());
                 user.setBio( etBio.getText().toString());
                 try {
-                    user.setLocation(getLocationFromString(etLocation.getText().toString()));
+                    user.setLocation(User.getLocationFromString(etLocation.getText().toString(),EditProfileActivity.this));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                   e.printStackTrace();
                 }
                 user.save();
                 finish();
@@ -195,8 +196,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 
@@ -252,29 +251,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-    public ParseGeoPoint getLocationFromString(String location) throws IOException {
-        Geocoder geocoder = new Geocoder(EditProfileActivity.this, Locale.US);
-        List<Address> addresses = geocoder.getFromLocationName(location, 5);
-        Address address = addresses.get(0); //get the first address for right now
-
-        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
-
-    }
-
-    public String getStringFromLocation(ParseGeoPoint parseGeoPoint) throws IOException {
-        Geocoder geocoder = new Geocoder(EditProfileActivity.this, Locale.US);
-        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
-        Address address = addresses.get(0); //get the first address for right now
-
-        return address.getAddressLine(0); //city
-    }
-
-
-
-
 
 
 

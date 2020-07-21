@@ -31,4 +31,5 @@
     <string name="choose_a_photo_from_gallery">Choose a photo from Gallery</string>
     <string name="camera_icon">camera icon</string>
     <string name="gallery_icon">gallery icon</string>
+    <string name="location">Location</string>
 </resources>

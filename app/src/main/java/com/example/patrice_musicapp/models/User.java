@@ -1,8 +1,12 @@
 package com.example.patrice_musicapp.models;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -13,8 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.parceler.Parcel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Parcel
 public class User {
@@ -210,6 +216,27 @@ public class User {
             }
         });
     }
+
+
+
+
+    public static ParseGeoPoint getLocationFromString(String location, Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocationName(location, 5);
+        Address address = addresses.get(0); //get the first address for right now
+
+        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
+
+    }
+
+    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
+        Address address = addresses.get(0); //get the first address for right now
+
+        return address.getLocality();
+    }
+
 
 
 

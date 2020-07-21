@@ -40,6 +40,7 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvUsername;
     private ImageView ivProfilePic;
     private TextView tvName;
+    private TextView tvLocation;
     private Button btnEditProfile;
     public static final int DISPLAY_LIMIT= 20;
     public static final String TAG = ProfileFragment.class.getSimpleName();
@@ -103,6 +105,7 @@ public class ProfileFragment extends Fragment {
         ivProfilePic = view.findViewById(R.id.ivProfilePic);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
+        tvLocation = view.findViewById(R.id.tvLocation);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
 
 
@@ -139,7 +142,11 @@ public class ProfileFragment extends Fragment {
             btnEditProfile.setVisibility(View.GONE);
         }
 
-
+        try {
+            tvLocation.setText(User.getStringFromLocation(user.getLocation(), getContext()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }

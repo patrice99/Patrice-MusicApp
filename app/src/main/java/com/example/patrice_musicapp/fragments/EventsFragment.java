@@ -33,16 +33,7 @@ public class EventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events, container, false);
-
-        toolbar =view.findViewById(R.id.toolbar_events);
-        if(toolbar != null){
-            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        }
-        if (toolbar != null) {
-            toolbar.setTitle("Events");
-        }
-
-
+        setHasOptionsMenu(true);
         return view;
 
     }
@@ -50,6 +41,12 @@ public class EventsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolbar =view.findViewById(R.id.toolbar_events);
+        if(toolbar != null){
+            toolbar.setTitle("Events");
+        }
+
         fragmentManager = getFragmentManager();
         tabLayout = view.findViewById(R.id.tabLayout);
         final Fragment fragmentEventPosts = new EventsPostsFragment();
@@ -96,12 +93,11 @@ public class EventsFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar item clicks here
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.addEventButton) {
-            //go to settings activity
+            //go to compose activity
             Intent intent = new Intent(getContext(), ComposeActivity.class);
             startActivity(intent);
         }
