@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
@@ -25,8 +28,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +43,16 @@ public class MapsFragment extends Fragment {
     private Event event;
     private LinearLayout bottomSheetEvent;
     private BottomSheetBehavior bottomSheetEventBehavior;
+
+    //Bottomsheet Views
+    private TextView tvName;
+    private TextView tvDescription;
+    private TextView tvDateTime;
+    private TextView tvAddress;
+    private TextView tvHostUsername;
+    private ImageView ivEventImage;
+    private ImageView ivHostProfilePic;
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -95,15 +110,60 @@ public class MapsFragment extends Fragment {
             mapFragment.getMapAsync(callback);
         }
 
+        //find views for bottom sheet
+        tvAddress = view.findViewById(R.id.tvAddress);
+        tvDateTime = view.findViewById(R.id.tvDateTime);
+        tvDescription = view.findViewById(R.id.tvDescription);
+        tvHostUsername = view.findViewById(R.id.tvHostUsername);
+        tvName = view.findViewById(R.id.tvName);
+        ivEventImage = view.findViewById(R.id.ivEventImage);
+        ivHostProfilePic = view.findViewById(R.id.ivHostProfilePic);
+
+
         //Get the bundle to determine if bottom navigation sheet is pulled up or not
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            Event event = bundle.getParcelable("event");
+            event = bundle.getParcelable("event");
             bottomSheetEvent = view.findViewById(R.id.bottom_sheet_event);
             bottomSheetEventBehavior = BottomSheetBehavior.from(bottomSheetEvent);
             bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            bindViews();
         }
 
+
+    }
+
+    private void bindViews() {
+        try {
+            tvAddress.setText(Event.getStringFromLocation(event.getLocation(), getContext(), TAG));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        tvDateTime.setText(event.getDate().toString());
+        tvDescription.setText(event.getDescription());
+        tvHostUsername.setText(event.getHost().getUsername());
+        tvName.setText(event.getName());
+
+        //check if the post has a valid image
+        ParseFile image = event.getImage();
+        if (image != null) {
+            Glide.with(this).load(event.getImage().getUrl()).into(ivEventImage);
+        }
+
+        //check if the user has a valid profilePic
+        ParseFile image2 = event.getHost().getParseFile("profileImage");
+        if (image2 != null) {
+            Glide.with(this)
+                    .load(event.getHost().getParseFile("profileImage").getUrl())
+                    .circleCrop()
+                    .into(ivHostProfilePic);
+        } else {
+            Glide.with(this)
+                    .load(getResources().getString(R.string.DEFAULT_PROFILE_PIC))
+                    .circleCrop()
+                    .into(ivHostProfilePic);
+        }
 
     }
 

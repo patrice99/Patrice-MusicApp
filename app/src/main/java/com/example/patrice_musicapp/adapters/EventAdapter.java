@@ -1,8 +1,6 @@
 package com.example.patrice_musicapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
-import com.example.patrice_musicapp.activities.EventDetailsActivity;
-import com.example.patrice_musicapp.activities.PostDetailsActivity;
-import com.example.patrice_musicapp.fragments.EventsPostsFragment;
 import com.example.patrice_musicapp.models.Event;
-import com.example.patrice_musicapp.models.Post;
-import com.google.android.gms.maps.MapFragment;
 import com.parse.ParseFile;
 
 import java.io.IOException;
@@ -32,6 +22,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public Context context;
     public List<Event> events;
     public onClickListener clickListener;
+    public static final String TAG = EventAdapter.class.getSimpleName();
 
     public interface onClickListener {
         void onEventClick(int position);
@@ -75,7 +66,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             super(itemView);
             ivEventImage = itemView.findViewById(R.id.ivEventImage);
             ivHostProfilePic = itemView.findViewById(R.id.ivHostProfilePic);
-            tvEventName = itemView.findViewById(R.id.tvEventName);
+            tvEventName = itemView.findViewById(R.id.tvName);
             tvEventLocation = itemView.findViewById(R.id.tvEventLocation);
             tvEventDate = itemView.findViewById(R.id.tvEventDate);
             tvHostUsername = itemView.findViewById(R.id.tvHostUsername);
@@ -86,7 +77,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             //bind views for events
             tvEventName.setText(event.getName());
             try {
-                tvEventLocation.setText(Event.getStringFromLocation(event.getLocation(), context));
+                tvEventLocation.setText(Event.getStringFromLocation(event.getLocation(), context, TAG));
             } catch (IOException e) {
                 e.printStackTrace();
             }

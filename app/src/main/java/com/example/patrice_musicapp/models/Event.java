@@ -1,9 +1,12 @@
 package com.example.patrice_musicapp.models;
 
+import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 
+import com.example.patrice_musicapp.activities.EditProfileActivity;
+import com.google.android.gms.maps.MapFragment;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseClassName;
@@ -26,6 +29,7 @@ public class Event extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_DATE = "date";
+
 
     public ParseUser getHost() {
         return getParseUser(KEY_HOST);
@@ -94,10 +98,14 @@ public class Event extends ParseObject {
 
     }
 
-    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context) throws IOException {
+    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context, String fromWhere) throws IOException {
         Geocoder geocoder = new Geocoder(context, Locale.US);
         List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
         Address address = addresses.get(0); //get the first address for right now
+
+        if (fromWhere == MapFragment.class.getSimpleName()){
+            return address.getAddressLine(0);
+        }
         return address.getFeatureName();
     }
 
