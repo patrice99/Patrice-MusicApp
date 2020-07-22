@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,7 +47,7 @@ public class EventsPostsFragment extends Fragment {
         rvEventPosts = view.findViewById(R.id.rvEventPosts);
         allEvents = new ArrayList<>();
         //set adapter on rvEventPosts
-        adapter = new EventAdapter(getContext(), allEvents);
+        adapter = new EventAdapter(getContext(), allEvents, );
         rvEventPosts.setAdapter(adapter);
         //set Layout manager on rvEventPosts
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -80,4 +81,16 @@ public class EventsPostsFragment extends Fragment {
         });
 
     }
+
+    EventAdapter.onClickListener clickListener = new EventAdapter.onClickListener() {
+        @Override
+        public void onEventClick(int position) {
+            //get event position
+            //get the post at that position
+            Event event = allEvents.get(position);
+            Log.i(EventAdapter.class.getSimpleName(), "Event at Position " + position + "clicked.");
+            //if any post clicked, take to the Maps Fragment and bring up a bottom sheet.
+
+        }
+    };
 }

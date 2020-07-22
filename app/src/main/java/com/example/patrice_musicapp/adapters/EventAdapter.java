@@ -10,14 +10,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.EventDetailsActivity;
 import com.example.patrice_musicapp.activities.PostDetailsActivity;
+import com.example.patrice_musicapp.fragments.EventsPostsFragment;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Post;
+import com.google.android.gms.maps.MapFragment;
 import com.parse.ParseFile;
 
 import java.io.IOException;
@@ -26,10 +31,16 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
     public Context context;
     public List<Event> events;
+    public onClickListener clickListener;
 
-    public EventAdapter(Context context, List<Event> events){
+    public interface onClickListener {
+        void onEventClick(int position);
+    }
+
+    public EventAdapter(Context context, List<Event> events, onClickListener clickListener){
         this.context = context;
         this.events = events;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -106,16 +117,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         @Override
         public void onClick(View view) {
-            //get event position
-            int position = getAdapterPosition();
-            //get the post at that position
-            Event event = events.get(position);
-            Log.i(EventAdapter.class.getSimpleName(), "Event at Position " + position + "clicked.");
-            //if any post clicked, take to the PostDetailsActivity with the post
-            Intent intent = new Intent(context, EventDetailsActivity.class);
-            //pass post into PostDetailsActivity
-            intent.putExtra("event", event);
-            context.startActivity(intent);
+            clickListener.onEventClick(getAdapterPosition());
         }
     }
 
