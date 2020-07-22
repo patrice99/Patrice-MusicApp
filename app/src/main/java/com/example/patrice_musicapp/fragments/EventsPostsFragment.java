@@ -72,7 +72,7 @@ public class EventsPostsFragment extends Fragment {
                 }
                 allEvents.addAll(events);
                 adapter.notifyDataSetChanged();
-                
+
             }
         });
 

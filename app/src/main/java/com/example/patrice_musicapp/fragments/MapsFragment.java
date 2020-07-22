@@ -15,14 +15,17 @@ import android.widget.Toast;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.adapters.EventAdapter;
 import com.example.patrice_musicapp.models.Event;
+import com.example.patrice_musicapp.models.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,8 @@ import java.util.List;
 public class MapsFragment extends Fragment {
     private static final int DISPLAY_LIMIT =20;
     public static final String TAG = MapsFragment.class.getSimpleName();
-    List<Event> allEvents = new ArrayList<>();
+    private List<Event> allEvents = new ArrayList<>();
+    private User user;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -51,10 +55,23 @@ public class MapsFragment extends Fragment {
     };
 
     private void addMarkers(GoogleMap googleMap) {
-        //for each event location, add Markers
+        //pan camera to the location of the user. make this marker green
+        user = new User(ParseUser.getCurrentUser());
+        LatLng userLatLng = new LatLng(user.getLocation().getLatitude(), user.getLocation().getLongitude());
+        googleMap.addMarker(new MarkerOptions()
+                .position(userLatLng)
+                .title("Me")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+
+        //change the view to the user location with a view of 15
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));
+
+        //for each event location, add a specific color for events
         for (Event event: allEvents){
             LatLng latLng = new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(event.getName()));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     }
