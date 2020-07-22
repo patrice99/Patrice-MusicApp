@@ -90,7 +90,6 @@ public class MapsFragment extends Fragment {
                 }
                 allEvents.addAll(events);
                 addMarkers(googleMap);
-
             }
         });
     }

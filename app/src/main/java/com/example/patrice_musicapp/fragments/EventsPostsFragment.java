@@ -72,12 +72,7 @@ public class EventsPostsFragment extends Fragment {
                 }
                 allEvents.addAll(events);
                 adapter.notifyDataSetChanged();
-
-                //pass events to the Map Fragment
-                Fragment fragment = new MapsFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("allEvents", (ArrayList<? extends Parcelable>) allEvents);
-                fragment.setArguments(bundle);
+                
             }
         });
 
