@@ -98,8 +98,7 @@ public class MapsFragment extends Fragment {
         //Get the bundle to determine if bottom navigation sheet is pulled up or not
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            int position = bundle.getInt("position");
-            event = allEvents.get(position);
+            Event event = bundle.getParcelable("event");
             bottomSheetEvent = view.findViewById(R.id.bottom_sheet_event);
             bottomSheetEventBehavior = BottomSheetBehavior.from(bottomSheetEvent);
             bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -121,6 +120,7 @@ public class MapsFragment extends Fragment {
                 }
                 allEvents.addAll(events);
                 addMarkers(googleMap);
+
             }
         });
     }

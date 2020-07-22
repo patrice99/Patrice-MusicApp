@@ -91,11 +91,11 @@ public class EventsPostsFragment extends Fragment {
             Event event = allEvents.get(position);
             Log.i(EventAdapter.class.getSimpleName(), "Event at Position " + position + "clicked.");
             //if any post clicked, take to the Maps Fragment and bring up a bottom sheet.
-            //pass the event position to maps for the bottom sheet
+            //pass the event to maps for the bottom sheet
             // Create new fragment and transaction
             Fragment newFragment = new MapsFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt("position", position);
+            bundle.putParcelable("event", event);
             newFragment.setArguments(bundle);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.flContainer2, newFragment);
