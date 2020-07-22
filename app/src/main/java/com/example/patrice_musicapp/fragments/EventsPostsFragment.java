@@ -54,6 +54,7 @@ public class EventsPostsFragment extends Fragment {
 
         queryEvents(0);
 
+
     }
 
     private void queryEvents(final int page) {
@@ -72,6 +73,8 @@ public class EventsPostsFragment extends Fragment {
                 }
                 allEvents.addAll(events);
                 adapter.notifyDataSetChanged();
+
+
 
             }
         });

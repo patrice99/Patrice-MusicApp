@@ -180,7 +180,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ImageUtil.onLaunchCamera(EditProfileActivity.this);
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 //save photo in parse
                 saveProfilePic(ImageUtil.photoFile);
             }
@@ -190,7 +190,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ImageUtil.onChoosePhoto(EditProfileActivity.this);
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 //save photo in parse
                 saveProfilePic(ImageUtil.photoFile);
 

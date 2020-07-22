@@ -90,6 +90,7 @@ public class MapsFragment extends Fragment {
             mapFragment.getMapAsync(callback);
         }
 
+
     }
 
     private void queryEvents(final int page, final GoogleMap googleMap) {
