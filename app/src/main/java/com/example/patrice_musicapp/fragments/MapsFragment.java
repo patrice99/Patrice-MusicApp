@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -33,6 +35,9 @@ public class MapsFragment extends Fragment {
     public static final String TAG = MapsFragment.class.getSimpleName();
     private List<Event> allEvents = new ArrayList<>();
     private User user;
+    private Event event;
+    private LinearLayout bottomSheetEvent;
+    private BottomSheetBehavior bottomSheetEventBehavior;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -88,6 +93,16 @@ public class MapsFragment extends Fragment {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
+        }
+
+        //Get the bundle to determine if bottom navigation sheet is pulled up or not
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            int position = bundle.getInt("position");
+            event = allEvents.get(position);
+            bottomSheetEvent = view.findViewById(R.id.bottom_sheet_event);
+            bottomSheetEventBehavior = BottomSheetBehavior.from(bottomSheetEvent);
+            bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
 
 
