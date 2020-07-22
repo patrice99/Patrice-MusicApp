@@ -102,7 +102,7 @@ public class MapsFragment extends Fragment {
             event = allEvents.get(position);
             bottomSheetEvent = view.findViewById(R.id.bottom_sheet_event);
             bottomSheetEventBehavior = BottomSheetBehavior.from(bottomSheetEvent);
-            bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
 
 
