@@ -20,6 +20,7 @@ import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Post;
 import com.parse.ParseFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
@@ -73,7 +74,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         public void bind(Event event) {
             //bind views for events
             tvEventName.setText(event.getName());
-            tvEventLocation.setText(event.getLocation().toString());
+            try {
+                tvEventLocation.setText(Event.getStringFromLocation(event.getLocation(), context));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             tvEventDate.setText(event.getDate().toString());
             tvHostUsername.setText(event.getHost().getUsername());
 

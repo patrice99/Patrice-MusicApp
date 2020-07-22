@@ -1,5 +1,9 @@
 package com.example.patrice_musicapp.models;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseClassName;
@@ -9,7 +13,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 @ParseClassName("Event")
 public class Event extends ParseObject {
@@ -76,6 +83,22 @@ public class Event extends ParseObject {
         query.setSkip(page * limit);
         query.addDescendingOrder(Event.KEY_CREATED_AT);
         query.findInBackground(callback);
+    }
+
+    public static ParseGeoPoint getLocationFromString(String location, Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocationName(location, 5);
+        Address address = addresses.get(0); //get the first address for right now
+
+        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
+
+    }
+
+    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
+        Address address = addresses.get(0); //get the first address for right now
+        return address.getLocality();
     }
 
 

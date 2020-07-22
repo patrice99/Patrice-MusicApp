@@ -1,19 +1,16 @@
 package com.example.patrice_musicapp.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.patrice_musicapp.R;
-import com.example.patrice_musicapp.adapters.EventAdapter;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -72,7 +69,6 @@ public class MapsFragment extends Fragment {
             googleMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(event.getName()));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     }
 
