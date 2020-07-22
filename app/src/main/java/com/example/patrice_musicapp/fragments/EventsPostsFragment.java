@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +48,7 @@ public class EventsPostsFragment extends Fragment {
         rvEventPosts = view.findViewById(R.id.rvEventPosts);
         allEvents = new ArrayList<>();
         //set adapter on rvEventPosts
-        adapter = new EventAdapter(getContext(), allEvents, );
+        adapter = new EventAdapter(getContext(), allEvents, clickListener);
         rvEventPosts.setAdapter(adapter);
         //set Layout manager on rvEventPosts
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -90,6 +91,16 @@ public class EventsPostsFragment extends Fragment {
             Event event = allEvents.get(position);
             Log.i(EventAdapter.class.getSimpleName(), "Event at Position " + position + "clicked.");
             //if any post clicked, take to the Maps Fragment and bring up a bottom sheet.
+            //pass the event position to maps for the bottom sheet
+            // Create new fragment and transaction
+            Fragment newFragment = new MapsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", position);
+            newFragment.setArguments(bundle);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.flContainer2, newFragment);
+            // Commit the transaction
+            transaction.commit();
 
         }
     };
