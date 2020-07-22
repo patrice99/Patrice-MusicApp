@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +21,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapsFragment extends Fragment {
-    List<Event> events;
+    private static final int DISPLAY_LIMIT =20;
+    public static final String TAG = MapsFragment.class.getSimpleName();
+    List<Event> allEvents = new ArrayList<>();
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -39,18 +44,18 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            if (events.size()> 0) {
-                addMarkers(googleMap);
-            }
+            queryEvents(0, googleMap);
+
         }
 
     };
 
     private void addMarkers(GoogleMap googleMap) {
         //for each event location, add Markers
-        for (Event event: events){
+        for (Event event: allEvents){
             LatLng latLng = new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker for " + event.getName()));
+            googleMap.addMarker(new MarkerOptions().position(latLng).title(event.getName()));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     }
 
@@ -65,18 +70,30 @@ public class MapsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
-
-        events = new ArrayList<>();
-
-        //get events from EventPostFragment
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-            events = bundle.getParcelable("events");
-        }
     }
+
+    private void queryEvents(final int page, final GoogleMap googleMap) {
+        Event.query(page, DISPLAY_LIMIT, new FindCallback<Event>() {
+            @Override
+            public void done(List<Event> events, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                for (Event event : events) {
+                    Log.i(TAG, "Post: " + event.getDescription() + " Username: " + event.getHost().getUsername());
+                }
+                allEvents.addAll(events);
+                addMarkers(googleMap);
+
+            }
+        });
+    }
+
+
 }
