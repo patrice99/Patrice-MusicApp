@@ -33,6 +33,7 @@ public class MapsFragment extends Fragment {
     public static final String TAG = MapsFragment.class.getSimpleName();
     private List<Event> allEvents = new ArrayList<>();
     private User user;
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
          * Manipulates the map once available.
@@ -89,14 +90,6 @@ public class MapsFragment extends Fragment {
             mapFragment.getMapAsync(callback);
         }
 
-        // Construct a GeoDataClient.
-        mGeoDataClient = Places.getGeoDataClient(this, null);
-
-        // Construct a PlaceDetectionClient.
-        mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
-
-        // Construct a FusedLocationProviderClient.
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     private void queryEvents(final int page, final GoogleMap googleMap) {

@@ -98,7 +98,7 @@ public class Event extends ParseObject {
         Geocoder geocoder = new Geocoder(context, Locale.US);
         List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
         Address address = addresses.get(0); //get the first address for right now
-        return address.getLocality();
+        return address.getFeatureName();
     }
 
 
