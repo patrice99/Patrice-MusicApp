@@ -35,4 +35,7 @@
     <string name="event_name">Event Name</string>
     <string name="event_description">Event Description</string>
     <string name="event_location">Event Location</string>
+    <string name="event_date">Event Date</string>
+    <string name="post_your_event">Post your Event</string>
+    <string name="event_image">Event Image</string>
 </resources>

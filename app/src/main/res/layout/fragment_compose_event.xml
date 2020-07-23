@@ -17,7 +17,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="65dp"
         android:src="@mipmap/ic_add_image"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/event_image" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlName"
@@ -62,7 +63,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="-20dp"
-        android:hint="@string/event_description"
+        android:hint="@string/event_date"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -97,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         style="?attr/materialButtonOutlinedStyle"
-        android:text="Post your Event" />
+        android:text="@string/post_your_event" />
 
 
 </LinearLayout>
