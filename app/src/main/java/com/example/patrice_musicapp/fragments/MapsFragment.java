@@ -1,10 +1,12 @@
 package com.example.patrice_musicapp.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
@@ -29,6 +33,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 import java.io.IOException;
@@ -52,6 +57,7 @@ public class MapsFragment extends Fragment {
     private TextView tvHostUsername;
     private ImageView ivEventImage;
     private ImageView ivHostProfilePic;
+    private Button btnContactHost;
 
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -124,6 +130,7 @@ public class MapsFragment extends Fragment {
         ivHostProfilePic = view.findViewById(R.id.ivHostProfilePic);
         bottomSheetEvent = view.findViewById(R.id.bottom_sheet_event);
         bottomSheetEventBehavior = BottomSheetBehavior.from(bottomSheetEvent);
+        btnContactHost = view.findViewById(R.id.btnContactHost);
 
         //Get the bundle to determine if bottom navigation sheet is pulled up or not
         Bundle bundle = this.getArguments();
@@ -136,6 +143,29 @@ public class MapsFragment extends Fragment {
             bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         }
+
+        //set onClick Listeners
+        btnContactHost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //go to the host's profile page
+                ParseUser user = event.getHost();
+
+                //pass this info to profile fragment
+                Fragment fragment = new ProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user", user);
+                fragment.setArguments(bundle);
+
+                //Go from this fragment to profile fragment
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
 
 
     }

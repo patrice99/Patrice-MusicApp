@@ -56,7 +56,7 @@ public class Event extends ParseObject {
     }
 
     public String getDescription() {
-        return getString(KEY_NAME);
+        return getString(KEY_DESCRIPTION);
     }
 
     public void setDescription(String description){

@@ -117,13 +117,14 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/ivEventPhoto"
+        android:id="@+id/ivEventImage"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
+        android:id="@+id/btnContactHost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
