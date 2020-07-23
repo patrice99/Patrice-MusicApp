@@ -41,6 +41,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="-20dp"
         android:hint="@string/event_description"
         app:errorEnabled="true">
 
@@ -58,6 +59,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="-20dp"
         android:hint="@string/event_description"
         app:errorEnabled="true">
 
@@ -65,9 +67,27 @@
             android:id="@+id/etDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"/>
+            android:layout_marginTop="3dp"
+            android:focusable="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="16dp"
+        android:hint="@string/event_location"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 
