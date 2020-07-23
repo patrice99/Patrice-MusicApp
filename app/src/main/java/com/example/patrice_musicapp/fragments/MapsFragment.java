@@ -73,16 +73,20 @@ public class MapsFragment extends Fragment {
     };
 
     private void addMarkers(GoogleMap googleMap) {
-        //pan camera to the location of the user. make this marker green
-        user = new User(ParseUser.getCurrentUser());
-        LatLng userLatLng = new LatLng(user.getLocation().getLatitude(), user.getLocation().getLongitude());
-        googleMap.addMarker(new MarkerOptions()
-                .position(userLatLng)
-                .title("Me")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        if (event != null) {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude()), 15));
+        } else {
+            //pan camera to the location of the user. make this marker green
+            user = new User(ParseUser.getCurrentUser());
+            LatLng userLatLng = new LatLng(user.getLocation().getLatitude(), user.getLocation().getLongitude());
+            googleMap.addMarker(new MarkerOptions()
+                    .position(userLatLng)
+                    .title("Me")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
-        //change the view to the user location with a view of 15
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));
+            //change the view to the user location with a view of 15
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));
+        }
 
         //for each event location, add a specific color for events
         for (Event event: allEvents){
@@ -127,6 +131,7 @@ public class MapsFragment extends Fragment {
             event = bundle.getParcelable("event");
             bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             bindViews();
+            //change camera view on Map
         } else {
             bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
