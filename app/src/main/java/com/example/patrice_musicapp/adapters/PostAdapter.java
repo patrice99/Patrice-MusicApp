@@ -32,8 +32,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     //interface for click actions
     public interface onClickListener {
         void onProfilePicAction(int position);
-        void onUsernameAction(int position);
         void onLikeAction(int position);
+        void onUnlikeAction(int position);
         void onCommentAction(int position);
     }
 
@@ -86,7 +86,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Post post) {
+        public void bind(final Post post) {
             //here is where we bind views
             tvTitle.setText(post.getTitle());
             tvUsername.setText(post.getUser().getUsername());
@@ -132,15 +132,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     clickListener.onProfilePicAction(getAdapterPosition());
                 }
             });
-
             ivLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    clickListener.onLikeAction(getAdapterPosition());
+                    try {
+                        if (post.isLiked(ParseUser.getCurrentUser())) {
+                            clickListener.onUnlikeAction(getAdapterPosition());
+                        } else {
+                            clickListener.onLikeAction(getAdapterPosition());
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
-
-
         }
 
         @Override
@@ -157,7 +162,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             context.startActivity(intent);
         }
     }
-
 
     public void clear() {
         posts.clear();

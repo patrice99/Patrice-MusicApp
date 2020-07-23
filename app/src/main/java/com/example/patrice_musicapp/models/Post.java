@@ -123,7 +123,7 @@ public class Post extends ParseObject {
     public void addLike(ParseUser parseUser){
         //increase like count
         put(KEY_LIKES_COUNT, getLikesCount()+ 1);
-        add(KEY_LIKES_ARRAY, parseUser);
+        addUnique(KEY_LIKES_ARRAY, parseUser);
     }
 
     public boolean isLiked(ParseUser parseUser) throws JSONException {
@@ -138,5 +138,24 @@ public class Post extends ParseObject {
             }
         }
         return false;
+    }
+
+
+    public void destroyLike(ParseUser parseUser) throws JSONException {
+        //reduce count
+        put(KEY_LIKES_COUNT, getLikesCount() - 1);
+        //loop through user like array and delete user object
+        JSONArray jsonArray = getJSONArray(KEY_LIKES_ARRAY);
+        if (jsonArray!= null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                String objectId = jsonObject.getString("objectId");
+                if (objectId.equals(parseUser.getObjectId())) {
+                    //delete that user object
+                    jsonArray.remove(i);
+                    put(KEY_LIKES_ARRAY, jsonArray);
+                }
+            }
+        }
     }
 }

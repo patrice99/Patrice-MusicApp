@@ -28,6 +28,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,10 +127,6 @@ public class FeedFragment extends Fragment {
             fragmentTransaction.commit();
         }
 
-        @Override
-        public void onUsernameAction(int position) {
-
-        }
 
         @Override
         public void onLikeAction(int position) {
@@ -141,6 +139,24 @@ public class FeedFragment extends Fragment {
                     Log.i(TAG, "Saved like successfully");
                 }
             });
+            adapter.notifyItemChanged(position);
+        }
+
+        @Override
+        public void onUnlikeAction(int position) {
+            Post post = allPosts.get(position);
+            try {
+                post.destroyLike(ParseUser.getCurrentUser());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            post.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Log.i(TAG, "DestroyedLike successfully");
+                }
+            });
+            adapter.notifyItemChanged(position);
         }
 
         @Override

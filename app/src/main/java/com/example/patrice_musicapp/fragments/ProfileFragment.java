@@ -201,12 +201,12 @@ public class ProfileFragment extends Fragment {
         }
 
         @Override
-        public void onUsernameAction(int position) {
-            //do nothing
+        public void onLikeAction(int position) {
+
         }
 
         @Override
-        public void onLikeAction(int position) {
+        public void onUnlikeAction(int position) {
 
         }
 
