@@ -118,16 +118,18 @@ public class MapsFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         ivEventImage = view.findViewById(R.id.ivEventImage);
         ivHostProfilePic = view.findViewById(R.id.ivHostProfilePic);
-
+        bottomSheetEvent = view.findViewById(R.id.bottom_sheet_event);
+        bottomSheetEventBehavior = BottomSheetBehavior.from(bottomSheetEvent);
 
         //Get the bundle to determine if bottom navigation sheet is pulled up or not
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             event = bundle.getParcelable("event");
-            bottomSheetEvent = view.findViewById(R.id.bottom_sheet_event);
-            bottomSheetEventBehavior = BottomSheetBehavior.from(bottomSheetEvent);
             bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             bindViews();
+        } else {
+            bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
         }
 
 
