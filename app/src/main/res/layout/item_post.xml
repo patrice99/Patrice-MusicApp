@@ -107,5 +107,18 @@
         app:srcCompat="@drawable/ic_ufi_heart"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <TextView
+        android:id="@+id/tvLikeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivLike"
+        android:layout_alignStart="@+id/ivLike"
+        android:layout_alignEnd="@+id/ivLike"
+        android:layout_marginStart="-20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="-20dp"
+        android:gravity="center_horizontal"
+        tools:text="300 likes" />
+
 
 </RelativeLayout>

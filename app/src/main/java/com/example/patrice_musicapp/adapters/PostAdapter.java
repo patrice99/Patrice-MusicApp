@@ -72,6 +72,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private TextView tvCaption;
         private TextView tvLocation;
         private TextView tvTimeStamp;
+        private TextView tvLikeCount;
 
         public ViewHolder (@NonNull View itemView){
             super(itemView);
@@ -83,6 +84,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvLocation = itemView.findViewById(R.id.tvLocation);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
+            tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
             itemView.setOnClickListener(this);
         }
 
@@ -92,6 +94,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvUsername.setText(post.getUser().getUsername());
             tvCaption.setText(post.getCaption());
             tvTimeStamp.setText(post.getTimeStamp());
+            String addS = "";
+            if (post.getLikesCount()!= 1){
+                addS = "s";
+            }
+            tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
 
             //check if the post has a valid image
             ParseFile image = post.getImage();
