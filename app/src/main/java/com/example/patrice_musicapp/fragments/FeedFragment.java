@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +132,15 @@ public class FeedFragment extends Fragment {
 
         @Override
         public void onLikeAction(int position) {
-
+            // add like to post
+            Post post = allPosts.get(position);
+            post.addLike(ParseUser.getCurrentUser());
+            post.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Log.i(TAG, "Saved like successfully");
+                }
+            });
         }
 
         @Override

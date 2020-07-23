@@ -63,6 +63,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivProfilePic;
         private ImageView ivPostImage;
+        private ImageView ivLike;
         private TextView tvTitle;
         private TextView tvUsername;
         private TextView tvCaption;
@@ -73,6 +74,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             super(itemView);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
+            ivLike = itemView.findViewById(R.id.ivLike);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvCaption = itemView.findViewById(R.id.tvCaption);
@@ -114,6 +116,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     clickListener.onProfilePicAction(getAdapterPosition());
+                }
+            });
+
+            ivLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onLikeAction(getAdapterPosition());
                 }
             });
 
