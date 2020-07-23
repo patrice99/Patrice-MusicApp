@@ -1,183 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.EditProfileActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_edit_profile"
-        android:minHeight="?attr/actionBarSize"
+    android:layout_height="match_parent">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary"/>
+        android:layout_height="match_parent"
+        tools:context=".activities.EditProfileActivity">
 
-    <ImageView
-        android:id="@+id/ivProfilePic"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_below="@+id/toolbar_edit_profile"
-        android:layout_alignParentStart="false"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/profile_pic"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvChangePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfilePic"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/change_profile_photo"
-        android:textColor="#2196F3"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="16dp"
-        android:layout_below="@+id/tvChangePhoto"
-        android:hint="@string/username">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUsername"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_edit_profile"
+            android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:titleTextColor="@android:color/white"
+            android:background="?attr/colorPrimary"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlName"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="16dp"
-        android:layout_below="@+id/tlUsername"
-        android:layout_marginRight="16dp"
-        android:hint="@string/name"
-        app:errorEnabled="true">
+        <ImageView
+            android:id="@+id/ivProfilePic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/toolbar_edit_profile"
+            android:layout_alignParentStart="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/profile_pic"
+            tools:srcCompat="@tools:sample/avatars" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etName"
+        <TextView
+            android:id="@+id/tvChangePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivProfilePic"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/change_profile_photo"
+            android:textColor="#2196F3"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@+id/tvChangePhoto"
+            android:hint="@string/username">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlBio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tlName"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="@string/bio"
-        app:errorEnabled="false">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlName"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="16dp"
+            android:layout_below="@+id/tlUsername"
+            android:layout_marginRight="16dp"
+            android:hint="@string/name"
+            app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etBio"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlBio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textLongMessage" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_below="@+id/tlName"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="@string/bio"
+            app:errorEnabled="false">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_below="@+id/tlBio"
-        android:layout_marginRight="16dp"
-        android:hint="@string/location"
-        app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textLongMessage" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etLocation"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textLongMessage" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginLeft="16dp"
+            android:layout_below="@+id/tlBio"
+            android:layout_marginRight="16dp"
+            android:hint="@string/location"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textLongMessage" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <Spinner
-        android:id="@+id/spinnerGenres"
-        android:layout_width="161dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tlLocation"
-        android:layout_alignEnd="@+id/tlName"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="-11dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="16dp"
-        android:layout_toEndOf="@+id/tvGenres" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_below="@id/tlLocation"
+            android:id="@+id/hsvGenres"
+            android:layout_height="wrap_content">
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_genres"
+                android:layout_width="wrap_content"
+                app:singleLine="true"
+                android:layout_height="wrap_content"/>
+        </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/btnDone"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/spinnerInstruments"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#FFFFFF"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/done"
-        android:textColor="#2196F3" />
-
-    <TextView
-        android:id="@+id/tvGenres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tlLocation"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="false"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="-11dp"
-        android:text="Genres: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-    <TextView
-        android:id="@+id/tvInstruments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGenres"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="false"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:text="Instruments: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-    <Spinner
-        android:id="@+id/spinnerInstruments"
-        android:layout_width="161dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinnerGenres"
-        android:layout_alignEnd="@+id/tlName"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="16dp"
-        android:layout_toEndOf="@+id/tvInstruments" />
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/bottom_sheet" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:id="@+id/hsvInstruments"
+            android:layout_below="@id/hsvGenres"
+            android:layout_height="wrap_content">
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_instruments"
+                android:layout_width="wrap_content"
+                app:singleLine="true"
+                android:layout_height="wrap_content"/>
+        </HorizontalScrollView>
 
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btnDone"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/hsvInstruments"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#FFFFFF"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/done"
+            android:textColor="#2196F3" />
+
+        <TextView
+            android:id="@+id/tvGenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tlLocation"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="false"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="-11dp"
+            android:text="Genres: "
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/tvInstruments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvGenres"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="false"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:text="Instruments: "
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/bottom_sheet" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    </RelativeLayout>
+</ScrollView>

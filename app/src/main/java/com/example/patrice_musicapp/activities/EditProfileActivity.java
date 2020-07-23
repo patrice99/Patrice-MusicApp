@@ -33,6 +33,8 @@ import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.ImageUtil;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.parse.LogOutCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -47,6 +49,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -88,8 +91,6 @@ public class EditProfileActivity extends AppCompatActivity {
         etBio = findViewById(R.id.etBio);
         etLocation = findViewById(R.id.etLocation);
         btnDone = findViewById(R.id.btnDone);
-        spinnerGenres = findViewById(R.id.spinnerGenres);
-        spinnerInstruments = findViewById(R.id.spinnerInstruments);
 
         bottomSheet = findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -136,8 +137,23 @@ public class EditProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        spinnerGenres.setAdapter(new ArrayAdapter<Genres>(this, android.R.layout.simple_spinner_item, Genres.values()));
-        spinnerInstruments.setAdapter(new ArrayAdapter<Instruments>(this, android.R.layout.simple_spinner_item, Instruments.values()));
+
+        ChipGroup chipGroupGenres = findViewById(R.id.chip_group_genres);
+        List<Genres> genres = Arrays.asList(Genres.values());
+        for(Genres genre : genres) {
+            Chip chip = new Chip(EditProfileActivity.this);
+            chip.setText(genre.toString());
+            chipGroupGenres.addView(chip);
+        }
+
+        ChipGroup chipGroupInstruments = findViewById(R.id.chip_group_instruments);
+        List<Instruments> instruments = Arrays.asList(Instruments.values());
+        for(Instruments instrument: instruments) {
+            Chip chip = new Chip(EditProfileActivity.this);
+            chip.setText(instrument.toString());
+            chipGroupInstruments.addView(chip);
+        }
+
 
 
         //set on click listeners
