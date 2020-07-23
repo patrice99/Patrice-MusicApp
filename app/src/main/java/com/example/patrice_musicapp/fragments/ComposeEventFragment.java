@@ -2,6 +2,9 @@ package com.example.patrice_musicapp.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,11 +22,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.utils.ImageUtil;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -31,11 +36,15 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class ComposeEventFragment extends Fragment {
@@ -48,6 +57,7 @@ public class ComposeEventFragment extends Fragment {
     EditText etLocation;
     ImageView ivEventImage;
     Button btnDone;
+    Event event = new Event();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,13 +140,13 @@ public class ComposeEventFragment extends Fragment {
         ivEventImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                ImageUtil.onChoosePhoto(getContext());
             }
         });
     }
 
+
     private void saveEvents(String description, ParseUser currentUser, File photoFile, ParseGeoPoint location, Date date, String name) {
-       Event event = new Event();
        event.setDescription(description);
        event.setName(name);
        event.setDate(date);
@@ -165,5 +175,40 @@ public class ComposeEventFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         etDate.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ImageUtil.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) { //make sure a photo was taken
+                // by this point we have the camera photo on disk
+                //decode the file
+                Bitmap takenImage = BitmapFactory.decodeFile(ImageUtil.photoFile.getAbsolutePath());
+                // Load the taken image into a preview
+                ivEventImage.setImageBitmap(takenImage);
+            } else { // Result was a failure
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        } else if ((data != null) && requestCode == ImageUtil.PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+            // Load the image located at photoUri into selectedImage
+            Bitmap selectedImage = ImageUtil.loadFromUri(photoUri, getContext());
+
+            // Load the selected image into a preview
+            ivEventImage.setImageBitmap(selectedImage);
+
+            //save the Image to Parse by converting it to byte Array
+            // Configure byte output stream
+            FileOutputStream outStream = null;
+            try {
+                outStream = new FileOutputStream(ImageUtil.photoFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            //Compress the image further 
+            selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+
+        }
     }
 }

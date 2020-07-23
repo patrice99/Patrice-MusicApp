@@ -101,7 +101,10 @@ public class ComposeActivity extends AppCompatActivity {
 
     }
 
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.flContainer3);
+        fragment.onActivityResult(requestCode, resultCode, data);
+    }
 }
