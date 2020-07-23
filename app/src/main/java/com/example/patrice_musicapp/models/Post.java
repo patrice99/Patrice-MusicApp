@@ -16,6 +16,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -124,4 +126,17 @@ public class Post extends ParseObject {
         add(KEY_LIKES_ARRAY, parseUser);
     }
 
+    public boolean isLiked(ParseUser parseUser) throws JSONException {
+        JSONArray jsonArray = getJSONArray(KEY_LIKES_ARRAY);
+        if (jsonArray!= null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                String objectId = jsonObject.getString("objectId");
+                if (objectId.equals(parseUser.getObjectId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

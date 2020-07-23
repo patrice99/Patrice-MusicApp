@@ -18,6 +18,9 @@ import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.PostDetailsActivity;
 import com.example.patrice_musicapp.models.Post;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -108,6 +111,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .load(context.getResources().getString(R.string.DEFAULT_PROFILE_PIC))
                         .circleCrop()
                         .into(ivProfilePic);
+            }
+
+            //change image for ivLike for liked and unliked
+            try {
+                if (post.isLiked(ParseUser.getCurrentUser())){
+                    Glide.with(context).load(context.getDrawable(R.drawable.ic_ufi_heart_active)).into(ivLike);
+                } else {
+                    Glide.with(context).load(context.getDrawable(R.drawable.ic_ufi_heart)).into(ivLike);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
 
