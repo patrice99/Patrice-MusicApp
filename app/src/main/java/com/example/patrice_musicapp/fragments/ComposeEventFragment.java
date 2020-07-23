@@ -49,7 +49,6 @@ public class ComposeEventFragment extends Fragment {
         };
 
         etDate.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(getContext(), date, myCalendar
