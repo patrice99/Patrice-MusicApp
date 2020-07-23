@@ -44,8 +44,10 @@ public class EventsFragment extends Fragment {
 
         toolbar =view.findViewById(R.id.toolbar_events);
         if(toolbar != null){
+            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
             toolbar.setTitle("Events");
         }
+
 
         fragmentManager = getFragmentManager();
         tabLayout = view.findViewById(R.id.tabLayout);
@@ -95,7 +97,6 @@ public class EventsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here
         int id = item.getItemId();
-
         if (id == R.id.addEventButton) {
             //go to compose activity
             Intent intent = new Intent(getContext(), ComposeActivity.class);
