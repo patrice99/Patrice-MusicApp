@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         tools:context=".activities.EditProfileActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_edit_profile"
-            android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextColor="@android:color/white"
-            android:background="?attr/colorPrimary"/>
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:titleTextColor="@android:color/white" />
 
         <ImageView
             android:id="@+id/ivProfilePic"
@@ -43,10 +44,10 @@
             android:id="@+id/tlUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tvChangePhoto"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="16dp"
-            android:layout_below="@+id/tvChangePhoto"
             android:hint="@string/username">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -61,8 +62,8 @@
             android:id="@+id/tlName"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="16dp"
             android:layout_below="@+id/tlUsername"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:hint="@string/name"
             app:errorEnabled="true">
@@ -96,8 +97,8 @@
             android:id="@+id/tlLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_below="@+id/tlBio"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:hint="@string/location"
             app:errorEnabled="true">
@@ -111,27 +112,37 @@
 
 
         <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_below="@id/tlLocation"
             android:id="@+id/hsvGenres"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tlLocation"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/tvGenres">
+
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_genres"
                 android:layout_width="wrap_content"
-                app:singleLine="true"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:singleLine="true" />
         </HorizontalScrollView>
 
         <HorizontalScrollView
-            android:layout_width="match_parent"
             android:id="@+id/hsvInstruments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/hsvGenres"
-            android:layout_height="wrap_content">
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/tvInstruments">
+
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_instruments"
                 android:layout_width="wrap_content"
-                app:singleLine="true"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:singleLine="true" />
         </HorizontalScrollView>
 
 
@@ -165,18 +176,18 @@
             android:id="@+id/tvInstruments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGenres"
+            android:layout_below="@+id/hsvGenres"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="false"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
             android:text="Instruments: "
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true">
 
             <include layout="@layout/bottom_sheet" />
 
