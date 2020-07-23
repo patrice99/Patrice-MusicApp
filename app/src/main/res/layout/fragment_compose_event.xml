@@ -13,8 +13,9 @@
         android:id="@+id/ivEventImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="65dp"
+        android:src="@mipmap/ic_add_image"
         tools:src="@tools:sample/avatars" />
 
     <com.google.android.material.textfield.TextInputLayout

@@ -106,10 +106,10 @@ public class ComposeEventFragment extends Fragment {
                 }
                 //get the user
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                if(ImageUtil.photoFile == null || ivEventImage.getDrawable() == null) {
-                    Toast.makeText(getContext(), "There is no image", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if(ImageUtil.photoFile == null || ivEventImage.getDrawable() == null) {
+//                    Toast.makeText(getContext(), "There is no image", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 //save the location
                 String locationString = etLocation.getText().toString();
                 ParseGeoPoint location = null;
@@ -126,6 +126,13 @@ public class ComposeEventFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        ivEventImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
     }
 
     private void saveEvents(String description, ParseUser currentUser, File photoFile, ParseGeoPoint location, Date date, String name) {
@@ -135,6 +142,9 @@ public class ComposeEventFragment extends Fragment {
        event.setDate(date);
        event.setLocation(location);
        event.setHost(currentUser);
+       if (photoFile != null){
+           event.setImage(new ParseFile(photoFile));
+        }
        event.saveInBackground(new SaveCallback() {
            @Override
            public void done(ParseException e) {
