@@ -89,10 +89,13 @@
             android:layout_marginTop="3dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        style="?attr/materialButtonOutlinedStyle"
+        android:text="Post your Event" />
 
 
 </LinearLayout>
