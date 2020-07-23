@@ -7,7 +7,7 @@
     tools:context=".fragments.EventsFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_events"
+        android:id="@+id/toolbar_compose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -18,7 +18,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_events">
+        android:layout_below="@id/toolbar_compose">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabPost"

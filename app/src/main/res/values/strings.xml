@@ -32,4 +32,6 @@
     <string name="camera_icon">camera icon</string>
     <string name="gallery_icon">gallery icon</string>
     <string name="location">Location</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_description">Event Description</string>
 </resources>
