@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.activities;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,10 +24,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.fragments.ComposePostFragment;
+import com.example.patrice_musicapp.fragments.EventsPostsFragment;
+import com.example.patrice_musicapp.fragments.MapsFragment;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.utils.ImageUtil;
+import com.google.android.material.tabs.TabLayout;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -45,14 +52,18 @@ public class ComposeActivity extends AppCompatActivity {
     private ImageButton btnCaptureImage;
     private Button btnSubmit;
     private Button btnGallery;
-
+    private TabLayout tabLayout;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
         toolbar = (Toolbar) findViewById(R.id.toolbar_compose);
-        toolbar.setTitle("Make a feed post!");
+        toolbar.setTitle("Compose");
+
+        setUpTabs();
+
 
         //find views
         ivPostImage = findViewById(R.id.ivPostImage);
@@ -158,6 +169,42 @@ public class ComposeActivity extends AppCompatActivity {
                 ivPostImage.setImageResource(0); //clear the image view
             }
         });
+    }
+
+    private void setupTabs() {
+        tabLayout = findViewById(R.id.tabLayout);
+        final Fragment fragmentComposePost = new ComposePostFragment();
+        final Fragment fragmentComposeEvent = new ComposeEventFragment();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                if (position == 0) {
+                    //PostCompose positionSelected
+                    //go to EventCompose Fragment
+                    fragmentManager.beginTransaction().replace(R.id.flContainer3, fragmentEventPosts).commit();
+                } else {
+                    //Maps Position Selected
+                    fragmentManager.beginTransaction().replace(R.id.flContainer3, fragment).commit();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+
+        });
+        tabLayout.getTabAt(1).select();
+        tabLayout.getTabAt(0).select();
+
+
     }
 
 
