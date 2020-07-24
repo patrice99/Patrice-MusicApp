@@ -1,21 +1,12 @@
 package com.example.patrice_musicapp.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,23 +15,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.bumptech.glide.Glide;
-import com.cocosw.bottomsheet.BottomSheet;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Genres;
 import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.ImageUtil;
-import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.parse.LogOutCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
@@ -51,7 +41,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 public class EditProfileActivity extends AppCompatActivity {
     public static final String TAG = EditProfileActivity.class.getSimpleName();
@@ -143,6 +132,7 @@ public class EditProfileActivity extends AppCompatActivity {
         for(Genres genre : genres) {
             Chip chip = new Chip(EditProfileActivity.this);
             chip.setText(genre.toString());
+            chip.isCheckable();
             chipGroupGenres.addView(chip);
         }
 
@@ -151,6 +141,7 @@ public class EditProfileActivity extends AppCompatActivity {
         for(Instruments instrument: instruments) {
             Chip chip = new Chip(EditProfileActivity.this);
             chip.setText(instrument.toString());
+            chip.isCheckable();
             chipGroupInstruments.addView(chip);
         }
 
@@ -212,6 +203,23 @@ public class EditProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
+        chipGroupGenres.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup group, @IdRes int checkedId) {
+                // Handle the chip group action.
+            }
+        });
+
+        chipGroupInstruments.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup group, @IdRes int checkedId) {
+                // Handle the chip group action.
+            }
+        });
+
+
 
     }
 
