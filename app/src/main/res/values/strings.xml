@@ -38,4 +38,6 @@
     <string name="event_date">Event Date</string>
     <string name="post_your_event">Post your Event</string>
     <string name="event_image">Event Image</string>
+    <string name="follow">Follow</string>
+    <string name="following">Following</string>
 </resources>
