@@ -122,14 +122,14 @@ public class User {
     }
 
     public void deleteFollowing(User user) throws JSONException {
-        //loop through user like array and delete user object
+        //loop through currentUser following array and delete user object
         JSONArray jsonArray = ParseUser.getCurrentUser().getJSONArray(KEY_FOLLOWING);
         if (jsonArray!= null) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 String objectId = jsonObject.getString("objectId");
                 if (objectId.equals(user.getParseUser().getObjectId())) {
-                    //delete that user object
+                    //delete that user object from current user's following JsonArray
                     jsonArray.remove(i);
                     ParseUser.getCurrentUser().put(KEY_FOLLOWING, jsonArray);
                 }
@@ -250,7 +250,7 @@ public class User {
 
     public boolean isFollowed(User following) throws JSONException {
         JSONArray jsonArray = ParseUser.getCurrentUser().getJSONArray(KEY_FOLLOWING);
-        if (jsonArray!= null) {
+        if (jsonArray!= null && jsonArray.length() != 0) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 String objectId = jsonObject.getString("objectId");

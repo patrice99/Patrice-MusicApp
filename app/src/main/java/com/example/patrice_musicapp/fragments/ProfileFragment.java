@@ -178,18 +178,33 @@ public class ProfileFragment extends Fragment {
                             btnFollow.setBackgroundColor(getResources().getColor(R.color.blue));
                             //change text to following
                             btnFollow.setText(getResources().getString(R.string.follow));
-                            
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                    follower.getParseUser().saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            Log.i(TAG, "Following successfully added");
+                            if (e!= null){
+                                Log.e(TAG, "Issue with saving", e);
+                            }
+                            Log.i(TAG, "Following of" + following.getParseUser().getUsername() + "successfully added");
                         }
                     });
+
+//                    following.getParseUser().saveInBackground(new SaveCallback() {
+//                        @Override
+//                        public void done(ParseException e) {
+//                            if (e!= null){
+//                                Log.e(TAG, "Issue with saving", e);
+//                            }
+//                            Log.i(TAG, "Follower of" + following.getParseUser().getUsername() +  "successfully added");
+//
+//                        }
+//                    });
+
                 }
             });
         }
