@@ -37,7 +37,9 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.io.IOException;
@@ -56,6 +58,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvName;
     private TextView tvLocation;
     private Button btnEditProfile;
+    private Button btnFollow;
     public static final int DISPLAY_LIMIT= 20;
     public static final String TAG = ProfileFragment.class.getSimpleName();
 
@@ -107,6 +110,7 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvLocation = view.findViewById(R.id.tvLocation);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
+        btnFollow = view.findViewById(R.id.btnFollow);
 
 
         tvUsername.setText(user.getUsername());
@@ -124,8 +128,23 @@ public class ProfileFragment extends Fragment {
                     .into(ivProfilePic);
         }
 
-        //set on click listeners
-        if (user.getParseUser() == ParseUser.getCurrentUser()) {
+        final User follower = new User(ParseUser.getCurrentUser());
+        final User following = new User(user.getParseUser());
+        try {
+            if(follower.isFollowed(following)) {
+                //change color to green
+                btnFollow.setBackgroundColor(getResources().getColor(R.color.green));
+                //change text to following
+                btnFollow.setText(getResources().getString(R.string.following));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        //set on click listeners an visibility
+        if (user.getParseUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            btnFollow.setVisibility(View.GONE);
             btnEditProfile.setVisibility(View.VISIBLE);
             //some EditProfile functionality
             btnEditProfile.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +159,38 @@ public class ProfileFragment extends Fragment {
             });
         } else {
             btnEditProfile.setVisibility(View.GONE);
+            btnFollow.setVisibility(View.VISIBLE);
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //check if following or unfollowing
+                    try {
+                        if (!(follower.isFollowed(following))) {
+                            //update in ParseUser Dashboard
+                            follower.addFollowing(following);
+                            //change color to green
+                            btnFollow.setBackgroundColor(getResources().getColor(R.color.green));
+                            //change text to following
+                            btnFollow.setText(getResources().getString(R.string.following));
+                        } else {
+                            follower.deleteFollowing(following);
+                            //change color back to blue
+                            btnFollow.setBackgroundColor(getResources().getColor(R.color.blue));
+                            //change text to following
+                            btnFollow.setText(getResources().getString(R.string.follow));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Log.i(TAG, "Following successfully added");
+                        }
+                    });
+                }
+            });
         }
 
         if (user.getLocation()!= null && (user.getLocation().getLatitude() != 0.0 && user.getLocation().getLongitude() != 0.0)) {

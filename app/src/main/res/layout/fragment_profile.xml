@@ -124,5 +124,18 @@
         android:textAllCaps="false"
         android:textColor="#000000" />
 
+    <Button
+        android:id="@+id/btnFollow"
+        android:layout_width="266dp"
+        android:layout_height="38dp"
+        android:layout_below="@+id/tvLocation"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        android:backgroundTint="#2196F3"
+        android:text="@string/follow"
+        android:textAllCaps="false"
+        android:textColor="#000000" />
+
 </RelativeLayout>
 
