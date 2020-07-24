@@ -97,7 +97,6 @@ public class User {
         parseUser.put(KEY_LOCATION, parseGeoPoint);
     }
 
-
     public int getFollowingCount() {
         return parseUser.getJSONArray(KEY_FOLLOWING).length();
     }

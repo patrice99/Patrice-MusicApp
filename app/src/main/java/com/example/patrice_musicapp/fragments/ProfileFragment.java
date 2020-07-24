@@ -34,6 +34,7 @@ import com.example.patrice_musicapp.adapters.PostAdapter;
 import com.example.patrice_musicapp.models.Followers;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -171,14 +172,22 @@ public class ProfileFragment extends Fragment {
                         if (!(subjectUser.isFollowed(user2follow))){
                             //update in ParseUser Dashboard
                             subjectUser.addFollowing(user2follow);
-                            follow.addFollower(subjectUser.getParseUser(), follow);
+                            follow.addFollower(user2follow.getParseUser(), subjectUser.getParseUser());
                             //change color to green
                             btnFollow.setBackgroundColor(getResources().getColor(R.color.green));
                             //change text to following
                             btnFollow.setText(getResources().getString(R.string.following));
                         } else {
                             user2follow.deleteFollowing(user2follow);
-                            follow.deleteFollower(subjectUser.getParseUser(), follow);
+                            follow.deleteInBackground(new DeleteCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e!=null){
+                                        Log.e(TAG, "Issue with deleting this follow",e);
+                                    }
+                                    Log.i(TAG, "Follow successfully deleted");
+                                }
+                            });
                             //change color back to blue
                             btnFollow.setBackgroundColor(getResources().getColor(R.color.blue));
                             //change text to following
@@ -205,7 +214,7 @@ public class ProfileFragment extends Fragment {
                             if (e!= null){
                                 Log.e(TAG, "Issue with saving", e);
                             }
-                            Log.i(TAG, "Follower of" + follow.getSubjectUser().getUsername() +  "successfully added");
+                            Log.i(TAG, "Follower of successfully added");
 
                         }
                     });
