@@ -31,6 +31,7 @@ import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.SettingsActivity;
 import com.example.patrice_musicapp.adapters.PostAdapter;
+import com.example.patrice_musicapp.models.Followers;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.parse.FindCallback;
@@ -61,6 +62,8 @@ public class ProfileFragment extends Fragment {
     private Button btnFollow;
     public static final int DISPLAY_LIMIT= 20;
     public static final String TAG = ProfileFragment.class.getSimpleName();
+    private Followers follow = new Followers();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -128,10 +131,10 @@ public class ProfileFragment extends Fragment {
                     .into(ivProfilePic);
         }
 
-        final User follower = new User(ParseUser.getCurrentUser());
-        final User following = new User(user.getParseUser());
+        final User subjectUser = new User(ParseUser.getCurrentUser());
+        final User user2follow = new User(user.getParseUser());
         try {
-            if(follower.isFollowed(following)) {
+            if(subjectUser.isFollowed(user2follow)) {
                 //change color to green
                 btnFollow.setBackgroundColor(getResources().getColor(R.color.green));
                 //change text to following
@@ -165,15 +168,17 @@ public class ProfileFragment extends Fragment {
                 public void onClick(View view) {
                     //check if following or unfollowing
                     try {
-                        if (!(follower.isFollowed(following))) {
+                        if (!(subjectUser.isFollowed(user2follow))){
                             //update in ParseUser Dashboard
-                            follower.addFollowing(following);
+                            subjectUser.addFollowing(user2follow);
+                            follow.addFollower(subjectUser.getParseUser(), follow);
                             //change color to green
                             btnFollow.setBackgroundColor(getResources().getColor(R.color.green));
                             //change text to following
                             btnFollow.setText(getResources().getString(R.string.following));
                         } else {
-                            follower.deleteFollowing(following);
+                            user2follow.deleteFollowing(user2follow);
+                            follow.deleteFollower(subjectUser.getParseUser(), follow);
                             //change color back to blue
                             btnFollow.setBackgroundColor(getResources().getColor(R.color.blue));
                             //change text to following
@@ -184,26 +189,26 @@ public class ProfileFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    follower.getParseUser().saveInBackground(new SaveCallback() {
+                    subjectUser.getParseUser().saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e!= null){
                                 Log.e(TAG, "Issue with saving", e);
                             }
-                            Log.i(TAG, "Following of" + following.getParseUser().getUsername() + "successfully added");
+                            Log.i(TAG, "Following of" + user2follow.getParseUser().getUsername() + "successfully added");
                         }
                     });
 
-//                    following.getParseUser().saveInBackground(new SaveCallback() {
-//                        @Override
-//                        public void done(ParseException e) {
-//                            if (e!= null){
-//                                Log.e(TAG, "Issue with saving", e);
-//                            }
-//                            Log.i(TAG, "Follower of" + following.getParseUser().getUsername() +  "successfully added");
-//
-//                        }
-//                    });
+                    follow.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e!= null){
+                                Log.e(TAG, "Issue with saving", e);
+                            }
+                            Log.i(TAG, "Follower of" + follow.getSubjectUser().getUsername() +  "successfully added");
+
+                        }
+                    });
 
                 }
             });

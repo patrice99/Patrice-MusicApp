@@ -26,6 +26,7 @@ import java.util.Locale;
 @Parcel
 public class User {
     public ParseUser parseUser;
+    public static final String TAG = User.class.getSimpleName();
     public static final String KEY_PROFILE_IMAGE = "profileImage";
     public static final String KEY_BIO = "bio";
     public static final String KEY_POST_COUNT = "postCount";
@@ -96,24 +97,9 @@ public class User {
         parseUser.put(KEY_LOCATION, parseGeoPoint);
     }
 
-    public int getFollowersCount() {
-        //length of the followersArray
-        return parseUser.getJSONArray(KEY_FOLLOWERS).length();
-    }
 
     public int getFollowingCount() {
         return parseUser.getJSONArray(KEY_FOLLOWING).length();
-    }
-
-    public List<String> getFollowingIds() throws JSONException {
-        List<String> following = new ArrayList<>();
-        //get the JSONArray of followers and make a list of users
-        JSONArray jsonArray = parseUser.getJSONArray(KEY_FOLLOWING);
-        for (int i = 0; i < jsonArray.length(); i++){
-            //get the IDs
-            following.add(jsonArray.getString(i));
-        }
-        return following;
     }
 
     //takes in parameters of the person who the current user just followed
@@ -124,7 +110,7 @@ public class User {
     public void deleteFollowing(User user) throws JSONException {
         //loop through currentUser following array and delete user object
         JSONArray jsonArray = ParseUser.getCurrentUser().getJSONArray(KEY_FOLLOWING);
-        if (jsonArray!= null) {
+        if (jsonArray!= null && jsonArray.length()!=0) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 String objectId = jsonObject.getString("objectId");
@@ -136,26 +122,6 @@ public class User {
             }
         }
 
-    }
-
-    public List<String> getFollowersIds() throws JSONException {
-        List<String> followers = new ArrayList<>();
-        //get the JSONArray of followers and make a list of users
-        JSONArray jsonArray = parseUser.getJSONArray(KEY_FOLLOWERS);
-        for (int i = 0; i < jsonArray.length(); i++){
-            followers.add(jsonArray.getString(i));
-        }
-        return followers;
-    }
-
-    //takes in parameters of the person who just followed the current user
-    public void addFollowers(ParseUser parseUser){
-        //get JSONArray of Users and add the passed in user to the array
-        JSONArray jsonArray = this.parseUser.getJSONArray(KEY_FOLLOWERS);
-        if (jsonArray == null){
-            jsonArray = new JSONArray();
-        }
-        jsonArray.put(parseUser.getObjectId());
     }
 
 
