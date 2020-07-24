@@ -178,6 +178,7 @@ public class ProfileFragment extends Fragment {
                             btnFollow.setBackgroundColor(getResources().getColor(R.color.blue));
                             //change text to following
                             btnFollow.setText(getResources().getString(R.string.follow));
+                            
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
