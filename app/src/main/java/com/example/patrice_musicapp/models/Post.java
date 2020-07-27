@@ -23,6 +23,7 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @ParseClassName("Post")
 public class Post extends ParseObject {
@@ -108,11 +109,13 @@ public class Post extends ParseObject {
         put(KEY_LOCATION, parseGeoPoint);
     }
 
-    public static void query(int page, int limit, ParseUser filterForUser, FindCallback callback){
+    public static void query(int page, int limit, ParseUser filterForUser, FindCallback callback, List<ParseUser> following){
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         if(filterForUser != null) {
             query.whereEqualTo(Post.KEY_USER, filterForUser);
+        } else{
+            query.whereContainedIn(KEY_USER, following);
         }
         query.setLimit(limit);
         query.setSkip(page * limit);

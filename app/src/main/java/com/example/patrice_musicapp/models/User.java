@@ -7,9 +7,12 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.example.patrice_musicapp.activities.EditProfileActivity;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -121,6 +124,20 @@ public class User {
             }
         }
 
+    }
+
+    public List<String> getFollowingIds() throws JSONException {
+        final List<String> followingIds = new ArrayList<>();
+        JSONArray jsonArray = ParseUser.getCurrentUser().getJSONArray(KEY_FOLLOWING);
+        if (jsonArray!= null && jsonArray.length()!=0) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                String objectId = jsonObject.getString("objectId");
+                followingIds.add(objectId);
+            }
+        }
+
+        return followingIds ;
     }
 
 

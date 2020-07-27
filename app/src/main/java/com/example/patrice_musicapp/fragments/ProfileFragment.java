@@ -272,7 +272,7 @@ public class ProfileFragment extends Fragment {
                 userPosts.addAll(posts);
                 userAdapter.notifyDataSetChanged();
             }
-        });
+        }, null);
     }
 
     PostAdapter.onClickListener onClickListener = new PostAdapter.onClickListener() {
