@@ -16,13 +16,18 @@ import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.PostDetailsActivity;
 import com.example.patrice_musicapp.fragments.ProfileFragment;
+import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.parse.ParseFile;
 
 import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder>{
+import butterknife.ButterKnife;
+
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHolder>{
+    public static final int TYPE_USER = 0;
+    public static final int TYPE_EVENT = 1;
     public Context context;
     public List<Object> objects;
 
@@ -34,16 +39,38 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_search, parent, false);
-        return new ViewHolder(view);
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        switch (viewType) {
+            case TYPE_USER: {
+                View view = LayoutInflater.from(context).inflate(R.layout.item_search, parent, false);
+                return new UserViewHolder(view, context);
+            }
+            case TYPE_EVENT: {
+                View view = LayoutInflater.from(context).inflate(R.layout.item_event, parent, false);
+                return new EventViewHolder(view, context);
+            }
+            default:
+                throw new IllegalArgumentException("Invalid view type");
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = (User) objects.get(position);
-        holder.bind(user);
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+        Object object = objects.get(position);
+        holder.bind(object);
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        Object object = objects.get(position);
+        if (object instanceof User) {
+            return TYPE_USER;
+        } else if (object instanceof Event) {
+            return TYPE_EVENT;
+        }
+
+        throw new IllegalArgumentException("Invalid position " + position);
     }
 
     @Override
@@ -53,18 +80,23 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     public static abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
 
-        public BaseViewHolder(@NonNull View itemView) {
+        private BaseViewHolder(View itemView) {
             super(itemView);
+            //butterknife is a light weight library to inject views into Android components
+            ButterKnife.bind(this, itemView);
         }
+        public abstract void bind(T type);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class UserViewHolder extends BaseViewHolder<User> implements View.OnClickListener{
+        Context context;
         private ImageView ivProfilePic;
         private TextView tvUsername;
         private TextView tvBio;
 
-        public ViewHolder(@NonNull View itemView) {
+        public UserViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
+            this.context = context;
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvBio = itemView.findViewById(R.id.tvBio);
@@ -94,6 +126,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                         .into(ivProfilePic);
             }
 
+
+        }
+    }
+
+    public static class EventViewHolder extends BaseViewHolder<Event> implements View.OnClickListener {
+        private EventViewHolder(View itemView, Context context) {
+            super(itemView);
+        }
+
+        @Override
+        public void bind(Event type) {
+
+        }
+
+        @Override
+        public void onClick(View view) {
 
         }
     }
