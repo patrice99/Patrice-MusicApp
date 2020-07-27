@@ -76,7 +76,7 @@ public class DiscoverFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 filter(newText);
-                return false;
+                return true;
             }
         });
 
@@ -85,28 +85,30 @@ public class DiscoverFragment extends Fragment {
     public void filter(String characterText) {
         final List<ParseUser> allParseUsers = new ArrayList<>();
         characterText = characterText.toLowerCase(Locale.getDefault());
+        searchAdapter.clear();
         if (characterText.length() != 0) {
-            searchAdapter.clear();
-            for (User user : users) {
-                //do a query
-                ParseQuery<ParseUser> query = ParseUser.getQuery();
-                query.findInBackground(new FindCallback<ParseUser>() {
-                    @Override
-                    public void done(List<ParseUser> allUsers, ParseException e) {
-                        if (e!= null){
-                            Log.e(TAG, "Issue with getting all users from Parse");
-                        }
-                        Log.i(TAG, "Got all users from parse Successfully");
-                        allParseUsers.addAll(allUsers);
+            //get all users
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            final String finalCharacterText = characterText;
+            query.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List<ParseUser> allUsers, ParseException e) {
+                    if (e!= null){
+                        Log.e(TAG, "Issue with getting all users from Parse");
                     }
-                });
-                //get all users
-                if (user.getUsername().toLowerCase(Locale.getDefault()).contains(characterText)) {
-                    users.add(user);
+                    Log.i(TAG, "Got all users from parse Successfully");
+                    allParseUsers.addAll(allUsers);
+
+                    for (ParseUser parseUser: allParseUsers) {
+                        if (parseUser.getUsername().toLowerCase(Locale.getDefault()).contains(finalCharacterText)) {
+                            users.add(new User(parseUser));
+                        }
+                    }
+                    searchAdapter.notifyDataSetChanged();
                 }
-            }
+            });
         }
-        searchAdapter.notifyDataSetChanged();
+
     }
 
 }
