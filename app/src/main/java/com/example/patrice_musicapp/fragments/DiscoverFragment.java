@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.adapters.SearchAdapter;
+import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -84,13 +85,14 @@ public class DiscoverFragment extends Fragment {
 
     public void filter(String characterText) {
         final List<ParseUser> allParseUsers = new ArrayList<>();
+        final List<Event> allEvents = new ArrayList<>();
         characterText = characterText.toLowerCase(Locale.getDefault());
         searchAdapter.clear();
         if (characterText.length() != 0) {
             //get all users
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            ParseQuery<ParseUser> queryUser = ParseUser.getQuery();
             final String finalCharacterText = characterText;
-            query.findInBackground(new FindCallback<ParseUser>() {
+            queryUser.findInBackground(new FindCallback<ParseUser>() {
                 @Override
                 public void done(List<ParseUser> allUsers, ParseException e) {
                     if (e!= null){
@@ -102,6 +104,27 @@ public class DiscoverFragment extends Fragment {
                     for (ParseUser parseUser: allParseUsers) {
                         if (parseUser.getUsername().toLowerCase(Locale.getDefault()).contains(finalCharacterText)) {
                             objects.add(new User(parseUser));
+                        }
+                    }
+                    searchAdapter.notifyDataSetChanged();
+                }
+            });
+
+
+            ParseQuery<Event> queryEvent = ParseQuery.getQuery("Event");
+            queryEvent.include("Host");
+            queryEvent.findInBackground(new FindCallback<Event>() {
+                @Override
+                public void done(List<Event> events, ParseException e) {
+                    if (e!= null){
+                        Log.e(TAG, "Issue with getting all events from Parse");
+                    }
+                    Log.i(TAG, "Got all events from parse Successfully");
+                    allEvents.addAll(events);
+
+                    for  (Event event: events){
+                        if (event.getName().toLowerCase(Locale.getDefault()).contains(finalCharacterText)) {
+                            objects.add(event);
                         }
                     }
                     searchAdapter.notifyDataSetChanged();

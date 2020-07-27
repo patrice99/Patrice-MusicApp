@@ -21,11 +21,13 @@ import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.parse.ParseFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.ButterKnife;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHolder>{
+    public static final String TAG = SearchAdapter.class.getSimpleName();
     public static final int TYPE_USER = 0;
     public static final int TYPE_EVENT = 1;
     public Context context;
@@ -82,8 +84,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
 
         private BaseViewHolder(View itemView) {
             super(itemView);
-            //butterknife is a light weight library to inject views into Android components
-            ButterKnife.bind(this, itemView);
         }
         public abstract void bind(T type);
     }
@@ -131,13 +131,54 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
     }
 
     public static class EventViewHolder extends BaseViewHolder<Event> implements View.OnClickListener {
+        private Context context;
+        private ImageView ivEventImage;
+        private ImageView ivHostProfilePic;
+        private TextView tvEventName;
+        private TextView tvEventLocation;
+        private TextView tvEventDate;
+        private TextView tvHostUsername;
+
         private EventViewHolder(View itemView, Context context) {
             super(itemView);
+            this.context = context;
+            ivEventImage = itemView.findViewById(R.id.ivEventImage);
+            ivHostProfilePic = itemView.findViewById(R.id.ivHostProfilePic);
+            tvEventName = itemView.findViewById(R.id.tvName);
+            tvEventLocation = itemView.findViewById(R.id.tvEventLocation);
+            tvEventDate = itemView.findViewById(R.id.tvEventDate);
+            tvHostUsername = itemView.findViewById(R.id.tvHostUsername);
         }
 
         @Override
-        public void bind(Event type) {
+        public void bind(Event event) {
+            tvEventName.setText(event.getName());
+            try {
+                tvEventLocation.setText(Event.getStringFromLocation(event.getLocation(), context, TAG));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            tvEventDate.setText(event.getDate().toString());
+            tvHostUsername.setText(event.getHost().getUsername());
 
+            ParseFile image = event.getImage();
+            if (image != null) {
+                Glide.with(context).load(event.getImage().getUrl()).into(ivEventImage);
+            }
+
+            //check if the user has a valid profilePic
+            ParseFile image2 = event.getHost().getParseFile("profileImage");
+            if (image2 != null) {
+                Glide.with(context)
+                        .load(event.getHost().getParseFile("profileImage").getUrl())
+                        .circleCrop()
+                        .into(ivHostProfilePic);
+            } else {
+                Glide.with(context)
+                        .load(context.getResources().getString(R.string.DEFAULT_PROFILE_PIC))
+                        .circleCrop()
+                        .into(ivHostProfilePic);
+            }
         }
 
         @Override
