@@ -99,6 +99,7 @@ public class FeedFragment extends Fragment {
     }
 
     private void getUserFollowing() throws JSONException {
+        following.add(ParseUser.getCurrentUser());
         User user = new User(ParseUser.getCurrentUser());
         List<String> objectIds = user.getFollowingIds();
         ParseQuery<ParseUser> query = ParseUser.getQuery();
