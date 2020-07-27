@@ -1,6 +1,8 @@
 package com.example.patrice_musicapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.PostDetailsActivity;
+import com.example.patrice_musicapp.fragments.ProfileFragment;
+import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.parse.ParseFile;
 
@@ -19,12 +24,12 @@ import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder>{
     public Context context;
-    public List<User> users;
+    public List<Object> objects;
 
     //constructor
-    public SearchAdapter(Context context, List<User> users){
+    public SearchAdapter(Context context, List<Object> objects){
         this.context = context;
-        this.users = users;
+        this.objects = objects;
 
     }
     @NonNull
@@ -36,14 +41,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = users.get(position);
+        User user = (User) objects.get(position);
         holder.bind(user);
 
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return objects.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -87,7 +92,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public void clear() {
-        users.clear();
+        objects.clear();
         notifyDataSetChanged();
     }
 
