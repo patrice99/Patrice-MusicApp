@@ -1,8 +1,6 @@
 package com.example.patrice_musicapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
-import com.example.patrice_musicapp.activities.PostDetailsActivity;
-import com.example.patrice_musicapp.fragments.ProfileFragment;
 import com.example.patrice_musicapp.models.Event;
-import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.parse.ParseFile;
 
 import java.io.IOException;
 import java.util.List;
-
-import butterknife.ButterKnife;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHolder>{
     public static final String TAG = SearchAdapter.class.getSimpleName();
@@ -32,11 +25,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
     public static final int TYPE_EVENT = 1;
     public Context context;
     public List<Object> objects;
+    public SearchAdapter.onClickListener clickListener;
+
+
+    public interface onClickListener{
+        void onEventClick(int position);
+        void onUserClick(int position);
+    }
 
     //constructor
-    public SearchAdapter(Context context, List<Object> objects){
+    public SearchAdapter(Context context, List<Object> objects, onClickListener clickListener){
         this.context = context;
         this.objects = objects;
+        this.clickListener = clickListener;
 
     }
     @NonNull
@@ -88,7 +89,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
         public abstract void bind(T type);
     }
 
-    public static class UserViewHolder extends BaseViewHolder<User> implements View.OnClickListener{
+    public class UserViewHolder extends BaseViewHolder<User> implements View.OnClickListener{
         Context context;
         private ImageView ivProfilePic;
         private TextView tvUsername;
@@ -100,11 +101,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvBio = itemView.findViewById(R.id.tvBio);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            //when a user is clicked, take them to the profile page
+            //when clicked go to the profile fragment
+            clickListener.onUserClick(getAdapterPosition());
 
         }
 
@@ -130,7 +133,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
         }
     }
 
-    public static class EventViewHolder extends BaseViewHolder<Event> implements View.OnClickListener {
+    public class EventViewHolder extends BaseViewHolder<Event> implements View.OnClickListener {
         private Context context;
         private ImageView ivEventImage;
         private ImageView ivHostProfilePic;
@@ -148,6 +151,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
             tvEventLocation = itemView.findViewById(R.id.tvEventLocation);
             tvEventDate = itemView.findViewById(R.id.tvEventDate);
             tvHostUsername = itemView.findViewById(R.id.tvHostUsername);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -183,6 +187,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
 
         @Override
         public void onClick(View view) {
+            //when clicked go to the map fragment and pull up bottom sheet
+            clickListener.onEventClick(getAdapterPosition());
 
         }
     }

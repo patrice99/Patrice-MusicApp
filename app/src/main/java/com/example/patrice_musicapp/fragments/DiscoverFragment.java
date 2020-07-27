@@ -8,15 +8,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.adapters.EventAdapter;
 import com.example.patrice_musicapp.adapters.SearchAdapter;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
@@ -59,7 +63,7 @@ public class DiscoverFragment extends Fragment {
         objects = new ArrayList<>();
         rvSearch = view.findViewById(R.id.rvSearch);
         //set adapter on rvSearch
-        searchAdapter = new SearchAdapter(getContext(), objects);
+        searchAdapter = new SearchAdapter(getContext(), objects, clickListener);
         rvSearch.setAdapter(searchAdapter);
 
         //set layout manager on recycler view
@@ -133,5 +137,47 @@ public class DiscoverFragment extends Fragment {
         }
 
     }
+
+    SearchAdapter.onClickListener clickListener = new SearchAdapter.onClickListener() {
+        @Override
+        public void onEventClick(int position) {
+            //get event position
+            //get the post at that position
+            Event event = (Event) objects.get(position);
+            Log.i(TAG, "Event at Position " + position + "clicked.");
+            //if any post clicked, take to the Maps Fragment and bring up a bottom sheet.
+            //pass the event to maps for the bottom sheet
+            // Create new fragment and transaction
+            Fragment newFragment = new MapsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("event", event);
+            newFragment.setArguments(bundle);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.flContainer, newFragment);
+            // Commit the transaction
+            transaction.commit();
+        }
+
+        @Override
+        public void onUserClick(int position) {
+            //go to profile Fragment
+            //get user of that specific post
+            User user = (User) objects.get(position);
+
+            //pass this info to profile fragment
+            Fragment fragment = new ProfileFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("user", user.getParseUser());
+            fragment.setArguments(bundle);
+
+            //Go from this fragment to profile fragment
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContainer, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+        }
+    };
 
 }
