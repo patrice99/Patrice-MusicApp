@@ -33,7 +33,7 @@ public class DiscoverFragment extends Fragment {
     public static final String TAG = DiscoverFragment.class.getSimpleName();
     private Toolbar toolbar;
     private SearchAdapter searchAdapter;
-    private List<User> users;
+    private List<Object> objects;
     private RecyclerView rvSearch;
     private SearchView searchView;
 
@@ -55,10 +55,10 @@ public class DiscoverFragment extends Fragment {
         }
         toolbar.setTitle("Discover");
 
-        users = new ArrayList<>();
+        objects = new ArrayList<>();
         rvSearch = view.findViewById(R.id.rvSearch);
         //set adapter on rvSearch
-        searchAdapter = new SearchAdapter(getContext(), users);
+        searchAdapter = new SearchAdapter(getContext(), objects);
         rvSearch.setAdapter(searchAdapter);
 
         //set layout manager on recycler view
@@ -101,7 +101,7 @@ public class DiscoverFragment extends Fragment {
 
                     for (ParseUser parseUser: allParseUsers) {
                         if (parseUser.getUsername().toLowerCase(Locale.getDefault()).contains(finalCharacterText)) {
-                            users.add(new User(parseUser));
+                            objects.add(new User(parseUser));
                         }
                     }
                     searchAdapter.notifyDataSetChanged();
