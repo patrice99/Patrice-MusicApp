@@ -22,15 +22,21 @@ import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
 import com.example.patrice_musicapp.adapters.PostAdapter;
 import com.example.patrice_musicapp.models.Post;
+import com.example.patrice_musicapp.models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FeedFragment extends Fragment {
@@ -41,6 +47,7 @@ public class FeedFragment extends Fragment {
     private RecyclerView rvFeedPosts;
     private PostAdapter adapter;
     private List<Post> allPosts;
+    private List<ParseUser> following = new ArrayList<>();
     private ParseUser filterForUser;
 
 
@@ -82,11 +89,39 @@ public class FeedFragment extends Fragment {
         rvFeedPosts.setLayoutManager(linearLayoutManager);
 
         //get the posts from the parse dashboard
-        queryPosts(0);
+        try {
+            getUserFollowing();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
-    private void queryPosts(final int page) {
+    private void getUserFollowing() throws JSONException {
+        User user = new User(ParseUser.getCurrentUser());
+        List<String> objectIds = user.getFollowingIds();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereContainedIn("objectId", objectIds);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting following users list to populate the feed fragment", e);
+                }
+                Log.i(TAG, "Got the followers successfully");
+                following.addAll(objects);
+                try {
+                    queryPosts(0);
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private void queryPosts(final int page) throws JSONException {
         Post.query(page, DISPLAY_LIMIT, filterForUser, new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
@@ -104,7 +139,7 @@ public class FeedFragment extends Fragment {
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
             }
-        });
+        }, following);
     }
 
     PostAdapter.onClickListener onClickListener = new PostAdapter.onClickListener() {
@@ -164,6 +199,7 @@ public class FeedFragment extends Fragment {
 
         }
     };
+
 
 
 }
