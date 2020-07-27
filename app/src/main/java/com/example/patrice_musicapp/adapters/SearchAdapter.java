@@ -51,6 +51,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         return objects.size();
     }
 
+    public static abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
+
+        public BaseViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView ivProfilePic;
         private TextView tvUsername;
