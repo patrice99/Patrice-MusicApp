@@ -20,10 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_discover"
+        app:iconifiedByDefault="false"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:iconifiedByDefault="false" />
+        android:layout_marginRight="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearch"
