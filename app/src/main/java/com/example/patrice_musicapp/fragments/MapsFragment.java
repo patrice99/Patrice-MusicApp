@@ -1,5 +1,13 @@
 package com.example.patrice_musicapp.fragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -13,22 +21,28 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -36,18 +50,25 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 public class MapsFragment extends Fragment {
-    private static final int DISPLAY_LIMIT =20;
+    private static final int DISPLAY_LIMIT = 20;
     public static final String TAG = MapsFragment.class.getSimpleName();
+    private static final int ACCESS_LOCATION_REQUEST_CODE = 63;
     private List<Event> allEvents = new ArrayList<>();
-    private User user;
+    private User user = new User(ParseUser.getCurrentUser());
     private Event event;
     private LinearLayout bottomSheetEvent;
     private BottomSheetBehavior bottomSheetEventBehavior;
+    private FusedLocationProviderClient fusedLocationClient;
+    private Location userLocation;
 
     //Bottomsheet Views
     private TextView tvName;
@@ -58,7 +79,6 @@ public class MapsFragment extends Fragment {
     private ImageView ivEventImage;
     private ImageView ivHostProfilePic;
     private Button btnContactHost;
-
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -78,13 +98,12 @@ public class MapsFragment extends Fragment {
 
     };
 
-    private void addMarkers(GoogleMap googleMap) {
+    private void addMarkers(final GoogleMap googleMap) {
         if (event != null) {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude()), 15));
         } else {
             //pan camera to the location of the user. make this marker green
-            user = new User(ParseUser.getCurrentUser());
-            LatLng userLatLng = new LatLng(user.getLocation().getLatitude(), user.getLocation().getLongitude());
+            LatLng userLatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
             googleMap.addMarker(new MarkerOptions()
                     .position(userLatLng)
                     .title("Me")
@@ -95,12 +114,58 @@ public class MapsFragment extends Fragment {
         }
 
         //for each event location, add a specific color for events
-        for (Event event: allEvents){
+        for (Event event : allEvents) {
             LatLng latLng = new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude());
             googleMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(event.getName()));
         }
+
+        //for each of the users following, add their locations and change the marker to be their faces
+        try {
+            final List<ParseUser> following = new ArrayList<>();
+            user.queryUserFollowing(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List objects, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting following users list to populate the feed fragment", e);
+                    }
+                    Log.i(TAG, "Got the followers successfully");
+                    following.addAll(objects);
+
+                    for(ParseUser parseUser: following){
+                        final User user = new User(parseUser);
+                        if (user.getLocation()!= null) {
+                            final LatLng latLng = new LatLng(user.getLocation().getLatitude(), user.getLocation().getLongitude());
+
+
+                            if (user.getImage()!= null) {
+//                                googleMap.addMarker(new MarkerOptions()
+//                                        .position(latLng)
+//                                        .title(user.getUsername())
+//                                        .icon(BitmapDescriptorFactory.fromFile(user.getImage().getUrl())));
+                            } else {
+                                Drawable drawable = getResources().getDrawable(R.drawable.ic_person_white_24dp);
+                                Canvas canvas = new Canvas();
+                                Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                                canvas.setBitmap(bitmap);
+                                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                                drawable.draw(canvas);
+                                BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(bitmap);
+                                googleMap.addMarker(new MarkerOptions()
+                                        .position(latLng)
+                                        .title(user.getUsername())
+                                        .icon(markerIcon));
+                            }
+                        }
+                    }
+
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Nullable
@@ -114,6 +179,25 @@ public class MapsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Ask for permission to access current location if they aren't already granted
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_LOCATION_REQUEST_CODE);
+            return;
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            userLocation = location;
+                        }
+                    }
+                });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {

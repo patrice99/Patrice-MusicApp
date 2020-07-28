@@ -48,6 +48,7 @@ public class FeedFragment extends Fragment {
     private PostAdapter adapter;
     private List<Post> allPosts;
     private List<ParseUser> following = new ArrayList<>();
+    private User user = new User(ParseUser.getCurrentUser());
     private ParseUser filterForUser;
 
 
@@ -100,13 +101,9 @@ public class FeedFragment extends Fragment {
 
     private void getUserFollowing() throws JSONException {
         following.add(ParseUser.getCurrentUser());
-        User user = new User(ParseUser.getCurrentUser());
-        List<String> objectIds = user.getFollowingIds();
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereContainedIn("objectId", objectIds);
-        query.findInBackground(new FindCallback<ParseUser>() {
+        user.queryUserFollowing(new FindCallback<ParseUser>() {
             @Override
-            public void done(List<ParseUser> objects, ParseException e) {
+            public void done(List objects, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting following users list to populate the feed fragment", e);
                 }
@@ -118,6 +115,7 @@ public class FeedFragment extends Fragment {
                     ex.printStackTrace();
                 }
             }
+
         });
 
     }

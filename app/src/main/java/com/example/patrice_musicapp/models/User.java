@@ -6,12 +6,10 @@ import android.location.Geocoder;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.example.patrice_musicapp.activities.EditProfileActivity;
-import com.parse.GetCallback;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -138,6 +136,13 @@ public class User {
         }
 
         return followingIds ;
+    }
+
+    public void queryUserFollowing(FindCallback callback) throws JSONException {
+        List<String> userIds = getFollowingIds();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereContainedIn("objectId", userIds);
+        query.findInBackground(callback);
     }
 
 
