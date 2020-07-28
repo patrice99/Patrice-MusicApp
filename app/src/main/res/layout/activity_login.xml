@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:contentDescription="@string/applogo"
-        app:srcCompat="@mipmap/ic_music_note"
+        app:srcCompat="@mipmap/ic_echo_logo"
         tools:srcCompat="@tools:sample/avatars" />
 
     <com.google.android.material.textfield.TextInputLayout
