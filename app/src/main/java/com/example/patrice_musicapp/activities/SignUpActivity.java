@@ -57,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Toast.makeText(SignUpActivity.this, "Sign up Successful!", Toast.LENGTH_SHORT).show();
-                    goMainActivity();
+                    goOnboarding();
                 } else {
                     Log.e(TAG, "Sign Up Failed", e);
                 }
@@ -66,8 +66,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    protected void goMainActivity() {
-        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+    protected void goOnboarding() {
+        Intent intent = new Intent(SignUpActivity.this, OnboardingActivity.class);
         startActivity(intent);
         finish();
     }
