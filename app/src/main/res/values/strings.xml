@@ -49,4 +49,6 @@
     <string name="city" />
     <string name="enter_your_city">Enter your city</string>
     <string name="select_your_country">Select your country</string>
+    <string name="instrument">instrument</string>
+    <string name="choose_your_instruments">Choose your instruments</string>
 </resources>
