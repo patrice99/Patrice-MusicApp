@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="117dp"
+        android:layout_marginTop="97dp"
         android:layout_marginEnd="191dp"
         android:fontFamily="@font/cabin"
         android:text="@string/your"
@@ -38,7 +38,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="78dp"
+        android:layout_marginTop="58dp"
         android:fontFamily="@font/cabin"
         android:text="@string/choose"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="165dp"
+        android:layout_marginTop="145dp"
         android:layout_marginEnd="66dp"
         android:fontFamily="@font/cabin"
         android:text="@string/location"
@@ -95,6 +95,16 @@
             android:inputType="text"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tlCity"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="@string/save"/>
 
 
 

@@ -21,171 +21,358 @@
         android:textColor="#000000" />
 
     <GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvInstruments"
-        android:useDefaultMargins="true"
-        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:columnCount="3"
-        android:rowCount="4">
+        android:rowCount="4"
+        android:useDefaultMargins="true">
 
-        <ImageButton
-            android:id="@+id/ibBassGuitar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
             android:layout_row="0"
-            android:layout_column="0"
-            android:adjustViewBounds="true"
-            android:backgroundTint="@color/colorAccent"
-            android:contentDescription="@string/instrument"
-            android:padding="-5dp"
-            android:paddingBottom="-5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/bass_guitar_icon" />
+            android:layout_column="0">
 
-        <ImageButton
-            android:id="@+id/ibAcousticGuitar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            <CheckBox
+                android:id="@+id/cbBassGuitar"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bass_guitar_icon"
+                android:button="@null"
+                android:checked="false"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/bass_guitar" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:backgroundTint="#ED9DE0"
-            android:contentDescription="@string/instrument"
-            android:padding="-5dp"
-            android:paddingTop="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/guitar_icon" />
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/ibElectriGuitar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="#00BCD4"
-            android:contentDescription="@string/instrument"
-            android:padding="-15dp"
-            android:scaleType="fitCenter"
-            tools:src="@drawable/electric_guitar_icon" />
+            <CheckBox
+                android:id="@+id/ibAcousticGuitar"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/guitar_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
 
-        <ImageButton
-            android:id="@+id/ibSaxophone"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="#00BCD4"
-            android:contentDescription="@string/instrument"
-            android:padding="-15dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/saxophone_icon" />
-
-        <ImageButton
-            android:id="@+id/ibTrumpet"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="@color/colorAccent"
-            android:contentDescription="@string/instrument"
-            android:padding="-5dp"
-            android:scaleType="fitStart"
-            android:src="@drawable/trumpet_icon" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/acoustic_guitar" />
+        </LinearLayout>
 
 
-        <ImageButton
-            android:id="@+id/ibTrombone"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="@color/light_pink"
-            android:contentDescription="@string/instrument"
-            android:padding="-10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/trombone_icon" />
-
-
-        <ImageButton
-            android:id="@+id/ibViolin"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="@color/light_pink"
-            android:contentDescription="@string/instrument"
-            android:padding="-10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/violin_icon" />
-
-        <ImageButton
-            android:id="@+id/ibCello"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="#00BCD4"
-            android:contentDescription="@string/instrument"
-            android:padding="-15dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/celllo_icon" />
-
-        <ImageButton
-            android:id="@+id/ibClarinet"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="@color/colorAccent"
-            android:contentDescription="@string/instrument"
-            android:padding="15dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/clarinet_icon" />
-
-        <ImageButton
-            android:id="@+id/ibDrums"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="@color/colorAccent"
-            android:contentDescription="@string/instrument"
-            android:padding="-10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/drums_icon" />
-
-        <ImageButton
-            android:id="@+id/ibPiano"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="@color/light_pink"
-            android:contentDescription="@string/instrument"
-            android:padding="-5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/piano2_icon" />
-
-        <ImageButton
-            android:id="@+id/ibBongos"
-            android:layout_width="wrap_content"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:backgroundTint="#00BCD4"
-            android:contentDescription="@string/instrument"
-            android:padding="15dp"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/bongos_icon2" />
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_row="0"
+            android:layout_column="2">
 
-        <ImageButton
-            android:id="@+id/ibSoundEngineer"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="#00BCD4"
-            android:contentDescription="@string/instrument"
-            android:padding="-10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/sound_engineer_icon" />
+            <CheckBox
+                android:id="@+id/ibElectricGuitar"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/electric_guitar_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/electric_guitar" />
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/ibVocals"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="@color/colorAccent"
-            android:contentDescription="@string/instrument"
-            android:padding="20dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/vocals_icon" />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibSaxophone"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/saxophone_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/saxophone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibTrumpet"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/trumpet_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/trumpet" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibTrombone"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/trombone_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/trombone" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibViolin"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/violin_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/violin" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibCello"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/celllo_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/cello" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibClarinet"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/clarinet_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/clarinet" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibDrums"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/drums_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/drums" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibPiano"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/piano2_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/piano" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibBongos"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@mipmap/bongos_icon2"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/percussion" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibSoundEngineer"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:background="@drawable/sound_engineer_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="-5dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/sound_engineer" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ibVocals"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/vocals_icon"
+                android:button="@null"
+                android:contentDescription="@string/instrument"
+                android:padding="30dp"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal|end"
+                android:text="@string/vocals" />
+        </LinearLayout>
+
 
         <ImageButton
             android:id="@+id/ibMore"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="@color/light_pink"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:backgroundTint="@color/white"
             android:contentDescription="@string/instrument"
             android:padding="30dp"
             android:src="@drawable/ic_baseline_add_24" />
@@ -193,5 +380,15 @@
 
 
     </GridLayout>
+
+    <Button
+        android:id="@+id/btnSave"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gridLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/save" />
 
 </RelativeLayout>

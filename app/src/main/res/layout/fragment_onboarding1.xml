@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ivWelcome"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="650dp"
     android:contentDescription="@string/welcome_to_echo"
-    tools:src="@drawable/welcome3" />
+    android:scaleType="centerCrop"
+    app:srcCompat="@drawable/welcome3" />

@@ -145,17 +145,18 @@ public class MapsFragment extends Fragment {
 //                                        .title(user.getUsername())
 //                                        .icon(BitmapDescriptorFactory.fromFile(user.getImage().getUrl())));
                             } else {
-                                Drawable drawable = getResources().getDrawable(R.drawable.ic_person_white_24dp);
-                                Canvas canvas = new Canvas();
-                                Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-                                canvas.setBitmap(bitmap);
-                                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                                drawable.draw(canvas);
-                                BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(bitmap);
+//                                Drawable drawable = getResources().getDrawable(R.drawable.ic_person_white_24dp);
+//                                Canvas canvas = new Canvas();
+//                                Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+//                                canvas.setBitmap(bitmap);
+//                                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+//                                drawable.draw(canvas);
+//                                BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(bitmap);
+                                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_person_outline_white_24dp);
                                 googleMap.addMarker(new MarkerOptions()
                                         .position(latLng)
                                         .title(user.getUsername())
-                                        .icon(markerIcon));
+                                        .icon(icon));
                             }
                         }
                     }

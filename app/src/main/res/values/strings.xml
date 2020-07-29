@@ -51,4 +51,19 @@
     <string name="select_your_country">Select your country</string>
     <string name="instrument">instrument</string>
     <string name="choose_your_instruments">Choose your instruments</string>
+    <string name="save">Save</string>
+    <string name="bass_guitar">Bass guitar</string>
+    <string name="acoustic_guitar">Acoustic Guitar</string>
+    <string name="electric_guitar">Electric Guitar</string>
+    <string name="trumpet">Trumpet</string>
+    <string name="saxophone">Saxophone</string>
+    <string name="violin">Violin</string>
+    <string name="trombone">Trombone</string>
+    <string name="cello">Cello</string>
+    <string name="clarinet">Clarinet</string>
+    <string name="drums">Drums</string>
+    <string name="piano">Piano</string>
+    <string name="percussion">Percussion</string>
+    <string name="sound_engineer">Sound Engineer</string>
+    <string name="vocals">Vocals</string>
 </resources>
