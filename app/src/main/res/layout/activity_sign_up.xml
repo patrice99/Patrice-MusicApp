@@ -11,12 +11,11 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="203dp"
+        android:layout_height="188dp"
         android:layout_gravity="center"
         android:contentDescription="@string/applogo"
-        android:tint="#000000"
-        app:srcCompat="@mipmap/ic_music_note" />
+        app:srcCompat="@mipmap/ic_echo_logo2" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlUsername"

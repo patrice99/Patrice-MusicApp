@@ -11,12 +11,12 @@
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="221dp"
+        android:layout_height="212dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:contentDescription="@string/applogo"
-        app:srcCompat="@mipmap/ic_echo_logo"
+        app:srcCompat="@mipmap/ic_echo_logo2"
         tools:srcCompat="@tools:sample/avatars" />
 
     <com.google.android.material.textfield.TextInputLayout
