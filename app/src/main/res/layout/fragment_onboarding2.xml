@@ -17,7 +17,7 @@
         android:layout_marginTop="117dp"
         android:layout_marginEnd="191dp"
         android:fontFamily="@font/cabin"
-        android:text="Your"
+        android:text="@string/your"
         android:textColor="#222222"
         android:textSize="36sp" />
 
@@ -40,7 +40,7 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="78dp"
         android:fontFamily="@font/cabin"
-        android:text="Choose"
+        android:text="@string/choose"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#191818"
         android:textSize="36sp" />
@@ -54,25 +54,48 @@
         android:layout_marginTop="165dp"
         android:layout_marginEnd="66dp"
         android:fontFamily="@font/cabin"
-        android:text="Location"
+        android:text="@string/location"
         android:textColor="#222222"
         android:textSize="36sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:id="@+id/tlCountry"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/ivGlobe"
-        android:hint="@string/Country">
+        android:layout_marginTop="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:hint="@string/select_your_country">
 
         <AutoCompleteTextView
             android:id="@+id/filled_exposed_dropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
+            android:layoutDirection="inherit"
+            android:inputType="none"
+            android:layout_marginTop="30dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tlCity"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tlCountry"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_your_city"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 
 </RelativeLayout>

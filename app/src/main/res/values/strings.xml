@@ -31,7 +31,6 @@
     <string name="choose_a_photo_from_gallery">Choose a photo from Gallery</string>
     <string name="camera_icon">camera icon</string>
     <string name="gallery_icon">gallery icon</string>
-    <string name="location">Location</string>
     <string name="event_name">Event Name</string>
     <string name="event_description">Event Description</string>
     <string name="event_location">Event Location</string>
@@ -44,4 +43,10 @@
     <string name="next">Next</string>
     <string name="welcome_to_echo">Welcome to Echo</string>
     <string name="Country">country</string>
+    <string name="your">Your</string>
+    <string name="choose">Choose</string>
+    <string name="location">Location</string>
+    <string name="city" />
+    <string name="enter_your_city">Enter your city</string>
+    <string name="select_your_country">Select your country</string>
 </resources>
