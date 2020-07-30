@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,18 +18,27 @@ import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import org.json.JSONException;
 
 public class PostDetailsActivity extends AppCompatActivity {
+    public static final String TAG = PostDetailsActivity.class.getSimpleName();
     private Toolbar toolbar;
     private Post post;
     private ImageView ivProfilePic;
     private ImageView ivPostImage;
+    private ImageView ivLike;
     private TextView tvTitle;
     private TextView tvUsername;
     private TextView tvCaption;
     private TextView tvLocation;
     private TextView tvTimeStamp;
+    private TextView tvLikeCount;
     private VideoView vvPostVideo;
+    String addS = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +55,13 @@ public class PostDetailsActivity extends AppCompatActivity {
         //find views
         ivProfilePic = findViewById(R.id.ivProfilePic);
         ivPostImage = findViewById(R.id.ivPostImage);
+        ivLike = findViewById(R.id.ivLike);
         tvTitle = findViewById(R.id.tvTitle);
         tvUsername = findViewById(R.id.tvUsername);
         tvCaption = findViewById(R.id.tvCaption);
         tvLocation = findViewById(R.id.tvLocation);
         tvTimeStamp = findViewById(R.id.tvTimeStamp);
+        tvLikeCount = findViewById(R.id.tvLikeCount);
         vvPostVideo = findViewById(R.id.vvPostVideo);
 
 
@@ -58,6 +70,13 @@ public class PostDetailsActivity extends AppCompatActivity {
         tvUsername.setText(post.getUser().getUsername());
         tvCaption.setText(post.getCaption());
         tvTimeStamp.setText(post.getTimeStamp());
+
+        if (post.getLikesCount() != 1) {
+            addS = "s";
+        }
+        tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
+
+
 
         //check if the post has a valid image
         ParseFile image = post.getImage();
@@ -68,7 +87,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         }
 
         ParseFile video = post.getVideo();
-        if (video != null){
+        if (video != null) {
             ivPostImage.setVisibility(View.GONE);
             vvPostVideo.setVisibility(View.VISIBLE);
             try {
@@ -99,5 +118,54 @@ public class PostDetailsActivity extends AppCompatActivity {
                     .into(ivProfilePic);
         }
 
+        //change image for ivLike for liked and unliked
+        try {
+            if (post.isLiked(ParseUser.getCurrentUser())) {
+                Glide.with(this).load(getDrawable(R.drawable.ic_ufi_heart_active)).into(ivLike);
+            } else {
+                Glide.with(this).load(getDrawable(R.drawable.ic_ufi_heart)).into(ivLike);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        //set onClick listeners
+        ivLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if (post.isLiked(ParseUser.getCurrentUser())) {
+                        //unlike post
+                        post.destroyLike(ParseUser.getCurrentUser());
+                        Glide.with(PostDetailsActivity.this).load(getDrawable(R.drawable.ic_ufi_heart)).into(ivLike);
+                        addS = "";
+                        if ((post.getLikesCount()) != 1) {
+                            addS = "s";
+                        }
+                        tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
+                    } else {
+                        //like post
+                        post.addLike(ParseUser.getCurrentUser());
+                        Glide.with(PostDetailsActivity.this).load(getDrawable(R.drawable.ic_ufi_heart_active)).into(ivLike);
+                        addS = "";
+                        if ((post.getLikesCount()) != 1) {
+                            addS = "s";
+                        }
+                        tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Log.i(TAG, "Saved like successfully");
+                    }
+                });
+
+            }
+        });
     }
 }

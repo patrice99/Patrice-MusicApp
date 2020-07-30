@@ -166,6 +166,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     clickListener.onProfilePicAction(getAdapterPosition());
                 }
             });
+
             ivLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
