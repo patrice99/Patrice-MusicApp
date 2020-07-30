@@ -63,6 +63,8 @@ dependencies {
     //Optional: see how to use the utility.
     compile 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
 
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
 
 
 

@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
@@ -50,6 +52,8 @@ public class FeedFragment extends Fragment {
     private List<ParseUser> following = new ArrayList<>();
     private User user = new User(ParseUser.getCurrentUser());
     private ParseUser filterForUser;
+    private SwipeRefreshLayout swipeContainer;
+
 
 
     @Override
@@ -79,6 +83,8 @@ public class FeedFragment extends Fragment {
         });
 
         rvFeedPosts = view.findViewById(R.id.rvFeedPosts);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
 
         allPosts = new ArrayList<>();
         //instantiate the adapter
@@ -95,6 +101,30 @@ public class FeedFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    getUserFollowing();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Stop animation (This will be after 2 seconds)
+                        swipeContainer.setRefreshing(false);
+                    }
+                }, 2000); //Delay in millis
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
 
     }
