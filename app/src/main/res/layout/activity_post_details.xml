@@ -27,6 +27,20 @@
         android:contentDescription="@string/profile_pic"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <VideoView
+        android:id="@+id/vvPostVideo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        android:contentDescription="@string/posted_video"
+        tools:srcCompat="@tools:sample/avatars" />
+
 
     <ImageView
         android:id="@+id/ivPostImage"
