@@ -180,13 +180,19 @@ public class User {
     }
 
     public void setInstrument(Instruments instrument){
-        //get the existing instrument JSONArray and add a genre to the end of it
-        JSONArray jsonArray = parseUser.getJSONArray(KEY_INSTRUMENT);
-        //check to see if null
-        if (jsonArray == null){
-            jsonArray = new JSONArray();
+        ParseUser.getCurrentUser().addUnique(KEY_INSTRUMENT, instrument.toString());
+    }
+
+    public void removeInstrument(Instruments instruments){
+        //Loop through array looking for instrument string
+        List<String> instrumentList = ParseUser.getCurrentUser().getList(KEY_INSTRUMENT);
+        if (instrumentList != null && instrumentList.size()!= 0) {
+            if (instrumentList.contains(instruments.toString())) {
+                instrumentList.remove(instruments.toString());
+            }
+            ParseUser.getCurrentUser().put(KEY_INSTRUMENT, instrumentList);
         }
-        jsonArray.put(instrument.toString());
+
     }
 
     public float getHourRate() {
