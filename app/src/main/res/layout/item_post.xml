@@ -19,20 +19,36 @@
         tools:srcCompat="@tools:sample/avatars" />
 
 
-    <ImageView
-        android:id="@+id/ivPostImage"
+    <RelativeLayout
+        android:id="@+id/rlPostMedia"
         android:layout_width="282dp"
-        android:layout_height="170dp"
-        android:layout_below="@+id/tvTitle"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/tvTitle"
+        android:layout_toEndOf="@id/ivProfilePic"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:layout_toEndOf="@+id/ivProfilePic"
-        android:contentDescription="@string/postedimage"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="170dp">
+        <ImageView
+            android:id="@+id/ivPostImage"
+            android:layout_width="282dp"
+            android:layout_height="170dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/postedimage"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <VideoView
+            android:id="@+id/vvPostVideo"
+            android:layout_width="282dp"
+            android:layout_height="170dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/postedimage"
+            android:scaleType="fitCenter"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </RelativeLayout>
 
 
     <TextView
@@ -64,8 +80,8 @@
         android:id="@+id/tvCaption"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivPostImage"
-        android:layout_alignStart="@+id/ivPostImage"
+        android:layout_below="@+id/rlPostMedia"
+        android:layout_alignStart="@+id/rlPostMedia"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="5dp"
