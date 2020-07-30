@@ -108,16 +108,13 @@ public class MediaUtil {
     public static void startRecordingVideo(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
             Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/myvideo.mp4");
-            // Create the storage directory if it does not exist
-            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-                Log.d(context.getClass().getSimpleName(), "failed to create directory");
-            }
 
-            // Return the file target for the photo based on filename
-            videoFile =  new File(mediaStorageDir.getPath() + File.separator + videoFilename);
+            videoFile = getPhotoFileUri(videoFilename, context);
 
+            // wrap File object into a content provider
+            videoUri = FileProvider.getUriForFile(context, "com.musicApp.fileprovider", videoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
+
             ((Activity) context).startActivityForResult(intent, VIDEO_CAPTURE);
         } else {
             Toast.makeText(context, "No camera on device", Toast.LENGTH_LONG).show();

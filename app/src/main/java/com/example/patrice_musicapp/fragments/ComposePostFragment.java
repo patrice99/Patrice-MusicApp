@@ -164,7 +164,7 @@ public class ComposePostFragment extends Fragment {
 
         } else if (requestCode == MediaUtil.VIDEO_CAPTURE) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(getContext(), "Video has been saved to:\n" + data.getData(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Video has been saved to:\n" , Toast.LENGTH_LONG).show();
                 playbackRecordedVideo();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getContext(), "Video recording cancelled.",  Toast.LENGTH_LONG).show();
@@ -182,7 +182,7 @@ public class ComposePostFragment extends Fragment {
     }
 
 
-    private void savePosts(String caption, ParseUser currentUser, File photoFile, File videoFile) {
+    private void savePosts(String caption, ParseUser currentUser, File photoFile, final File videoFile) {
         Post post = new Post();
         post.setCaption(caption);
         if (photoFile != null) {
@@ -192,7 +192,6 @@ public class ComposePostFragment extends Fragment {
         if (videoFile != null) {
             post.setVideo(new ParseFile(videoFile));
         }
-        post.setImage(new ParseFile(videoFile));
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
