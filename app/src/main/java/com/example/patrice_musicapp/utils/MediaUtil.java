@@ -3,6 +3,8 @@ package com.example.patrice_musicapp.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
@@ -10,6 +12,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
@@ -18,11 +21,17 @@ import com.example.patrice_musicapp.activities.ComposeActivity;
 import java.io.File;
 import java.io.IOException;
 
-public class ImageUtil {
+public class MediaUtil {
     public static String photoFilename = "photo.jpg";
+    public static String videoFilename = "video.mp4";
     public static File photoFile;
+    public static File videoFile;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public final static int PICK_PHOTO_CODE = 1046;
+    public static final int VIDEO_CAPTURE = 101;
+    public static Uri videoUri;
+
+
 
 
 
@@ -93,6 +102,26 @@ public class ImageUtil {
             e.printStackTrace();
         }
         return image;
+    }
+
+
+    public static void startRecordingVideo(Context context) {
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/myvideo.mp4");
+            // Create the storage directory if it does not exist
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+                Log.d(context.getClass().getSimpleName(), "failed to create directory");
+            }
+
+            // Return the file target for the photo based on filename
+            videoFile =  new File(mediaStorageDir.getPath() + File.separator + videoFilename);
+
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
+            ((Activity) context).startActivityForResult(intent, VIDEO_CAPTURE);
+        } else {
+            Toast.makeText(context, "No camera on device", Toast.LENGTH_LONG).show();
+        }
     }
 
 
