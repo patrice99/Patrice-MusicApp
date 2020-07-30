@@ -11,14 +11,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="0dp"
         android:fontFamily="@font/cabin"
         android:includeFontPadding="false"
+        android:paddingStart="30dp"
+        android:paddingTop="30dp"
+        android:paddingEnd="30dp"
+        android:paddingBottom="10dp"
         android:text="@string/choose_your_instruments"
-        android:textSize="30dp"
-        android:layout_centerHorizontal="true"
-        android:padding="30dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textSize="30dp" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -26,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvInstruments"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="-10dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
@@ -36,11 +40,11 @@
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_row="0"
-            android:layout_column="0">
+            android:layout_column="0"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cbBassGuitar"
@@ -87,11 +91,11 @@
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_row="0"
-            android:layout_column="2">
+            android:layout_column="2"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cbElectricGuitar"
@@ -103,6 +107,7 @@
                 android:padding="-5dp"
                 android:paddingTop="10dp"
                 android:scaleType="fitCenter" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,8 +117,8 @@
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -135,8 +140,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -158,8 +163,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -182,8 +187,8 @@
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -206,8 +211,8 @@
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -229,8 +234,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -253,8 +258,8 @@
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -276,8 +281,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -300,20 +305,21 @@
 
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cbBongos"
-                android:layout_width="80dp"
+                android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@mipmap/bongos_icon2"
+                android:background="@drawable/bongos3"
                 android:button="@null"
                 android:contentDescription="@string/instrument"
                 android:padding="-5dp"
                 android:paddingTop="10dp"
                 android:scaleType="fitCenter" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -322,8 +328,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -336,6 +342,7 @@
                 android:padding="-5dp"
                 android:paddingTop="10dp"
                 android:scaleType="fitCenter" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -344,8 +351,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
@@ -376,7 +383,6 @@
             android:contentDescription="@string/instrument"
             android:padding="30dp"
             android:src="@drawable/ic_baseline_add_24" />
-
 
 
     </GridLayout>
