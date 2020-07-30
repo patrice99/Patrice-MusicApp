@@ -3,13 +3,19 @@ package com.example.patrice_musicapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Post;
+import com.example.patrice_musicapp.utils.MediaUtil;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 
 public class PostDetailsActivity extends AppCompatActivity {
@@ -22,6 +28,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     private TextView tvCaption;
     private TextView tvLocation;
     private TextView tvTimeStamp;
+    private VideoView vvPostVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         tvCaption = findViewById(R.id.tvCaption);
         tvLocation = findViewById(R.id.tvLocation);
         tvTimeStamp = findViewById(R.id.tvTimeStamp);
+        vvPostVideo = findViewById(R.id.vvPostVideo);
 
 
         //bind views
@@ -54,7 +62,27 @@ public class PostDetailsActivity extends AppCompatActivity {
         //check if the post has a valid image
         ParseFile image = post.getImage();
         if (image != null) {
+            vvPostVideo.setVisibility(View.GONE);
+            ivPostImage.setVisibility(View.VISIBLE);
             Glide.with(this).load(post.getImage().getUrl()).into(ivPostImage);
+        }
+
+        ParseFile video = post.getVideo();
+        if (video != null){
+            ivPostImage.setVisibility(View.GONE);
+            vvPostVideo.setVisibility(View.VISIBLE);
+            try {
+                MediaUtil.videoUri = Uri.fromFile(post.getVideo().getFile());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            MediaUtil.playbackRecordedVideo(vvPostVideo, this);
+            vvPostVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.setLooping(true);
+                }
+            });
         }
 
         //check if the user has a valid profilePic
