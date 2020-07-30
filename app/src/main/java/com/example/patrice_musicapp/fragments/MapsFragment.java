@@ -152,11 +152,11 @@ public class MapsFragment extends Fragment {
 //                                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
 //                                drawable.draw(canvas);
 //                                BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(bitmap);
-                                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_person_outline_white_24dp);
-                                googleMap.addMarker(new MarkerOptions()
-                                        .position(latLng)
-                                        .title(user.getUsername())
-                                        .icon(icon));
+//                                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_person_outline_white_24dp);
+//                                googleMap.addMarker(new MarkerOptions()
+//                                        .position(latLng)
+//                                        .title(user.getUsername())
+//                                        .icon(icon));
                             }
                         }
                     }

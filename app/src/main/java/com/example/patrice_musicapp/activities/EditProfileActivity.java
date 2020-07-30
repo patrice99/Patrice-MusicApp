@@ -25,7 +25,7 @@ import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Genres;
 import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
-import com.example.patrice_musicapp.utils.ImageUtil;
+import com.example.patrice_musicapp.utils.MediaUtil;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -186,20 +186,20 @@ public class EditProfileActivity extends AppCompatActivity {
         tvTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageUtil.onLaunchCamera(EditProfileActivity.this);
+                MediaUtil.onLaunchCamera(EditProfileActivity.this);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 //save photo in parse
-                saveProfilePic(ImageUtil.photoFile);
+                saveProfilePic(MediaUtil.photoFile);
             }
         });
 
         tvChoosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageUtil.onChoosePhoto(EditProfileActivity.this);
+                MediaUtil.onChoosePhoto(EditProfileActivity.this);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 //save photo in parse
-                saveProfilePic(ImageUtil.photoFile);
+                saveProfilePic(MediaUtil.photoFile);
 
             }
         });
@@ -227,20 +227,20 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ImageUtil.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == MediaUtil.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { //make sure a photo was taken
                 // by this point we have the camera photo on disk
                 //decode the file
-                Bitmap takenImage = BitmapFactory.decodeFile(ImageUtil.photoFile.getAbsolutePath());
+                Bitmap takenImage = BitmapFactory.decodeFile(MediaUtil.photoFile.getAbsolutePath());
                 // Load the taken image into a preview
                 ivProfilePic.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
-        } else if ((data != null) && requestCode == ImageUtil.PICK_PHOTO_CODE) {
+        } else if ((data != null) && requestCode == MediaUtil.PICK_PHOTO_CODE) {
             Uri photoUri = data.getData();
             // Load the image located at photoUri into selectedImage
-            Bitmap selectedImage = ImageUtil.loadFromUri(photoUri, EditProfileActivity.this);
+            Bitmap selectedImage = MediaUtil.loadFromUri(photoUri, EditProfileActivity.this);
 
             // Load the selected image into a preview
             ivProfilePic.setImageBitmap(selectedImage);
@@ -249,7 +249,7 @@ public class EditProfileActivity extends AppCompatActivity {
             // Configure byte output stream
             FileOutputStream outStream = null;
             try {
-                outStream = new FileOutputStream(ImageUtil.photoFile);
+                outStream = new FileOutputStream(MediaUtil.photoFile);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

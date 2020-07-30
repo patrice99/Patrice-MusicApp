@@ -7,23 +7,40 @@
     tools:context=".activities.ComposeActivity">
 
 
-    <ImageView
-        android:id="@+id/ivPostImage"
+    <RelativeLayout
+        android:id="@+id/relLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="0dp"
-        android:contentDescription="@string/posted_image"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivPostImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="0dp"
+            android:contentDescription="@string/posted_image"
+            tools:srcCompat="@tools:sample/avatars" />
+
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="392dp"
+            android:layout_height="195dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="23dp" />
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/etCaption"
         android:layout_width="383dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivPostImage"
+        android:layout_below="@+id/relLayout"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="2dp"
@@ -51,9 +68,9 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_below="@+id/btnSubmit"
-        android:layout_alignParentStart="false"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="171dp"
+        android:layout_marginTop="49dp"
         android:background="#FFFFFF"
         android:contentDescription="@string/camera"
         android:src="@drawable/ic_baseline_camera_alt_24" />
@@ -65,5 +82,17 @@
         android:layout_below="@+id/btnCaptureImage"
         android:layout_centerHorizontal="true"
         android:text="@string/choose_from_gallery" />
+
+
+    <ImageButton
+        android:id="@+id/btnCaptureVideo"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSubmit"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="156dp"
+        android:backgroundTint="@color/white"
+        app:srcCompat="@drawable/ic_baseline_videocam_24" />
 
 </RelativeLayout>
