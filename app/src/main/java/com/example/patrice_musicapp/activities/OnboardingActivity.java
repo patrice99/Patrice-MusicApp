@@ -114,4 +114,5 @@ public class OnboardingActivity extends AppCompatActivity {
         // Close the OnboardingActivity
         finish();
     }
+
 }

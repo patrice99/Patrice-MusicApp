@@ -68,7 +68,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibAcousticGuitar"
+                android:id="@+id/cbAcousticGuitar"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/guitar_icon"
@@ -94,7 +94,7 @@
             android:layout_column="2">
 
             <CheckBox
-                android:id="@+id/ibElectricGuitar"
+                android:id="@+id/cbElectricGuitar"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/electric_guitar_icon"
@@ -117,7 +117,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibSaxophone"
+                android:id="@+id/cbSaxophone"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/saxophone_icon"
@@ -140,7 +140,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibTrumpet"
+                android:id="@+id/cbTrumpet"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/trumpet_icon"
@@ -163,7 +163,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibTrombone"
+                android:id="@+id/cbTrombone"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/trombone_icon"
@@ -187,7 +187,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibViolin"
+                android:id="@+id/cbViolin"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/violin_icon"
@@ -211,7 +211,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibCello"
+                android:id="@+id/cbCello"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/celllo_icon"
@@ -234,7 +234,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibClarinet"
+                android:id="@+id/cbClarinet"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/clarinet_icon"
@@ -258,7 +258,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibDrums"
+                android:id="@+id/cbDrums"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/drums_icon"
@@ -281,7 +281,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibPiano"
+                android:id="@+id/cbPiano"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/piano2_icon"
@@ -305,7 +305,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibBongos"
+                android:id="@+id/cbBongos"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@mipmap/bongos_icon2"
@@ -327,7 +327,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibSoundEngineer"
+                android:id="@+id/cbSoundEngineer"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:background="@drawable/sound_engineer_icon"
@@ -349,7 +349,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/ibVocals"
+                android:id="@+id/cbVocals"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/vocals_icon"
@@ -369,7 +369,7 @@
 
 
         <ImageButton
-            android:id="@+id/ibMore"
+            android:id="@+id/cbMore"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:backgroundTint="@color/white"
