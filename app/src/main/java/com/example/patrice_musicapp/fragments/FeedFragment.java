@@ -25,6 +25,7 @@ import com.example.patrice_musicapp.activities.ComposeActivity;
 import com.example.patrice_musicapp.adapters.PostAdapter;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
+import com.example.patrice_musicapp.utils.EndlessRecyclerViewScrollListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -53,6 +54,8 @@ public class FeedFragment extends Fragment {
     private User user = new User(ParseUser.getCurrentUser());
     private ParseUser filterForUser;
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
+
 
 
 
@@ -125,6 +128,20 @@ public class FeedFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                //get the next 20 posts
+                try {
+                    queryPosts(page);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        rvFeedPosts.addOnScrollListener(scrollListener);
 
 
     }
