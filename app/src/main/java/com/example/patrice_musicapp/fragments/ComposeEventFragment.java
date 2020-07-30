@@ -22,13 +22,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.patrice_musicapp.R;
-import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.models.Event;
-import com.example.patrice_musicapp.models.Post;
-import com.example.patrice_musicapp.utils.ImageUtil;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.example.patrice_musicapp.utils.MediaUtil;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -130,7 +126,7 @@ public class ComposeEventFragment extends Fragment {
                 }
                 String name = etName.getText().toString();
                 //save the post into
-                saveEvents(description, currentUser, ImageUtil.photoFile, location, date, name);
+                saveEvents(description, currentUser, MediaUtil.photoFile, location, date, name);
                 //go back to post fragment(which is in MainActivity)
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
@@ -140,7 +136,7 @@ public class ComposeEventFragment extends Fragment {
         ivEventImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageUtil.onChoosePhoto(getContext());
+                MediaUtil.onChoosePhoto(getContext());
             }
         });
     }
@@ -179,20 +175,20 @@ public class ComposeEventFragment extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ImageUtil.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == MediaUtil.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { //make sure a photo was taken
                 // by this point we have the camera photo on disk
                 //decode the file
-                Bitmap takenImage = BitmapFactory.decodeFile(ImageUtil.photoFile.getAbsolutePath());
+                Bitmap takenImage = BitmapFactory.decodeFile(MediaUtil.photoFile.getAbsolutePath());
                 // Load the taken image into a preview
                 ivEventImage.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
-        } else if ((data != null) && requestCode == ImageUtil.PICK_PHOTO_CODE) {
+        } else if ((data != null) && requestCode == MediaUtil.PICK_PHOTO_CODE) {
             Uri photoUri = data.getData();
             // Load the image located at photoUri into selectedImage
-            Bitmap selectedImage = ImageUtil.loadFromUri(photoUri, getContext());
+            Bitmap selectedImage = MediaUtil.loadFromUri(photoUri, getContext());
 
             // Load the selected image into a preview
             ivEventImage.setImageBitmap(selectedImage);
@@ -201,7 +197,7 @@ public class ComposeEventFragment extends Fragment {
             // Configure byte output stream
             FileOutputStream outStream = null;
             try {
-                outStream = new FileOutputStream(ImageUtil.photoFile);
+                outStream = new FileOutputStream(MediaUtil.photoFile);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

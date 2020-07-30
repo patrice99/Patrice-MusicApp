@@ -18,13 +18,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
 import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.models.Post;
-import com.example.patrice_musicapp.utils.ImageUtil;
+import com.example.patrice_musicapp.utils.MediaUtil;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -34,6 +36,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 public class ComposePostFragment extends Fragment {
@@ -41,8 +44,10 @@ public class ComposePostFragment extends Fragment {
     private ImageView ivPostImage;
     private EditText etCaption;
     private ImageButton btnCaptureImage;
+    private ImageButton btnCaptureVideo;
     private Button btnSubmit;
     private Button btnGallery;
+    private VideoView mVideoView;
 
     @Nullable
     @Override
@@ -61,14 +66,30 @@ public class ComposePostFragment extends Fragment {
         ivPostImage = view.findViewById(R.id.ivPostImage);
         etCaption = view.findViewById(R.id.etCaption);
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
+        btnCaptureVideo = view.findViewById(R.id.btnCaptureVideo);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnGallery = view.findViewById(R.id.btnGallery);
+        mVideoView = view.findViewById(R.id.videoView);
+
+        mVideoView.setVisibility(View.GONE);
+        ivPostImage.setImageDrawable(getResources().getDrawable(R.drawable.image_placeholder));
+
 
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageUtil.onLaunchCamera(getContext());
+                mVideoView.setVisibility(View.GONE);
+                MediaUtil.onLaunchCamera(getContext());
+            }
+        });
+
+        btnCaptureVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivPostImage.setVisibility(View.GONE);
+                mVideoView.setVisibility(View.VISIBLE);
+                MediaUtil.startRecordingVideo(getContext());
             }
         });
 
@@ -84,12 +105,12 @@ public class ComposePostFragment extends Fragment {
                 }
                 //get the user
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                if(ImageUtil.photoFile == null || ivPostImage.getDrawable() == null) {
-                    Toast.makeText(getContext(), "There is no image", Toast.LENGTH_SHORT).show();
+                if((MediaUtil.photoFile == null || ivPostImage.getDrawable() == null) && MediaUtil.videoFile == null) {
+                    Toast.makeText(getContext(), "There is no media", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //save the post into
-                savePosts(description, currentUser, ImageUtil.photoFile);
+                savePosts(description, currentUser, MediaUtil.photoFile, MediaUtil.videoFile);
                 //go back to post fragment(which is in MainActivity)
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
@@ -99,7 +120,7 @@ public class ComposePostFragment extends Fragment {
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageUtil.onChoosePhoto(getContext());
+                MediaUtil.onChoosePhoto(getContext());
             }
         });
 
@@ -111,20 +132,20 @@ public class ComposePostFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ImageUtil.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == MediaUtil.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { //make sure a photo was taken
                 // by this point we have the camera photo on disk
                 //decode the file
-                Bitmap takenImage = BitmapFactory.decodeFile(ImageUtil.photoFile.getAbsolutePath());
+                Bitmap takenImage = BitmapFactory.decodeFile(MediaUtil.photoFile.getAbsolutePath());
                 // Load the taken image into a preview
                 ivPostImage.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
-        } else if ((data != null) && requestCode == ImageUtil.PICK_PHOTO_CODE) {
+        } else if ((data != null) && requestCode == MediaUtil.PICK_PHOTO_CODE) {
             Uri photoUri = data.getData();
             // Load the image located at photoUri into selectedImage
-            Bitmap selectedImage = ImageUtil.loadFromUri(photoUri, getContext());
+            Bitmap selectedImage = MediaUtil.loadFromUri(photoUri, getContext());
 
             // Load the selected image into a preview
             ivPostImage.setImageBitmap(selectedImage);
@@ -133,7 +154,7 @@ public class ComposePostFragment extends Fragment {
             // Configure byte output stream
             FileOutputStream outStream = null;
             try {
-                outStream = new FileOutputStream(ImageUtil.photoFile);
+                outStream = new FileOutputStream(MediaUtil.photoFile);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -141,15 +162,37 @@ public class ComposePostFragment extends Fragment {
             //Compress the image further 
             selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
 
+        } else if (requestCode == MediaUtil.VIDEO_CAPTURE) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getContext(), "Video has been saved to:\n" + data.getData(), Toast.LENGTH_LONG).show();
+                playbackRecordedVideo();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getContext(), "Video recording cancelled.",  Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), "Failed to record video",  Toast.LENGTH_LONG).show();
+            }
         }
     }
 
+    public void playbackRecordedVideo() {
+        mVideoView.setVideoURI(MediaUtil.videoUri);
+        mVideoView.setMediaController(new MediaController(getContext()));
+        mVideoView.requestFocus();
+        mVideoView.start();
+    }
 
-    private void savePosts(String caption, ParseUser currentUser, File photoFile) {
+
+    private void savePosts(String caption, ParseUser currentUser, File photoFile, File videoFile) {
         Post post = new Post();
         post.setCaption(caption);
-        post.setImage(new ParseFile(photoFile));
+        if (photoFile != null) {
+            post.setImage(new ParseFile(photoFile));
+        }
         post.setUser(currentUser);
+        if (videoFile != null) {
+            post.setVideo(new ParseFile(videoFile));
+        }
+        post.setImage(new ParseFile(videoFile));
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -164,4 +207,7 @@ public class ComposePostFragment extends Fragment {
             }
         });
     }
+
+
+
 }
