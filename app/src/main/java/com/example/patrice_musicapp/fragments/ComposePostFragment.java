@@ -165,7 +165,7 @@ public class ComposePostFragment extends Fragment {
         } else if (requestCode == MediaUtil.VIDEO_CAPTURE) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(getContext(), "Video has been saved to:\n" , Toast.LENGTH_LONG).show();
-                playbackRecordedVideo();
+                MediaUtil.playbackRecordedVideo(mVideoView, getContext());
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getContext(), "Video recording cancelled.",  Toast.LENGTH_LONG).show();
             } else {
@@ -174,12 +174,6 @@ public class ComposePostFragment extends Fragment {
         }
     }
 
-    public void playbackRecordedVideo() {
-        mVideoView.setVideoURI(MediaUtil.videoUri);
-        mVideoView.setMediaController(new MediaController(getContext()));
-        mVideoView.requestFocus();
-        mVideoView.start();
-    }
 
 
     private void savePosts(String caption, ParseUser currentUser, File photoFile, final File videoFile) {

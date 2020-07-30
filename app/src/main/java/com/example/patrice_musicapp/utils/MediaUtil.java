@@ -12,7 +12,9 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.core.content.FileProvider;
 
@@ -119,6 +121,13 @@ public class MediaUtil {
         } else {
             Toast.makeText(context, "No camera on device", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public static void playbackRecordedVideo(VideoView mVideoView, Context context) {
+        mVideoView.setVideoURI(MediaUtil.videoUri);
+        mVideoView.setMediaController(new MediaController(context));
+        mVideoView.requestFocus();
+        mVideoView.start();
     }
 
 

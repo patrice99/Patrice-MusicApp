@@ -2,6 +2,8 @@ package com.example.patrice_musicapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.PostDetailsActivity;
 import com.example.patrice_musicapp.models.Post;
+import com.example.patrice_musicapp.utils.MediaUtil;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -73,6 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private TextView tvLocation;
         private TextView tvTimeStamp;
         private TextView tvLikeCount;
+        private VideoView vvPostVideo;
 
         public ViewHolder (@NonNull View itemView){
             super(itemView);
@@ -85,6 +91,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvLocation = itemView.findViewById(R.id.tvLocation);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
             tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
+            vvPostVideo = itemView.findViewById(R.id.vvPostVideo);
             itemView.setOnClickListener(this);
         }
 
@@ -103,7 +110,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             //check if the post has a valid image
             ParseFile image = post.getImage();
             if (image != null) {
+                vvPostVideo.setVisibility(View.GONE);
+                ivPostImage.setVisibility(View.VISIBLE);
                 Glide.with(context).load(post.getImage().getUrl()).into(ivPostImage);
+            }
+
+            ParseFile video = post.getVideo();
+            if(video != null){
+                ivPostImage.setVisibility(View.GONE);
+                vvPostVideo.setVisibility(View.VISIBLE);
+                try {
+                    MediaUtil.videoUri = Uri.fromFile(post.getVideo().getFile());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                MediaUtil.playbackRecordedVideo(vvPostVideo, context);
+                vvPostVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.setLooping(true);
+                    }
+                });
             }
 
             //check if the user has a valid profilePic

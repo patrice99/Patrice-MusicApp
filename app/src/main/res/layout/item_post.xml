@@ -40,12 +40,10 @@
 
         <VideoView
             android:id="@+id/vvPostVideo"
-            android:layout_width="282dp"
-            android:layout_height="170dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
             android:contentDescription="@string/postedimage"
-            android:scaleType="fitCenter"
             tools:srcCompat="@tools:sample/avatars" />
 
     </RelativeLayout>
