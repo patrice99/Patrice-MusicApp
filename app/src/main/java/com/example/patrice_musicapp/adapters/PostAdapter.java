@@ -1,26 +1,35 @@
 package com.example.patrice_musicapp.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.activities.PostDetailsActivity;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.utils.MediaUtil;
+import com.example.patrice_musicapp.utils.OnDoubleTapListener;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -73,6 +82,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private ImageView ivProfilePic;
         private ImageView ivPostImage;
         private ImageView ivLike;
+        private ImageView ivLikeAnim;
         private TextView tvTitle;
         private TextView tvUsername;
         private TextView tvCaption;
@@ -80,12 +90,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private TextView tvTimeStamp;
         private TextView tvLikeCount;
         private VideoView vvPostVideo;
+        private AnimatedVectorDrawableCompat avd;
+        private AnimatedVectorDrawable avd2;
 
         public ViewHolder (@NonNull View itemView){
             super(itemView);
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
             ivLike = itemView.findViewById(R.id.ivLike);
+            ivLikeAnim = itemView.findViewById(R.id.ivLikeAnim);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvCaption = itemView.findViewById(R.id.tvCaption);
@@ -96,6 +109,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             itemView.setOnClickListener(this);
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         public void bind(final Post post) {
             //here is where we bind views
             tvTitle.setText(post.getTitle());
@@ -189,6 +203,38 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
                 }
             });
+
+            final Drawable drawable = ivLikeAnim.getDrawable();
+            ivPostImage.setOnTouchListener(new OnDoubleTapListener(context) {
+                @Override
+                public void onDoubleTap(MotionEvent e) {
+
+                    try {
+                        if (post.isLiked(ParseUser.getCurrentUser())) {
+                            clickListener.onUnlikeAction(getAdapterPosition());
+                        } else {
+                            ivLikeAnim.setAlpha(0.70f);
+                            if (drawable instanceof AnimatedVectorDrawableCompat){
+                                avd = (AnimatedVectorDrawableCompat) drawable;
+                                avd.start();
+                            } else if (drawable instanceof  AnimatedVectorDrawable){
+                                avd2 = (AnimatedVectorDrawable) drawable;
+                                avd2.start();
+                            }
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    clickListener.onLikeAction(getAdapterPosition());
+                                }
+                            }, 300); //Delay in millis
+                        }
+                    } catch (JSONException er) {
+                        er.printStackTrace();
+                    }
+                }
+
+            });
+
         }
 
         @Override
