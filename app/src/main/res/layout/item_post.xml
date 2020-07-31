@@ -50,6 +50,22 @@
                 android:contentDescription="@string/postedimage"
                 tools:srcCompat="@tools:sample/avatars" />
 
+                <ImageView
+                    android:alpha="0"
+                    android:id="@+id/ivLikeAnim"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="114dp"
+                    android:layout_marginTop="51dp"
+                    android:layout_marginEnd="116dp"
+                    android:layout_marginBottom="49dp"
+                    app:srcCompat="@drawable/like_animation" />
+
         </RelativeLayout>
 
 

@@ -221,12 +221,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                                 avd2 = (AnimatedVectorDrawable) drawable;
                                 avd2.start();
                             }
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    clickListener.onLikeAction(getAdapterPosition());
-                                }
-                            }, 300); //Delay in millis
+                            clickListener.onLikeAction(getAdapterPosition());
                         }
                     } catch (JSONException er) {
                         er.printStackTrace();
