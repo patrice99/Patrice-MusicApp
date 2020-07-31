@@ -146,12 +146,12 @@ public class User {
     }
 
 
-    public List<Genres> getGenres() throws JSONException {
+    public List<String> getGenres() throws JSONException {
        //get the JSONArray and parse through it to make a list
-        List<Genres> genres = new ArrayList<>();
+        List<String> genres = new ArrayList<>();
         JSONArray jsonArray = parseUser.getJSONArray(KEY_GENRE);
         for (int i = 0 ; i < jsonArray.length(); i++){
-             genres.add(Genres.valueOf(jsonArray.getString(i)));
+             genres.add(jsonArray.getString(i));
         }
         return genres;
 
@@ -168,14 +168,8 @@ public class User {
 
     }
 
-    public List<Instruments> getInstruments() throws JSONException {
-        //get the JSONArray and parse through it to make a list
-        List<Instruments> instruments = new ArrayList<>();
-        JSONArray jsonArray = parseUser.getJSONArray(KEY_INSTRUMENT);
-        for (int i = 0 ; i < jsonArray.length(); i++){
-            instruments.add(Instruments.valueOf(jsonArray.getString(i)));
-        }
-        return instruments;
+    public List<String> getInstruments() throws JSONException {
+        return getParseUser().getList(KEY_INSTRUMENT);
 
     }
 

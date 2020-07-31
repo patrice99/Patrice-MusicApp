@@ -34,6 +34,8 @@ import com.example.patrice_musicapp.adapters.PostAdapter;
 import com.example.patrice_musicapp.models.Followers;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -46,6 +48,7 @@ import org.parceler.Parcels;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -59,8 +62,11 @@ public class ProfileFragment extends Fragment {
     private ImageView ivProfilePic;
     private TextView tvName;
     private TextView tvLocation;
+    private TextView tvBio;
     private Button btnEditProfile;
     private Button btnFollow;
+    private ChipGroup chipGroupGenres;
+    private ChipGroup chipGroupInstruments;
     public static final int DISPLAY_LIMIT= 20;
     public static final String TAG = ProfileFragment.class.getSimpleName();
     private Followers follow = new Followers();
@@ -114,12 +120,17 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
         tvLocation = view.findViewById(R.id.tvLocation);
+        tvBio = view.findViewById(R.id.tvBio);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
         btnFollow = view.findViewById(R.id.btnFollow);
+        chipGroupGenres = view.findViewById(R.id.chip_group_genres);
+        chipGroupInstruments = view.findViewById(R.id.chip_group_instruments);
+
 
 
         tvUsername.setText(user.getUsername());
         tvName.setText(user.getName());
+        tvBio.setText(user.getBio());
         ParseFile image = user.getImage();
         if (image == null){
             Glide.with(getContext())
@@ -132,6 +143,23 @@ public class ProfileFragment extends Fragment {
                     .circleCrop()
                     .into(ivProfilePic);
         }
+
+        //populate chips for genres of music and instruments
+
+        List<String> instruments = new ArrayList<>();
+        try {
+            instruments = user.getInstruments();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        for(String instrument : instruments) {
+            Chip chip = new Chip(getContext());
+            chip.setText(instrument);
+            chip.isCheckable();
+            chipGroupInstruments.addView(chip);
+        }
+
+
 
         final User subjectUser = new User(ParseUser.getCurrentUser());
         final User user2follow = new User(user.getParseUser());
