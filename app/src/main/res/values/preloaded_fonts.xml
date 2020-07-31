@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/alef</item>
         <item>@font/cabin</item>
+        <item>@font/cairo_extralight</item>
         <item>@font/cambay</item>
+        <item>@font/chivo</item>
         <item>@font/unica_one</item>
     </array>
 </resources>

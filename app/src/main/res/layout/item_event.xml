@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/ivEventImage"
+                android:fontFamily="@font/chivo"
                 android:textSize="30sp"
                 tools:text="Event Name" />
 
@@ -38,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvName"
                 android:layout_toRightOf="@+id/ivEventImage"
+                android:fontFamily="@font/cabin"
                 tools:text="Event Date" />
 
             <TextView
@@ -46,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvEventDate"
                 android:layout_toRightOf="@+id/ivEventImage"
+                android:fontFamily="@font/cabin"
                 tools:text="event Location" />
 
             <ImageView
@@ -67,6 +70,7 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="45dp"
                 android:layout_marginEnd="10dp"
+                android:fontFamily="@font/cambay"
                 tools:text="user123" />
 
 

@@ -1,7 +1,11 @@
 package com.example.patrice_musicapp.models;
 
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.parse.FindCallback;
@@ -19,11 +23,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @ParseClassName("Post")
 public class Post extends ParseObject {
@@ -70,6 +76,7 @@ public class Post extends ParseObject {
         put(KEY_TITLE, title);
     }
 
+
     public String getCaption() {
         return getString(KEY_CAPTION);
     }
@@ -83,6 +90,29 @@ public class Post extends ParseObject {
         Date date = getCreatedAt();
         SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy hh:mm aa");
         return formatter.format(date);
+    }
+
+    public String getRelativeTimeAgo(String rawDate) {
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+        sf.setLenient(true);
+
+        String relativeDate = "";
+        try {
+            long dateMillis = sf.parse(rawDate).getTime();
+            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        //shortened form of time stamp
+        String[] num = relativeDate.split(" ");
+        relativeDate = num[0] + num[1].charAt(0);
+
+
+
+        return relativeDate;
     }
 
     public int getLikesCount() {
@@ -160,5 +190,23 @@ public class Post extends ParseObject {
                 }
             }
         }
+    }
+
+
+
+    public static ParseGeoPoint getLocationFromString(String location, Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocationName(location, 5);
+        Address address = addresses.get(0); //get the first address for right now
+
+        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
+
+    }
+
+    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
+        Address address = addresses.get(0); //get the first address for right now
+        return address.getLocality();
     }
 }

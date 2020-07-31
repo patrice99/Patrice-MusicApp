@@ -3,16 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/grey"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FeedFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_feed"
-        android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/grey"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@color/pink">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@drawable/echotoolbar" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -27,21 +35,20 @@
             android:layout_below="@+id/toolbar_feed"
             android:layout_height="match_parent"/>
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|right"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:baselineAlignBottom="false"
-            android:backgroundTint="@color/yellow"
-            android:src="@drawable/ic_baseline_add_24"
-            app:fabSize="normal" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:baselineAlignBottom="false"
+        android:backgroundTint="@color/pink"
+        android:src="@drawable/ic_baseline_add_24"
+        app:fabSize="normal" />
 
 
 </RelativeLayout>
