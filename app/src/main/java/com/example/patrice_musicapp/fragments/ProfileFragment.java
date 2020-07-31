@@ -63,9 +63,10 @@ public class ProfileFragment extends Fragment {
     private TextView tvName;
     private TextView tvLocation;
     private TextView tvBio;
+    private TextView tvFollowing;
+    private TextView tvFollowers;
     private Button btnEditProfile;
     private Button btnFollow;
-    private ChipGroup chipGroupGenres;
     private ChipGroup chipGroupInstruments;
     public static final int DISPLAY_LIMIT= 20;
     public static final String TAG = ProfileFragment.class.getSimpleName();
@@ -121,9 +122,10 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvLocation = view.findViewById(R.id.tvLocation);
         tvBio = view.findViewById(R.id.tvBio);
+        tvFollowers = view.findViewById(R.id.tvFollowers);
+        tvFollowing = view.findViewById(R.id.tvFollowing);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
         btnFollow = view.findViewById(R.id.btnFollow);
-        chipGroupGenres = view.findViewById(R.id.chip_group_genres);
         chipGroupInstruments = view.findViewById(R.id.chip_group_instruments);
 
 
@@ -131,6 +133,20 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText(user.getUsername());
         tvName.setText(user.getName());
         tvBio.setText(user.getBio());
+        tvFollowing.setText(String.valueOf(user.getFollowingCount()));
+        final List<ParseUser> followers = new ArrayList<>();
+        Followers.getFollowers(user.getParseUser(), new FindCallback<Followers>() {
+            @Override
+            public void done(List<Followers> followersList, ParseException e) {
+                List<Followers> follows = new ArrayList<>();
+                follows.addAll(followersList);
+                for (Followers follow : follows){
+                    followers.add(follow.getFollower());
+                }
+
+                tvFollowers.setText(String.valueOf(followers.size()));
+            }
+        });
         ParseFile image = user.getImage();
         if (image == null){
             Glide.with(getContext())
@@ -144,7 +160,6 @@ public class ProfileFragment extends Fragment {
                     .into(ivProfilePic);
         }
 
-        //populate chips for genres of music and instruments
 
         List<String> instruments = new ArrayList<>();
         try {
@@ -152,11 +167,13 @@ public class ProfileFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        for(String instrument : instruments) {
-            Chip chip = new Chip(getContext());
-            chip.setText(instrument);
-            chip.isCheckable();
-            chipGroupInstruments.addView(chip);
+        if (instruments!=null) {
+            for (String instrument : instruments) {
+                Chip chip = new Chip(getContext());
+                chip.setText(instrument);
+                chip.isCheckable();
+                chipGroupInstruments.addView(chip);
+            }
         }
 
 
