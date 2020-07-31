@@ -66,6 +66,11 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation "com.hootsuite.android:nachos:1.1.1"
 
+    //noinspection GradleCompatible
+    compile 'com.android.support:support-compat:25.1.1'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.3@aar'
+
 
 
 

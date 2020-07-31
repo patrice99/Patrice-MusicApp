@@ -19,6 +19,12 @@
         app:srcCompat="@mipmap/ic_echo_logo2"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlUsername"
         android:layout_width="match_parent"
@@ -52,6 +58,8 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
 
     <Button

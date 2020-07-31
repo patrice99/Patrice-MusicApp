@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.patrice_musicapp.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -70,7 +72,11 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with login", e);
-                    Toast.makeText(LoginActivity.this, "Issue with login", Toast.LENGTH_SHORT).show();
+                    YoYo.with(Techniques.Shake)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(findViewById(R.id.linearLayout2));
+                    Toast.makeText(LoginActivity.this, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     goMainActivity();
