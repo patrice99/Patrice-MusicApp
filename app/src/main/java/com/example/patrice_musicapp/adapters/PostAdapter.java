@@ -27,6 +27,7 @@ import com.parse.ParseUser;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
@@ -100,7 +101,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvTitle.setText(post.getTitle());
             tvUsername.setText(post.getUser().getUsername());
             tvCaption.setText(post.getCaption());
-            tvTimeStamp.setText(post.getTimeStamp());
+            tvTimeStamp.setText(post.getRelativeTimeAgo(post.getCreatedAt().toString()));
+            try {
+                if (post.getLocation()!=null) {
+                    tvLocation.setText(Post.getStringFromLocation(post.getLocation(), context));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             String addS = "";
             if (post.getLikesCount()!= 1){
                 addS = "s";

@@ -14,171 +14,197 @@
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="@android:color/white" />
 
-    <ImageView
-        android:id="@+id/ivProfilePic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/toolbar_profile"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        tools:src="@tools:sample/avatars" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_profile"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="30dp"
-        android:layout_toEndOf="@+id/ivProfilePic"
-        android:orientation="vertical">
+        android:layout_margin="5dp"
+        android:elevation="0dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvName"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/cabin"
-            android:gravity="center_horizontal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Patrice Gill" />
+            android:layout_height="250dp">
 
-        <TextView
-            android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="1dp"
-            android:fontFamily="@font/cambay"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="3cmel" />
+            <ImageView
+                android:id="@+id/ivProfilePic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="20dp"
+                tools:src="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawableStart="@drawable/ic_outline_location_on_24"
-            android:gravity="center_horizontal"
-            android:textColor="#2196F3"
-            tools:text="Seattle, Washington" />
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="30dp"
+                android:layout_toEndOf="@+id/ivProfilePic"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/cabin"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    tools:text="Patrice Gill" />
 
-    <TextView
-        android:id="@+id/tvBio"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfilePic"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="13dp"
-        android:layout_toEndOf="@+id/ivProfilePic"
-        android:fontFamily="@font/cambay"
-        android:gravity="center_horizontal"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        tools:text="Here is my bio, I would probably look a little about myself here" />
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="1dp"
+                    android:fontFamily="@font/cambay"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="3cmel" />
 
-    <HorizontalScrollView
-        android:id="@+id/hsvGenres"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearLayout"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@+id/tvBio">
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableStart="@drawable/ic_outline_location_on_24"
+                    android:gravity="center_horizontal"
+                    android:textColor="#2196F3"
+                    tools:text="Seattle, Washington" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_genres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:singleLine="true" />
-    </HorizontalScrollView>
+            </LinearLayout>
 
-    <HorizontalScrollView
-        android:id="@+id/hsvInstruments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hsvGenres"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvBio">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_instruments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:singleLine="true" />
-    </HorizontalScrollView>
+            <TextView
+                android:id="@+id/tvBio"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivProfilePic"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="13dp"
+                android:layout_toEndOf="@+id/ivProfilePic"
+                android:fontFamily="@font/cambay"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                tools:text="Here is my bio, I would probably look a little about myself here" />
 
 
-    <!--    <TextView-->
-<!--        android:id="@+id/tvGenres"-->
-<!--        android:layout_width="238dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/linearLayout"-->
-<!--        android:layout_alignStart="@+id/tvBio"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginStart="168dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:textAlignment="textEnd"-->
-<!--        android:textSize="15sp"-->
-<!--        tools:text="Genres: RnB , Pop, Reggae, Soca" />-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_below="@id/tvBio"
+                android:layout_alignStart="@+id/tvBio"
+                android:layout_alignEnd="@+id/tvBio"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-<!--    <TextView-->
-<!--        android:id="@+id/tvInstruments"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/tvGenres"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:textAlignment="textEnd"-->
-<!--        tools:text="Piano, Organ, Flute" />-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/following"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tvFollowing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        tools:text="100" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/followers"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tvFollowers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        tools:text="300" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/hsvInstruments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayout"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/tvBio">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_instruments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true" />
+            </HorizontalScrollView>
+
+
+            <Button
+                android:id="@+id/btnEditProfile"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_below="@+id/hsvInstruments"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="@string/edit_profile"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/btnFollow"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_below="@+id/hsvInstruments"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#03A9F4"
+                android:text="@string/follow"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProfilePosts"
         android:layout_width="match_parent"
         android:layout_height="462dp"
-        android:layout_below="@id/btnEditProfile"
+        android:layout_below="@id/cardView"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="-1dp" />
-
-    <Button
-        android:id="@+id/btnEditProfile"
-        android:layout_width="200dp"
-        android:layout_height="45dp"
-        android:layout_below="@+id/hsvInstruments"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="@string/edit_profile"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimary" />
-
-    <Button
-        android:id="@+id/btnFollow"
-        android:layout_width="200dp"
-        android:layout_height="45dp"
-        android:layout_below="@+id/hsvInstruments"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="#03A9F4"
-        android:text="@string/follow"
-        android:textAllCaps="false"
-        android:textColor="@color/white" />
 
 </RelativeLayout>
 
