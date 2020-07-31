@@ -9,12 +9,12 @@
         android:id="@+id/tvLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvInstruments"
-        android:layout_alignEnd="@+id/tvInstruments"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="0dp"
-        android:layout_toEndOf="@+id/ivProfilePic"
+        android:layout_below="@+id/tvName"
+        android:layout_alignEnd="@+id/tvName"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="-25dp"
+        android:drawableLeft="@drawable/ic_outline_location_on_24"
+        android:gravity="center_horizontal"
         android:textAlignment="textEnd"
         android:textColor="#2196F3"
         tools:text="Seattle, Washington" />
@@ -23,9 +23,9 @@
         android:id="@+id/toolbar_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/light_grey"
         android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@android:color/white"/>
+        app:titleTextColor="@android:color/white" />
 
     <ImageView
         android:id="@+id/ivProfilePic"
@@ -33,9 +33,8 @@
         android:layout_height="100dp"
         android:layout_below="@+id/toolbar_profile"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -43,9 +42,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_profile"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        android:fontFamily="@font/cabin"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         tools:text="Patrice Gill" />
 
@@ -53,37 +53,40 @@
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfilePic"
-        android:layout_alignEnd="@+id/ivProfilePic"
-        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvName"
+        android:layout_alignStart="@+id/tvName"
+        android:layout_alignEnd="@+id/tvName"
         android:layout_marginTop="0dp"
+        android:fontFamily="@font/cambay"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="3cmel" />
 
     <TextView
         android:id="@+id/tvBio"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvName"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
+        android:layout_below="@+id/ivProfilePic"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="13dp"
         android:layout_toEndOf="@+id/ivProfilePic"
-        android:textAlignment="textStart"
-        android:textSize="16sp"
+        android:fontFamily="@font/cambay"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textSize="14sp"
         tools:text="Here is my bio, I would probably look a little about myself here" />
 
     <TextView
         android:id="@+id/tvGenres"
-        android:layout_width="200dp"
+        android:layout_width="238dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvBio"
+        android:layout_below="@+id/tvLocation"
         android:layout_alignStart="@+id/tvBio"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:textAlignment="textEnd"
         android:textSize="15sp"
@@ -94,10 +97,8 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvGenres"
-        android:layout_alignStart="@+id/tvGenres"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:textAlignment="textEnd"
         tools:text="Piano, Organ, Flute" />
@@ -106,19 +107,19 @@
         android:id="@+id/rvProfilePosts"
         android:layout_width="match_parent"
         android:layout_height="462dp"
-        android:layout_below="@+id/btnEditProfile"
+        android:layout_below="@id/btnEditProfile"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="5dp" />
 
     <Button
         android:id="@+id/btnEditProfile"
-        android:layout_width="266dp"
-        android:layout_height="38dp"
-        android:layout_below="@+id/tvLocation"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/ivProfilePic"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/tvInstruments"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#FFFFFF"
         android:text="@string/edit_profile"
         android:textAllCaps="false"
@@ -126,16 +127,16 @@
 
     <Button
         android:id="@+id/btnFollow"
-        android:layout_width="266dp"
-        android:layout_height="38dp"
-        android:layout_below="@+id/tvLocation"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/ivProfilePic"
-        android:backgroundTint="#2196F3"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/tvInstruments"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
         android:text="@string/follow"
         android:textAllCaps="false"
-        android:textColor="#000000" />
+        android:textColor="@color/pink" />
 
 </RelativeLayout>
 
