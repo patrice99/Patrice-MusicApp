@@ -99,6 +99,9 @@ public class User {
     }
 
     public int getFollowingCount() {
+        if (parseUser.getJSONArray(KEY_FOLLOWING) == null){
+            return 0;
+        }
         return parseUser.getJSONArray(KEY_FOLLOWING).length();
     }
 
@@ -147,13 +150,7 @@ public class User {
 
 
     public List<String> getGenres() throws JSONException {
-       //get the JSONArray and parse through it to make a list
-        List<String> genres = new ArrayList<>();
-        JSONArray jsonArray = parseUser.getJSONArray(KEY_GENRE);
-        for (int i = 0 ; i < jsonArray.length(); i++){
-             genres.add(jsonArray.getString(i));
-        }
-        return genres;
+       return parseUser.getList(KEY_GENRE);
 
     }
 
@@ -169,12 +166,12 @@ public class User {
     }
 
     public List<String> getInstruments() throws JSONException {
-        return getParseUser().getList(KEY_INSTRUMENT);
+        return parseUser.getList(KEY_INSTRUMENT);
 
     }
 
     public void setInstrument(Instruments instrument){
-        ParseUser.getCurrentUser().addUnique(KEY_INSTRUMENT, instrument.toString());
+        parseUser.addUnique(KEY_INSTRUMENT, instrument.toString());
     }
 
     public void removeInstrument(Instruments instruments){
@@ -184,7 +181,7 @@ public class User {
             if (instrumentList.contains(instruments.toString())) {
                 instrumentList.remove(instruments.toString());
             }
-            ParseUser.getCurrentUser().put(KEY_INSTRUMENT, instrumentList);
+            parseUser.put(KEY_INSTRUMENT, instrumentList);
         }
 
     }
