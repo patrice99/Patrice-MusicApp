@@ -36,24 +36,15 @@ public class Followers extends ParseObject {
 
     }
 
-    public List<ParseUser>getFollowers(ParseUser subjectUser){
+    public static void getFollowers(ParseUser subjectUser, FindCallback callback){
         final List<Followers> follows = new ArrayList<>();
         final List<ParseUser> followers = new ArrayList<>();
         //query followers
         ParseQuery<Followers> query = ParseQuery.getQuery(Followers.class);
         query.whereEqualTo("subjectUser", subjectUser);
+        query.include(KEY_FOLLOWER);
         // execute the query
-        query.findInBackground(new FindCallback<Followers>() {
-            @Override
-            public void done(List<Followers> followersList, ParseException e) {
-                follows.addAll(followersList);
-
-            }
-        });
-
-        for (Followers follow : follows){
-            followers.add(follow.getFollower());
-        }
-        return followers;
+        query.findInBackground(callback);
     }
+
 }
