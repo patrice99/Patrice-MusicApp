@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.patrice_musicapp.R;
@@ -98,6 +99,13 @@ public class FeedFragment extends Fragment {
         //set layout manager on recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvFeedPosts.setLayoutManager(linearLayoutManager);
+
+        //turn off blinking when adapter is notified of a data set change
+        RecyclerView.ItemAnimator animator = rvFeedPosts.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
+
 
         //get the posts from the parse dashboard
         try {
