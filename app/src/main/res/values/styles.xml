@@ -13,4 +13,8 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="ChipTextApperance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

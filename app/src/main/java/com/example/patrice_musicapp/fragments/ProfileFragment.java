@@ -81,6 +81,7 @@ public class ProfileFragment extends Fragment {
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         }
         toolbar.setTitle("Profile");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.pink));
 
 
         //Get the bundle to determine user

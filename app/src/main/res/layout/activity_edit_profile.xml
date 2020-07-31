@@ -48,6 +48,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="@string/username">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -65,6 +66,7 @@
             android:layout_below="@+id/tlUsername"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="@string/name"
             app:errorEnabled="true">
 
@@ -83,6 +85,7 @@
             android:layout_below="@+id/tlName"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="@string/bio"
             app:errorEnabled="false">
 
@@ -100,6 +103,7 @@
             android:layout_below="@+id/tlBio"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="@string/location"
             app:errorEnabled="true">
 
@@ -111,39 +115,60 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <HorizontalScrollView
-            android:id="@+id/hsvGenres"
-            android:layout_width="match_parent"
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/tlGenre"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_below="@id/tlLocation"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--            android:hint="@string/what_genres_of_music_do_you_play">-->
+
+<!--            <AutoCompleteTextView-->
+<!--                android:id="@+id/filled_exposed_dropdown_Genres"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layoutDirection="inherit"-->
+<!--                android:inputType="text"-->
+<!--                android:layout_marginTop="30dp" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <com.hootsuite.nachos.NachoTextView
+            android:id="@+id/nacho_text_view_genres"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/tlLocation"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@+id/tvGenres">
+            android:layout_centerHorizontal="true"
+            android:hint="@string/what_genres_of_music_do_you_play"
+            app:chipBackground="@color/light_pink"
+            app:chipTextColor="@color/black"
+            app:chipTextSize="16dp"
+            app:chipHeight="30dp"
+            app:chipVerticalSpacing="3dp"/>
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_genres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleLine="true" />
-        </HorizontalScrollView>
 
-        <HorizontalScrollView
-            android:id="@+id/hsvInstruments"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlInstruments"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/hsvGenres"
-            android:layout_marginStart="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/nacho_text_view_genres"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/tvInstruments">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:hint="@string/what_instruments_do_you_play">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_instruments"
-                android:layout_width="wrap_content"
+            <AutoCompleteTextView
+                android:id="@+id/filled_exposed_dropdown_Instruments"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:singleLine="true" />
-        </HorizontalScrollView>
+                android:layoutDirection="inherit"
+                android:inputType="text"
+                android:layout_marginTop="30dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button
@@ -151,7 +176,7 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/hsvInstruments"
+            android:layout_below="@+id/tlInstruments"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:backgroundTint="#FFFFFF"
@@ -160,28 +185,6 @@
             android:text="@string/done"
             android:textColor="#2196F3" />
 
-        <TextView
-            android:id="@+id/tvGenres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tlLocation"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="false"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="-11dp"
-            android:text="Genres: "
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <TextView
-            android:id="@+id/tvInstruments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hsvGenres"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="false"
-            android:layout_marginStart="16dp"
-            android:text="Instruments: "
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -1,138 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/ivProfilePic"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_below="@+id/tvTitle"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/profile_pic"
-        tools:srcCompat="@tools:sample/avatars" />
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#FFFFFF"
+    android:layout_marginVertical="2dp"
+    app:cardElevation="0.8dp">
 
 
     <RelativeLayout
-        android:id="@+id/rlPostMedia"
-        android:layout_width="282dp"
-        android:layout_below="@id/tvTitle"
-        android:layout_toEndOf="@id/ivProfilePic"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:layout_height="170dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
         <ImageView
-            android:id="@+id/ivPostImage"
+            android:id="@+id/ivProfilePic"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_below="@+id/tvTitle"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/profile_pic"
+            tools:srcCompat="@tools:sample/avatars" />
+
+
+        <RelativeLayout
+            android:id="@+id/rlPostMedia"
             android:layout_width="282dp"
             android:layout_height="170dp"
+            android:layout_below="@id/tvTitle"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@id/ivProfilePic">
+
+            <ImageView
+                android:id="@+id/ivPostImage"
+                android:layout_width="282dp"
+                android:layout_height="170dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/postedimage"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <VideoView
+                android:id="@+id/vvPostVideo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/postedimage"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="Here is the title of my post" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivProfilePic"
+            android:layout_alignStart="@+id/ivProfilePic"
+            android:layout_alignEnd="@+id/ivProfilePic"
+            android:layout_marginStart="-15dp"
+            android:layout_marginTop="-11dp"
+            android:layout_marginEnd="-15dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            tools:text="username123" />
+
+        <TextView
+            android:id="@+id/tvCaption"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlPostMedia"
+            android:layout_alignStart="@+id/rlPostMedia"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:contentDescription="@string/postedimage"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="center"
+            tools:text="Here is the caption of my post" />
 
-        <VideoView
-            android:id="@+id/vvPostVideo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <TextView
+            android:id="@+id/tvTimeStamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCaption"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            tools:text="16th July 2020" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCaption"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_toStartOf="@+id/tvTimeStamp"
+            tools:text="Bridgetown, Barbados" />
+
+        <ImageView
+            android:id="@+id/ivLike"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/tvUsername"
+            android:layout_alignStart="@+id/ivProfilePic"
+            android:layout_alignEnd="@+id/ivProfilePic"
             android:layout_centerHorizontal="true"
-            android:contentDescription="@string/postedimage"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="22dp"
+            app:srcCompat="@drawable/ic_ufi_heart"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <TextView
+            android:id="@+id/tvLikeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivLike"
+            android:layout_alignStart="@+id/ivLike"
+            android:layout_alignEnd="@+id/ivLike"
+            android:layout_marginStart="-20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="-20dp"
+            android:gravity="center_horizontal"
+            tools:text="300 likes" />
     </RelativeLayout>
 
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:text="Here is the title of my post" />
-
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivProfilePic"
-        android:layout_alignStart="@+id/ivProfilePic"
-        android:layout_alignEnd="@+id/ivProfilePic"
-        android:layout_marginStart="-15dp"
-        android:layout_marginTop="-11dp"
-        android:layout_marginEnd="-15dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        tools:text="username123" />
-
-    <TextView
-        android:id="@+id/tvCaption"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlPostMedia"
-        android:layout_alignStart="@+id/rlPostMedia"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
-        android:textAlignment="center"
-        tools:text="Here is the caption of my post" />
-
-    <TextView
-        android:id="@+id/tvTimeStamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCaption"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
-        tools:text="16th July 2020" />
-
-    <TextView
-        android:id="@+id/tvLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCaption"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:layout_toStartOf="@+id/tvTimeStamp"
-        tools:text="Bridgetown, Barbados" />
-
-    <ImageView
-        android:id="@+id/ivLike"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_below="@+id/tvUsername"
-        android:layout_alignStart="@+id/ivProfilePic"
-        android:layout_alignEnd="@+id/ivProfilePic"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="22dp"
-        app:srcCompat="@drawable/ic_ufi_heart"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvLikeCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivLike"
-        android:layout_alignStart="@+id/ivLike"
-        android:layout_alignEnd="@+id/ivLike"
-        android:layout_marginStart="-20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="-20dp"
-        android:gravity="center_horizontal"
-        tools:text="300 likes" />
-
-
-</RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

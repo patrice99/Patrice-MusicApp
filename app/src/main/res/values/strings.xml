@@ -67,4 +67,6 @@
     <string name="sound_engineer">Sound Engineer</string>
     <string name="vocals">Vocals</string>
     <string name="posted_video">Posted Video</string>
+    <string name="what_genres_of_music_do_you_play">What genres of music do you play?</string>
+    <string name="what_instruments_do_you_play">What instruments do you play?</string>
 </resources>

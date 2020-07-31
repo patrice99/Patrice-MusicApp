@@ -57,7 +57,7 @@ public class OnboardingFragment2 extends Fragment {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(
                         getContext(),
-                        R.layout.dropdown_menu_countries,
+                        R.layout.dropdown_menu,
                         countries);
 
         editTextFilledExposedDropdown = view.findViewById(R.id.filled_exposed_dropdown);
