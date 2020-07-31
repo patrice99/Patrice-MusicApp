@@ -38,6 +38,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     private TextView tvLikeCount;
     private VideoView vvPostVideo;
     String addS = "";
+    private ParseUser user;
 
 
     @Override
@@ -51,6 +52,7 @@ public class PostDetailsActivity extends AppCompatActivity {
 
         //get the intent and post passed in
         post = getIntent().getParcelableExtra("post");
+        user = getIntent().getParcelableExtra("user");
 
         //find views
         ivProfilePic = findViewById(R.id.ivProfilePic);
@@ -67,7 +69,7 @@ public class PostDetailsActivity extends AppCompatActivity {
 
         //bind views
         tvTitle.setText(post.getTitle());
-        tvUsername.setText(post.getUser().getUsername());
+        tvUsername.setText(user.getUsername());
         tvCaption.setText(post.getCaption());
         tvTimeStamp.setText(post.getTimeStamp());
 
@@ -105,10 +107,10 @@ public class PostDetailsActivity extends AppCompatActivity {
         }
 
         //check if the user has a valid profilePic
-        ParseFile image2 = post.getUser().getParseFile("profileImage");
+        ParseFile image2 = user.getParseFile("profileImage");
         if (image2 != null) {
             Glide.with(this)
-                    .load(post.getUser().getParseFile("profileImage").getUrl())
+                    .load(user.getParseFile("profileImage").getUrl())
                     .circleCrop()
                     .into(ivProfilePic);
         } else {

@@ -55,6 +55,7 @@ public class FeedFragment extends Fragment {
     private ParseUser filterForUser;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private int page;
 
 
 
@@ -132,10 +133,11 @@ public class FeedFragment extends Fragment {
 
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+            public void onLoadMore(int pages, int totalItemsCount, RecyclerView view) {
                 //get the next 20 posts
                 try {
-                    queryPosts(page);
+                    page = pages;
+                    getUserFollowing();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -157,7 +159,7 @@ public class FeedFragment extends Fragment {
                 Log.i(TAG, "Got the followers successfully");
                 following.addAll(objects);
                 try {
-                    queryPosts(0);
+                    queryPosts(page);
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
