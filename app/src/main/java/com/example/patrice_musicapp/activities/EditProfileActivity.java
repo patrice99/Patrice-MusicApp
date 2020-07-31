@@ -5,8 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.text.style.ImageSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,7 +36,9 @@ import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
+import com.hootsuite.nachos.NachoTextView;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
@@ -39,6 +49,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,6 +70,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView tvTakePhoto;
     private TextView tvChoosePhoto;
+    private AutoCompleteTextView editTextFilledExposedDropdownGenres;
+    private AutoCompleteTextView editTextFilledExposedDropdownInstruments;
+    private int SpannedLength = 0,chipLength = 5;
+    private NachoTextView nachoTextViewGenres;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +96,10 @@ public class EditProfileActivity extends AppCompatActivity {
         etBio = findViewById(R.id.etBio);
         etLocation = findViewById(R.id.etLocation);
         btnDone = findViewById(R.id.btnDone);
+//        editTextFilledExposedDropdownGenres = findViewById(R.id.filled_exposed_dropdown_Genres);
+        editTextFilledExposedDropdownInstruments = findViewById(R.id.filled_exposed_dropdown_Instruments);
+        nachoTextViewGenres = findViewById(R.id.nacho_text_view_genres);
+
 
         bottomSheet = findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -126,24 +146,87 @@ public class EditProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        ArrayAdapter<Genres> genreAdapter = new ArrayAdapter<>
+                (this,
+                R.layout.dropdown_menu,
+                Arrays.asList(Genres.values()));
 
-        ChipGroup chipGroupGenres = findViewById(R.id.chip_group_genres);
-        List<Genres> genres = Arrays.asList(Genres.values());
-        for(Genres genre : genres) {
-            Chip chip = new Chip(EditProfileActivity.this);
-            chip.setText(genre.toString());
-            chip.isCheckable();
-            chipGroupGenres.addView(chip);
-        }
+//        editTextFilledExposedDropdownGenres.setAdapter(genreAdapter);
 
-        ChipGroup chipGroupInstruments = findViewById(R.id.chip_group_instruments);
-        List<Instruments> instruments = Arrays.asList(Instruments.values());
-        for(Instruments instrument: instruments) {
-            Chip chip = new Chip(EditProfileActivity.this);
-            chip.setText(instrument.toString());
-            chip.isCheckable();
-            chipGroupInstruments.addView(chip);
-        }
+        ArrayAdapter<Instruments> instrumentAdapter = new ArrayAdapter<>
+                (this,
+                        R.layout.dropdown_menu,
+                        Arrays.asList(Instruments.values()));
+
+        editTextFilledExposedDropdownInstruments.setAdapter(instrumentAdapter);
+
+        nachoTextViewGenres.setAdapter(genreAdapter);
+
+
+//        editTextFilledExposedDropdownGenres.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+//                ChipDrawable chip = ChipDrawable.createFromResource(EditProfileActivity.this, R.xml.chip);
+//                 Editable editable = editTextFilledExposedDropdownGenres.getText();
+//                chip.setText(editable.subSequence(SpannedLength,editable.length()));
+//                chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
+//                ImageSpan span = new ImageSpan(chip);
+//                editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                SpannedLength = editable.length();
+//
+//
+//                return true;
+//            }
+//        });
+
+//        editTextFilledExposedDropdownGenres.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ChipDrawable chip = ChipDrawable.createFromResource(EditProfileActivity.this, R.xml.chip);
+//                Editable editable = editTextFilledExposedDropdownGenres.getText();
+//                chip.setText(editable.subSequence(SpannedLength,editable.length()));
+//                chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
+//                ImageSpan span = new ImageSpan(chip);
+//                editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                SpannedLength = editable.length();
+//            }
+//        });
+
+//        editTextFilledExposedDropdownGenres.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if (charSequence.length() == SpannedLength - chipLength)
+//                {
+//                    SpannedLength = charSequence.length();
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if(editable.length() - SpannedLength == chipLength) {
+//                    ChipDrawable chip = ChipDrawable.createFromResource(EditProfileActivity.this, R.xml.chip);
+//                    chip.setText(editable.subSequence(SpannedLength,editable.length()));
+//                    chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
+//                    ImageSpan span = new ImageSpan(chip);
+//                    editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    SpannedLength = editable.length();
+//                }
+//
+//            }
+//        });
+//
+//        editTextFilledExposedDropdownInstruments.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+//                return false;
+//            }
+//        });
+
 
 
 
@@ -204,20 +287,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-
-        chipGroupGenres.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(ChipGroup group, @IdRes int checkedId) {
-                // Handle the chip group action.
-            }
-        });
-
-        chipGroupInstruments.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(ChipGroup group, @IdRes int checkedId) {
-                // Handle the chip group action.
-            }
-        });
 
 
 
