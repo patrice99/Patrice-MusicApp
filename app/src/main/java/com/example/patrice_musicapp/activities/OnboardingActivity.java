@@ -72,7 +72,7 @@ public class OnboardingActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pager.getCurrentItem() == 2) { // The last screen
+                if(pager.getCurrentItem() == 3) { // The last screen
                     finishOnboarding();
                 } else {
                     pager.setCurrentItem(
@@ -87,7 +87,7 @@ public class OnboardingActivity extends AppCompatActivity {
         indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                if(position == 2){
+                if(position == 3){
                     skip.setVisibility(View.GONE);
                     next.setText("Done");
                 } else {
