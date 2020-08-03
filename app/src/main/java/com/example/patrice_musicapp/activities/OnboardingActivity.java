@@ -15,6 +15,7 @@ import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment1;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment2;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment3;
+import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment4;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class OnboardingActivity extends AppCompatActivity {
@@ -41,6 +42,7 @@ public class OnboardingActivity extends AppCompatActivity {
                     case 0 : return new OnboardingFragment1();
                     case 1 : return new OnboardingFragment2();
                     case 2 : return new OnboardingFragment3();
+                    case 3 : return new OnboardingFragment4();
                     default: return null;
                 }
 
@@ -49,7 +51,7 @@ public class OnboardingActivity extends AppCompatActivity {
             @Override
             public int getCount() {
                 //number of onboarding screens
-                return 3;
+                return 4;
             }
         };
 
