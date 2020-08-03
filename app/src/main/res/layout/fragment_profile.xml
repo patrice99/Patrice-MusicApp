@@ -8,8 +8,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_toolbar"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_profile"
@@ -23,8 +23,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -208,19 +208,39 @@
 
             </androidx.cardview.widget.CardView>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tlChoice"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_marginTop="-8dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:padding="-5dp"
+                android:layout_below="@id/cardView">
+                <AutoCompleteTextView
+                    android:id="@+id/filled_exposed_dropdown"
+                    android:inputType="none"
+                    android:textSize="12sp"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvProfilePosts"
-            android:layout_width="match_parent"
-            android:layout_height="462dp"
-            android:layout_below="@id/cardView"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="-1dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProfilePosts"
+                android:layout_width="match_parent"
+                android:layout_height="462dp"
+                android:layout_below="@id/tlChoice"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="-1dp" />
 
         </RelativeLayout>
 

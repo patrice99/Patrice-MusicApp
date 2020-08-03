@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,6 +64,7 @@ public class ProfileFragment extends Fragment {
     private Button btnEditProfile;
     private Button btnFollow;
     private ChipGroup chipGroupInstruments;
+    private AutoCompleteTextView editTextFilledExposedDropdown;
     public static final int DISPLAY_LIMIT= 20;
     public static final String TAG = ProfileFragment.class.getSimpleName();
     private Followers follow = new Followers();
@@ -109,7 +112,25 @@ public class ProfileFragment extends Fragment {
         //query posts
         queryPosts(0);
 
+        editTextFilledExposedDropdown = view.findViewById(R.id.filled_exposed_dropdown);
 
+        String[] rvChoice = new String[] {"Posts", "Events"};
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
+                        getContext(),
+                        R.layout.dropdown_menu,
+                        rvChoice);
+        editTextFilledExposedDropdown.setText("Posts",false);
+        editTextFilledExposedDropdown.setAdapter(adapter);
+
+
+
+
+
+
+
+        //For ProfileDetails CardView
 
         ivProfilePic = view.findViewById(R.id.ivProfilePic);
         tvUsername = view.findViewById(R.id.tvUsername);

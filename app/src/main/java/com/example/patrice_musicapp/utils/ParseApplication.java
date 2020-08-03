@@ -30,7 +30,6 @@ public class ParseApplication extends Application {
 
         //register m model classes
         ParseObject.registerSubclass(Post.class);
-        ParseObject.registerSubclass(Portfolio.class);
         ParseObject.registerSubclass(Event.class);
         ParseObject.registerSubclass(Followers.class);
 
