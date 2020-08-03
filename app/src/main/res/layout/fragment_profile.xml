@@ -232,15 +232,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvProfileContent"
                 android:layout_width="match_parent"
-                android:layout_height="462dp"
+                android:layout_height="500dp"
                 android:layout_below="@id/tlChoice"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="1dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="-1dp" />
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="0dp" />
 
         </RelativeLayout>
 
