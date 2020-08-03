@@ -147,7 +147,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHo
             this.context = context;
             ivEventImage = itemView.findViewById(R.id.ivEventImage);
             ivHostProfilePic = itemView.findViewById(R.id.ivHostProfilePic);
-            tvEventName = itemView.findViewById(R.id.tvName);
+            tvEventName = itemView.findViewById(R.id.tvUsername);
             tvEventLocation = itemView.findViewById(R.id.tvEventLocation);
             tvEventDate = itemView.findViewById(R.id.tvEventDate);
             tvHostUsername = itemView.findViewById(R.id.tvHostUsername);

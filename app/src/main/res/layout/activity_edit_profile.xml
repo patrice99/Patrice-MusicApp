@@ -115,27 +115,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/tlGenre"-->
-<!--            android:layout_width="300dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_below="@id/tlLocation"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-<!--            android:hint="@string/what_genres_of_music_do_you_play">-->
-
-<!--            <AutoCompleteTextView-->
-<!--                android:id="@+id/filled_exposed_dropdown_Genres"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layoutDirection="inherit"-->
-<!--                android:inputType="text"-->
-<!--                android:layout_marginTop="30dp" />-->
-
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
-
         <com.hootsuite.nachos.NachoTextView
             android:id="@+id/nacho_text_view_genres"
             android:layout_width="300dp"

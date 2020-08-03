@@ -185,7 +185,7 @@ public class MapsFragment extends Fragment {
         tvDateTime = view.findViewById(R.id.tvDateTime);
         tvDescription = view.findViewById(R.id.tvDescription);
         tvHostUsername = view.findViewById(R.id.tvHostUsername);
-        tvName = view.findViewById(R.id.tvName);
+        tvName = view.findViewById(R.id.tvUsername);
         ivEventImage = view.findViewById(R.id.ivEventImage);
         ivHostProfilePic = view.findViewById(R.id.ivHostProfilePic);
         bottomSheetEvent = view.findViewById(R.id.bottom_sheet_event);
