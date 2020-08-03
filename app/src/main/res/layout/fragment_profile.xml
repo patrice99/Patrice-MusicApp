@@ -230,7 +230,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvProfilePosts"
+                android:id="@+id/rvProfileContent"
                 android:layout_width="match_parent"
                 android:layout_height="462dp"
                 android:layout_below="@id/tlChoice"

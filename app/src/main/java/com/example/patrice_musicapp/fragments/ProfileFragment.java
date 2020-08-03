@@ -3,12 +3,14 @@ package com.example.patrice_musicapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -27,12 +29,15 @@ import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.SettingsActivity;
+import com.example.patrice_musicapp.adapters.EventAdapter;
 import com.example.patrice_musicapp.adapters.PostAdapter;
+import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Followers;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputLayout;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -51,9 +56,11 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
     private User user;
     private Toolbar toolbar;
-    private RecyclerView rvProfilePosts;
-    private PostAdapter userAdapter;
+    private RecyclerView rvProfileContent;
+    private PostAdapter userPostAdapter;
+    private EventAdapter userEventsAdapter;
     private List<Post> userPosts;
+    private List<Event> userEvents;
     private TextView tvUsername;
     private ImageView ivProfilePic;
     private TextView tvName;
@@ -68,6 +75,7 @@ public class ProfileFragment extends Fragment {
     public static final int DISPLAY_LIMIT= 20;
     public static final String TAG = ProfileFragment.class.getSimpleName();
     private Followers follow = new Followers();
+    private String selected;
 
 
     @Override
@@ -96,38 +104,32 @@ public class ProfileFragment extends Fragment {
             user = new User(bundle.getParcelable("user"));
         }
 
-        rvProfilePosts = view.findViewById(R.id.rvProfilePosts);
-
-        userPosts = new ArrayList<>();
-
-        //instantiate adapter
-        userAdapter = new PostAdapter(getContext(), userPosts, onClickListener);
-        //set adapter on recycler view
-        rvProfilePosts.setAdapter(userAdapter);
-
-        //set layout manager on recycler view
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvProfilePosts.setLayoutManager(linearLayoutManager);
-
-        //query posts
-        queryPosts(0);
-
+        //for menu to determine which adapter to set on the recycler view
         editTextFilledExposedDropdown = view.findViewById(R.id.filled_exposed_dropdown);
-
-        String[] rvChoice = new String[] {"Posts", "Events"};
-
+        String[] profileChoice = new String[] {"Posts", "Events"};
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(
                         getContext(),
                         R.layout.dropdown_menu,
-                        rvChoice);
-        editTextFilledExposedDropdown.setText("Posts",false);
+                        profileChoice);
+        editTextFilledExposedDropdown.setText("Posts",true);
+        selected = "Posts";
         editTextFilledExposedDropdown.setAdapter(adapter);
 
 
+        rvProfileContent = view.findViewById(R.id.rvProfileContent);
+        //set layout manager on recycler view
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvProfileContent.setLayoutManager(linearLayoutManager);
 
-
-
+        checkChoice();
+        editTextFilledExposedDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selected = editTextFilledExposedDropdown.getText().toString();
+                checkChoice();
+            }
+        });
 
 
         //For ProfileDetails CardView
@@ -295,6 +297,31 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void checkChoice() {
+        switch (selected){
+            case "Posts":
+                userPosts = new ArrayList<>();
+                //instantiate adapter
+                userPostAdapter = new PostAdapter(getContext(), userPosts, onClickListenerPost);
+                //set adapter on recycler view
+                rvProfileContent.setAdapter(userPostAdapter);
+                //query posts
+                queryPosts(0);
+                break;
+            case "Events":
+                userEvents = new ArrayList<>();
+                //instantiate adapter
+                userEventsAdapter = new EventAdapter(getContext(), userEvents, onClickListenerEvent);
+                //set adapter on recycler view
+                rvProfileContent.setAdapter(userEventsAdapter);
+
+                //query events
+                queryEvents(0);
+                break;
+        }
+
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -328,15 +355,38 @@ public class ProfileFragment extends Fragment {
                     Log.i(TAG, "Post: " + post.getCaption() + " Username: " + post.getUser().getUsername());
                 }
                 if(page == 0) {
-                    userAdapter.clear();
+                    userPostAdapter.clear();
                 }
                 userPosts.addAll(posts);
-                userAdapter.notifyDataSetChanged();
+                userPostAdapter.notifyDataSetChanged();
             }
         }, null);
     }
 
-    PostAdapter.onClickListener onClickListener = new PostAdapter.onClickListener() {
+
+    protected void queryEvents(final int page) {
+        Event.query(page, DISPLAY_LIMIT, user.getParseUser(), new FindCallback<Event>() {
+            @Override
+            public void done(List<Event> events, ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "Issue with getting events", e);
+                    return;
+                }
+
+                for (Event event: events){
+                    Log.i(TAG, "Event" + event.getName() + "Host: " + event.getHost().getUsername());
+                }
+                if (page == 0) {
+                    userEventsAdapter.clear();
+                }
+
+                userEvents.addAll(events);
+                userEventsAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    PostAdapter.onClickListener onClickListenerPost = new PostAdapter.onClickListener() {
         @Override
         public void onProfilePicAction(int position) {
             //do nothing
@@ -358,4 +408,10 @@ public class ProfileFragment extends Fragment {
         }
     };
 
+    EventAdapter.onClickListener onClickListenerEvent = new EventAdapter.onClickListener() {
+        @Override
+        public void onEventClick(int position) {
+
+        }
+    };
 }

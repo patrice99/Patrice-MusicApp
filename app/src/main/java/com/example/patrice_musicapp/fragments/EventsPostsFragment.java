@@ -56,7 +56,7 @@ public class EventsPostsFragment extends Fragment {
     }
 
     private void queryEvents(final int page) {
-        Event.query(page, DISPLAY_LIMIT, new FindCallback<Event>() {
+        Event.query(page, DISPLAY_LIMIT, null, new FindCallback<Event>() {
             @Override
             public void done(List<Event> events, ParseException e) {
                 if (e != null){

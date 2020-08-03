@@ -77,9 +77,12 @@ public class Event extends ParseObject {
         put(KEY_DATE, date);
     }
 
-    public static void query(int page, int limit, FindCallback callback){
+    public static void query(int page, int limit, ParseUser filterForUser, FindCallback callback){
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.KEY_HOST);
+        if(filterForUser != null) {
+            query.whereEqualTo(KEY_HOST, filterForUser);
+        }
         query.setLimit(limit);
         query.setSkip(page * limit);
         query.addDescendingOrder(Event.KEY_CREATED_AT);

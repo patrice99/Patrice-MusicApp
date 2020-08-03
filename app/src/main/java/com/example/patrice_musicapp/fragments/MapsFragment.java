@@ -265,7 +265,7 @@ public class MapsFragment extends Fragment {
     }
 
     private void queryEvents(final int page, final GoogleMap googleMap) {
-        Event.query(page, DISPLAY_LIMIT, new FindCallback<Event>() {
+        Event.query(page, DISPLAY_LIMIT,null,  new FindCallback<Event>() {
             @Override
             public void done(List<Event> events, ParseException e) {
                 if (e != null) {
