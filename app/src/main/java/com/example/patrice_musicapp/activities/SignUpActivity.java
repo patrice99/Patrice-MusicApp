@@ -56,7 +56,6 @@ public class SignUpActivity extends AppCompatActivity {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast.makeText(SignUpActivity.this, "Sign up Successful!", Toast.LENGTH_SHORT).show();
                     goOnboarding();
                 } else {
                     Log.e(TAG, "Sign Up Failed", e);
