@@ -3,13 +3,8 @@ package com.example.patrice_musicapp.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +22,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
@@ -38,7 +31,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -47,16 +39,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 public class MapsFragment extends Fragment {
     private static final int DISPLAY_LIMIT = 20;
@@ -140,23 +129,9 @@ public class MapsFragment extends Fragment {
 
 
                             if (user.getImage()!= null) {
-//                                googleMap.addMarker(new MarkerOptions()
-//                                        .position(latLng)
-//                                        .title(user.getUsername())
-//                                        .icon(BitmapDescriptorFactory.fromFile(user.getImage().getUrl())));
-                            } else {
-//                                Drawable drawable = getResources().getDrawable(R.drawable.ic_person_white_24dp);
-//                                Canvas canvas = new Canvas();
-//                                Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-//                                canvas.setBitmap(bitmap);
-//                                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-//                                drawable.draw(canvas);
-//                                BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(bitmap);
-//                                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_person_outline_white_24dp);
-//                                googleMap.addMarker(new MarkerOptions()
-//                                        .position(latLng)
-//                                        .title(user.getUsername())
-//                                        .icon(icon));
+
+                            } else{
+
                             }
                         }
                     }

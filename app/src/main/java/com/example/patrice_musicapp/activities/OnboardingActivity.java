@@ -1,21 +1,20 @@
 package com.example.patrice_musicapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment1;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment2;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment3;
-import com.google.android.material.tabs.TabLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class OnboardingActivity extends AppCompatActivity {

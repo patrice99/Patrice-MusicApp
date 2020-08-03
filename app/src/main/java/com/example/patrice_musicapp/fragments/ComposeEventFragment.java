@@ -112,10 +112,6 @@ public class ComposeEventFragment extends Fragment {
                 }
                 //get the user
                 ParseUser currentUser = ParseUser.getCurrentUser();
-//                if(ImageUtil.photoFile == null || ivEventImage.getDrawable() == null) {
-//                    Toast.makeText(getContext(), "There is no image", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
                 //save the location
                 String locationString = etLocation.getText().toString();
                 ParseGeoPoint location = null;

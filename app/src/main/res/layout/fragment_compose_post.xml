@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".activities.ComposeActivity">
 
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="-3dp"
+        android:layout_marginBottom="50dp"
+        android:visibility="invisible" />
+
 
     <RelativeLayout
         android:id="@+id/relLayout"

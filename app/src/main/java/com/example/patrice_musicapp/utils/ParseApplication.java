@@ -5,7 +5,6 @@ import android.app.Application;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Followers;
-import com.example.patrice_musicapp.models.Portfolio;
 import com.example.patrice_musicapp.models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;

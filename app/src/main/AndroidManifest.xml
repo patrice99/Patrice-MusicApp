@@ -27,16 +27,6 @@
             android:name=".utils.ParseApplication"
             android:foregroundServiceType="location" />
 
-        <activity android:name=".activities.SearchActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -44,7 +34,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".activities.EventDetailsActivity" />
         <activity android:name=".activities.PostDetailsActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.EditProfileActivity" />

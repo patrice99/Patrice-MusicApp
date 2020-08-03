@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -48,6 +49,8 @@ public class ComposePostFragment extends Fragment {
     private Button btnSubmit;
     private Button btnGallery;
     private VideoView mVideoView;
+    private ProgressBar pb;
+
 
     @Nullable
     @Override
@@ -70,6 +73,7 @@ public class ComposePostFragment extends Fragment {
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnGallery = view.findViewById(R.id.btnGallery);
         mVideoView = view.findViewById(R.id.videoView);
+        pb = view.findViewById(R.id.pbLoading);
 
         mVideoView.setVisibility(View.GONE);
         ivPostImage.setImageDrawable(getResources().getDrawable(R.drawable.image_placeholder));
@@ -186,6 +190,7 @@ public class ComposePostFragment extends Fragment {
         if (videoFile != null) {
             post.setVideo(new ParseFile(videoFile));
         }
+        pb.setVisibility(ProgressBar.VISIBLE);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -197,6 +202,7 @@ public class ComposePostFragment extends Fragment {
                 Log.i(TAG, "Post save was successful!");
                 etCaption.setText(""); // clear out edit text so user does not save the same post twice
                 ivPostImage.setImageResource(0); //clear the image view
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }

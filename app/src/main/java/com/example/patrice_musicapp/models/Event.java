@@ -1,14 +1,11 @@
 package com.example.patrice_musicapp.models;
 
-import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 
-import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.google.android.gms.maps.MapFragment;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;

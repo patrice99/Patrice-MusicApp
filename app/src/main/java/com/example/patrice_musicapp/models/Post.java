@@ -4,29 +4,22 @@ package com.example.patrice_musicapp.models;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.text.format.DateUtils;
-import android.util.Log;
 
 import com.parse.FindCallback;
-import com.parse.ParseACL;
 import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -106,11 +99,6 @@ public class Post extends ParseObject {
             e.printStackTrace();
         }
 
-        //shortened form of time stamp
-//        String[] num = relativeDate.split(" ");
-//        relativeDate = num[0] + num[1].charAt(0);
-
-
 
         return relativeDate;
     }
@@ -119,17 +107,6 @@ public class Post extends ParseObject {
         return (int) getNumber(KEY_LIKES_COUNT);
     }
 
-    public void setLikesCount(int likesCount){
-        put(KEY_LIKES_COUNT, likesCount);
-    }
-
-    public boolean getisNotice() {
-        return getBoolean(KEY_IS_NOTICE);
-    }
-
-    public void setIsNotice(boolean bool){
-        put(KEY_IS_NOTICE, bool);
-    }
 
     public ParseGeoPoint getLocation(){
         return getParseGeoPoint(KEY_LOCATION);

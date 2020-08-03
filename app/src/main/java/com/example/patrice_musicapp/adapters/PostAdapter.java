@@ -7,16 +7,13 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +22,6 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
-import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.activities.PostDetailsActivity;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.utils.MediaUtil;

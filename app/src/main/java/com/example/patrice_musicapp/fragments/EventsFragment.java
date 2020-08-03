@@ -1,8 +1,13 @@
 package com.example.patrice_musicapp.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,16 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
-import com.example.patrice_musicapp.activities.SettingsActivity;
 import com.google.android.material.tabs.TabLayout;
 
 public class EventsFragment extends Fragment {
