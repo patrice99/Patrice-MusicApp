@@ -22,19 +22,19 @@
             android:id="@+id/skip"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="20dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_weight="3"
-            android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/skip" />
+            android:text="@string/skip"
+            android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
         <Button
             android:id="@+id/next"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="20dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_weight="3"
-            android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/next" />
+            android:text="@string/next"
+            android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
     </LinearLayout>
 
@@ -43,9 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/navigation"
-        android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
         app:stl_dividerThickness="1dp"
-        app:stl_indicatorColor="#1e88e5"/>
+        app:stl_indicatorColor="#1e88e5" />
 
 </RelativeLayout>

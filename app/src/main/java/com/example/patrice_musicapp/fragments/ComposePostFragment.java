@@ -27,6 +27,7 @@ import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
 import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.models.Post;
+import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -180,7 +181,7 @@ public class ComposePostFragment extends Fragment {
 
 
 
-    private void savePosts(String caption, ParseUser currentUser, File photoFile, final File videoFile) {
+    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile) {
         Post post = new Post();
         post.setCaption(caption);
         if (photoFile != null) {
@@ -203,6 +204,8 @@ public class ComposePostFragment extends Fragment {
                 etCaption.setText(""); // clear out edit text so user does not save the same post twice
                 ivPostImage.setImageResource(0); //clear the image view
                 pb.setVisibility(ProgressBar.INVISIBLE);
+                User user = new User(currentUser);
+                user.setPostCount(user.getPostCount() + 1);
             }
         });
     }

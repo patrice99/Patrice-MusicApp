@@ -32,13 +32,14 @@ public class User {
     public static final String KEY_BIO = "bio";
     public static final String KEY_POST_COUNT = "postCount";
     public static final String KEY_LOCATION = "location";
-    public static final String KEY_FOLLOWERS = "followers";
     public static final String KEY_FOLLOWING = "following";
     public static final String KEY_GENRE = "genre";
     public static final String KEY_INSTRUMENT = "instrument";
     public static final String KEY_HOUR_RATE = "hourRate";
     public static final String KEY_SOLO_ARTIST = "soloArtist";
     public static final String KEY_NAME = "name";
+    public static final String KEY_USERNAME = "username";
+
 
     public User() {
         parseUser = ParseUser.getCurrentUser();
@@ -244,5 +245,15 @@ public class User {
             }
         }
         return false;
+    }
+
+    public static void queryUsers(int limit, ParseUser filterForUser, FindCallback callback){
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        if (filterForUser != null) {
+            query.whereNotEqualTo(KEY_USERNAME, filterForUser);
+        }
+        query.setLimit(limit);
+        query.addDescendingOrder(KEY_POST_COUNT);
+        query.findInBackground(callback);
     }
 }

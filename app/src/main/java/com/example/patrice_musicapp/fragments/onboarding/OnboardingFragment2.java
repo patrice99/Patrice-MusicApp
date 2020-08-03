@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class OnboardingFragment2 extends Fragment {
     private AutoCompleteTextView editTextFilledExposedDropdown;
     private Button btnSave;
     private EditText etCity;
+    private boolean isSaved;
 
 
     @Override
@@ -65,6 +67,20 @@ public class OnboardingFragment2 extends Fragment {
         etCity = view.findViewById(R.id.etCity);
 
         editTextFilledExposedDropdown.setAdapter(adapter);
+        editTextFilledExposedDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                btnSave.setText("Save");
+                btnSave.setBackgroundColor(getResources().getColor(R.color.white));
+            }
+        });
+        etCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnSave.setText("Save");
+                btnSave.setBackgroundColor(getResources().getColor(R.color.white));
+            }
+        });
 
         //set click listeners
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +100,8 @@ public class OnboardingFragment2 extends Fragment {
                             Log.e(TAG, "Issue with saving new user's location", e);
                         }
                         Log.i(TAG, "User's location saved successfully");
+                        btnSave.setText("Saved!");
+                        btnSave.setBackgroundColor(getResources().getColor(R.color.light_grey));
                     }
                 });
             }

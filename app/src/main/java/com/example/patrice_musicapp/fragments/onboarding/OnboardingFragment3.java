@@ -49,6 +49,8 @@ public class OnboardingFragment3 extends Fragment {
                             Log.e(TAG, "Issues with saving instruments", e);
                         }
                         Log.i(TAG, "Instruments saved sucessfully");
+                        btnSave.setText("Saved!");
+                        btnSave.setBackgroundColor(getResources().getColor(R.color.light_grey));
 
                     }
                 });
@@ -61,6 +63,8 @@ public class OnboardingFragment3 extends Fragment {
     CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton view, boolean checked) {
+            btnSave.setText("Save");
+            btnSave.setBackgroundColor(getResources().getColor(R.color.white));
             switch (view.getId()) {
                 case R.id.cbBassGuitar:
                     if (checked) {
