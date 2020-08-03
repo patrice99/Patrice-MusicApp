@@ -134,7 +134,7 @@ public class ProfileFragment extends Fragment {
 
         ivProfilePic = view.findViewById(R.id.ivProfilePic);
         tvUsername = view.findViewById(R.id.tvUsername);
-        tvName = view.findViewById(R.id.tvUsername);
+        tvName = view.findViewById(R.id.tvName);
         tvLocation = view.findViewById(R.id.tvLocation);
         tvBio = view.findViewById(R.id.tvBio);
         tvFollowers = view.findViewById(R.id.tvFollowers);
