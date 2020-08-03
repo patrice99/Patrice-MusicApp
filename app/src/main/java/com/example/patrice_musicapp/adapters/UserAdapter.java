@@ -17,15 +17,23 @@ import com.example.patrice_musicapp.models.User;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context context;
     private List<ParseUser> users;
+    private onClickListener clickListener;
 
-    public UserAdapter(Context context, List<ParseUser> users){
+    public interface onClickListener {
+        void onFollowClick(int position);
+    }
+
+    public UserAdapter(Context context, List<ParseUser> users, onClickListener clickListener){
         this.context = context;
         this.users = users;
+        this.clickListener = clickListener;
 
     }
 
@@ -79,10 +87,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvUsername.setText(user.getUsername());
             tvBio.setText(user.getBio());
 
+            final User subjectUser = new User(ParseUser.getCurrentUser());
+            final User user2follow = new User(user.getParseUser());
+            try {
+                if(subjectUser.isFollowed(user2follow)) {
+                    //change color to green
+                    btnFollow.setBackgroundColor(context.getResources().getColor(R.color.green));
+                    //change text to following
+                    btnFollow.setText(context.getResources().getString(R.string.following));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    clickListener.onFollowClick(getAdapterPosition());
                 }
             });
 
