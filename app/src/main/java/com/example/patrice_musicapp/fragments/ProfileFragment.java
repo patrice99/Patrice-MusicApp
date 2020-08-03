@@ -3,7 +3,6 @@ package com.example.patrice_musicapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,7 +36,6 @@ import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.textfield.TextInputLayout;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -301,21 +299,14 @@ public class ProfileFragment extends Fragment {
         switch (selected){
             case "Posts":
                 userPosts = new ArrayList<>();
-                //instantiate adapter
                 userPostAdapter = new PostAdapter(getContext(), userPosts, onClickListenerPost);
-                //set adapter on recycler view
                 rvProfileContent.setAdapter(userPostAdapter);
-                //query posts
                 queryPosts(0);
                 break;
             case "Events":
                 userEvents = new ArrayList<>();
-                //instantiate adapter
                 userEventsAdapter = new EventAdapter(getContext(), userEvents, onClickListenerEvent);
-                //set adapter on recycler view
                 rvProfileContent.setAdapter(userEventsAdapter);
-
-                //query events
                 queryEvents(0);
                 break;
         }
