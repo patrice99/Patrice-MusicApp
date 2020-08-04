@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlYoutubeUrl"
+        android:id="@+id/tlInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -12,7 +12,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etYoutubeURL"
+            android:id="@+id/etInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/youtube_start_url"

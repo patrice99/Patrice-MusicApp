@@ -65,6 +65,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvUsername;
     private ImageView ivProfilePic;
     private ImageView ivYoutube;
+    private ImageView ivInstagram;
     private TextView tvName;
     private TextView tvLocation;
     private TextView tvBio;
@@ -147,6 +148,7 @@ public class ProfileFragment extends Fragment {
         btnFollow = view.findViewById(R.id.btnFollow);
         chipGroupInstruments = view.findViewById(R.id.chip_group_instruments);
         ivYoutube = view.findViewById(R.id.ivYoutube);
+        ivInstagram = view.findViewById(R.id.ivInstagram);
 
 
 
@@ -309,6 +311,27 @@ public class ProfileFragment extends Fragment {
                     try {
                        getContext().startActivity(webIntent);
                     } catch (ActivityNotFoundException ex) {
+                    }
+                }
+            });
+        }
+
+        if(user.getInstagramUsername() == null){
+            ivInstagram.setVisibility(View.GONE);
+        } else {
+            ivInstagram.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Uri uri = Uri.parse("http://instagram.com/_u/" + user.getInstagramUsername());
+                    Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+                    likeIng.setPackage("com.instagram.android");
+
+                    try {
+                        startActivity(likeIng);
+                    } catch (ActivityNotFoundException e) {
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("http://instagram.com/" + user.getInstagramUsername())));
                     }
                 }
             });

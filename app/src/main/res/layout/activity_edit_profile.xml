@@ -171,10 +171,16 @@
 
 
             <ImageButton
-                android:id="@+id/youtubeButton"
+                android:id="@+id/btnYoutube"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/youtube_icon" />
+
+            <ImageButton
+                android:id="@+id/btnInstagram"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/instagram_icon"/>
 
         </LinearLayout>
 

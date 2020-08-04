@@ -40,6 +40,8 @@ public class User {
     public static final String KEY_NAME = "name";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_YOUTUBE = "youtube";
+    public static final String KEY_IG_USERNAME = "igUsername";
+
 
 
     public User() {
@@ -194,6 +196,15 @@ public class User {
 
     public void setYoutubeUrl(String url){
         parseUser.put(KEY_YOUTUBE, url);
+    }
+
+    public String getInstagramUsername() {
+        return parseUser.getString(KEY_IG_USERNAME);
+    }
+
+    public void setInstagramUsername(String username) {
+        parseUser.put(KEY_IG_USERNAME, username);
+
     }
 
     public float getHourRate() {

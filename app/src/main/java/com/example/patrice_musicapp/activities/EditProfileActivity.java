@@ -54,7 +54,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private User user;
     private ImageView ivProfilePic;
-    private ImageButton youtubeButton;
+    private ImageButton btnYoutube;
+    private ImageButton btnInstagram;
     private TextView tvChangePhoto;
     private EditText etName;
     private EditText etUsername;
@@ -91,7 +92,8 @@ public class EditProfileActivity extends AppCompatActivity {
         btnDone = findViewById(R.id.btnDone);
         editTextFilledExposedDropdownInstruments = findViewById(R.id.filled_exposed_dropdown_Instruments);
         nachoTextViewGenres = findViewById(R.id.nacho_text_view_genres);
-        youtubeButton = findViewById(R.id.youtubeButton);
+        btnYoutube = findViewById(R.id.btnYoutube);
+        btnInstagram = findViewById(R.id.btnInstagram);
 
 
         bottomSheet = findViewById(R.id.bottom_sheet);
@@ -217,10 +219,17 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        youtubeButton.setOnClickListener(new View.OnClickListener() {
+        btnYoutube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popUpEditText();
+                popUpEditText(0);
+            }
+        });
+
+        btnInstagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popUpEditText(1);
             }
         });
 
@@ -282,27 +291,48 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
 
-    private void popUpEditText() {
+    private void popUpEditText(int indicator) {
         final LayoutInflater inflater = this.getLayoutInflater();
         final View dialogueView = inflater.inflate(R.layout.custom_dialogue, null);
-        final TextInputEditText input = dialogueView.findViewById(R.id.etYoutubeURL);
+        final TextInputEditText input = dialogueView.findViewById(R.id.etInput);
 
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Enter your YouTube Channel URL")
-                .setView(dialogueView)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        user.setYoutubeUrl(input.getText().toString());
-                    }
-                })
-                .show();
+        if (indicator == 0) {
+            input.setText(getResources().getString(R.string.youtube_start_url));
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Enter your YouTube Channel URL")
+                    .setView(dialogueView)
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            user.setYoutubeUrl(input.getText().toString());
+                        }
+                    })
+                    .show();
+        } else {
+            input.setText("");
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Enter your Instagram Username")
+                    .setView(dialogueView)
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            user.setInstagramUsername(input.getText().toString());
+                        }
+                    })
+                    .show();
+        }
     }
 
 

@@ -199,6 +199,14 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:background="@drawable/youtube_icon2" />
+
+                        <ImageView
+                            android:id="@+id/ivInstagram"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:scaleType="fitCenter"
+                            android:padding="5dp"
+                            android:src="@drawable/instagram_icon"/>
                     </LinearLayout>
 
                     <HorizontalScrollView
