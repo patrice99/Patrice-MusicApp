@@ -32,6 +32,7 @@ import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -61,6 +62,7 @@ public class MapsFragment extends Fragment {
     private List<Event> allEvents = new ArrayList<>();
     private User user = new User(ParseUser.getCurrentUser());
     private Event event;
+    private LatLng location;
     private LinearLayout bottomSheetEvent;
     private BottomSheetBehavior bottomSheetEventBehavior;
     private FusedLocationProviderClient fusedLocationClient;
@@ -97,6 +99,9 @@ public class MapsFragment extends Fragment {
     private void addMarkers(final GoogleMap googleMap) {
         if (event != null) {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude()), 15));
+        } else if (location != null){
+            bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
         } else {
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             //pan camera to the location of the user. make this marker green
@@ -204,9 +209,13 @@ public class MapsFragment extends Fragment {
         //Get the bundle to determine if bottom navigation sheet is pulled up or not
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            event = bundle.getParcelable("event");
-            bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            bindViews();
+            if (bundle.getParcelable("event") != null) {
+                event = bundle.getParcelable("event");
+                bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bindViews();
+            } else {
+                location = bundle.getParcelable("location");
+            }
             //change camera view on Map
         } else {
             bottomSheetEventBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);

@@ -2,6 +2,7 @@ package com.example.patrice_musicapp.fragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +39,7 @@ import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Followers;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.parse.DeleteCallback;
@@ -295,6 +298,21 @@ public class ProfileFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
+        tvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //go to maps fragment at that location
+                LatLng location = new LatLng(user.getLocation().getLatitude(), user.getLocation().getLongitude());
+                Fragment newFragment = new MapsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("location", location);
+                newFragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.flContainer, newFragment);
+                transaction.commit();
+            }
+        });
 
         if(user.getYoutubeUrl() == null){
             ivYoutube.setVisibility(View.GONE);
