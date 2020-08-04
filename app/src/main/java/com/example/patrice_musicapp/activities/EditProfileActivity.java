@@ -283,8 +283,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
     private void popUpEditText() {
-        LayoutInflater inflater = this.getLayoutInflater();
+        final LayoutInflater inflater = this.getLayoutInflater();
         final View dialogueView = inflater.inflate(R.layout.custom_dialogue, null);
+        final TextInputEditText input = dialogueView.findViewById(R.id.etYoutubeURL);
+
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Enter your YouTube Channel URL")
                 .setView(dialogueView)
@@ -297,7 +299,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //save youtube url to Parse as String
+                        user.setYoutubeUrl(input.getText().toString());
                     }
                 })
                 .show();

@@ -1,6 +1,8 @@
 package com.example.patrice_musicapp.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.EditProfileActivity;
+import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.activities.SettingsActivity;
 import com.example.patrice_musicapp.adapters.EventAdapter;
 import com.example.patrice_musicapp.adapters.PostAdapter;
@@ -61,6 +64,7 @@ public class ProfileFragment extends Fragment {
     private List<Event> userEvents;
     private TextView tvUsername;
     private ImageView ivProfilePic;
+    private ImageView ivYoutube;
     private TextView tvName;
     private TextView tvLocation;
     private TextView tvBio;
@@ -142,6 +146,7 @@ public class ProfileFragment extends Fragment {
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
         btnFollow = view.findViewById(R.id.btnFollow);
         chipGroupInstruments = view.findViewById(R.id.chip_group_instruments);
+        ivYoutube = view.findViewById(R.id.ivYoutube);
 
 
 
@@ -282,6 +287,7 @@ public class ProfileFragment extends Fragment {
 
                 }
             });
+
         }
 
         if (user.getLocation()!= null && (user.getLocation().getLatitude() != 0.0 && user.getLocation().getLongitude() != 0.0)) {
@@ -290,6 +296,22 @@ public class ProfileFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        if(user.getYoutubeUrl() == null){
+            ivYoutube.setVisibility(View.GONE);
+        } else {
+            ivYoutube.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(user.getYoutubeUrl()));
+                    try {
+                       getContext().startActivity(webIntent);
+                    } catch (ActivityNotFoundException ex) {
+                    }
+                }
+            });
         }
 
 

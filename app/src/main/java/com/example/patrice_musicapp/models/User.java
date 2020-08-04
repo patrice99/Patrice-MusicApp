@@ -39,6 +39,7 @@ public class User {
     public static final String KEY_SOLO_ARTIST = "soloArtist";
     public static final String KEY_NAME = "name";
     public static final String KEY_USERNAME = "username";
+    public static final String KEY_YOUTUBE = "youtube";
 
 
     public User() {
@@ -187,6 +188,14 @@ public class User {
 
     }
 
+    public String getYoutubeUrl() {
+        return parseUser.getString(KEY_YOUTUBE);
+    }
+
+    public void setYoutubeUrl(String url){
+        parseUser.put(KEY_YOUTUBE, url);
+    }
+
     public float getHourRate() {
         return (float) parseUser.getNumber(KEY_HOUR_RATE);
     }
@@ -256,4 +265,5 @@ public class User {
         query.addDescendingOrder(KEY_POST_COUNT);
         query.findInBackground(callback);
     }
+
 }
