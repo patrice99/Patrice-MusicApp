@@ -31,6 +31,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -91,6 +92,7 @@ public class MapsFragment extends Fragment {
         if (event != null) {
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(event.getLocation().getLatitude(), event.getLocation().getLongitude()), 15));
         } else {
+            googleMap.getUiSettings().setZoomControlsEnabled(true);
             //pan camera to the location of the user. make this marker green
             LatLng userLatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
             googleMap.addMarker(new MarkerOptions()
