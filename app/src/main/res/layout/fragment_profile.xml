@@ -3,27 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="0dp"
     android:layout_height="wrap_content">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_profile"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@android:color/white" />
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey"
+                android:minHeight="?attr/actionBarSize"
+                app:titleTextColor="@android:color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/profile"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/pink"
+                    android:layout_gravity="start" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -47,7 +64,7 @@
                         android:layout_height="100dp"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="35dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="5dp"
                         tools:src="@tools:sample/avatars" />
 
                     <LinearLayout
@@ -55,7 +72,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="60dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/ivProfilePic"
                         android:orientation="vertical">
 
@@ -94,7 +111,7 @@
 
                     <TextView
                         android:id="@+id/tvBio"
-                        android:layout_width="150dp"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ivProfilePic"
                         android:layout_alignParentStart="true"
@@ -105,16 +122,16 @@
                         android:gravity="center_horizontal"
                         android:textAlignment="center"
                         android:textSize="14sp"
-                        tools:text="Here is my bio, I would probably look a little about myself here" />
+                        tools:text="Here is my bio" />
 
 
                     <LinearLayout
+                        android:id="@+id/layoutFollow"
                         android:layout_width="wrap_content"
-                        android:layout_height="100dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/tvBio"
                         android:layout_alignStart="@+id/tvBio"
                         android:layout_alignEnd="@+id/tvBio"
-                        android:layout_marginTop="5dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -160,6 +177,27 @@
                                 tools:text="300" />
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutSocial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layoutFollow"
+                        android:layout_alignStart="@id/tvBio"
+                        android:layout_alignEnd="@id/tvBio"
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"/>
+
+                        <ImageView
+                            android:id="@+id/youtubeButton"
+                            android:background="@drawable/youtube_icon2"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"/>
                     </LinearLayout>
 
                     <HorizontalScrollView
@@ -211,21 +249,21 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlChoice"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_marginTop="-8dp"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
+                android:layout_below="@id/cardView"
                 android:layout_centerHorizontal="true"
-                android:padding="-5dp"
-                android:layout_below="@id/cardView">
+                android:layout_marginTop="-8dp">
+
                 <AutoCompleteTextView
                     android:id="@+id/filled_exposed_dropdown"
-                    android:inputType="none"
-                    android:textSize="12sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:includeFontPadding="false"
+                    android:inputType="none"
                     android:maxLines="1"
                     android:textColor="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="12sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -236,9 +274,9 @@
                 android:layout_below="@id/tlChoice"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="0dp" />
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="-10dp" />
 
         </RelativeLayout>
 

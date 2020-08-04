@@ -9,10 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:hint="@string/youtube_start_url"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:text="@string/youtube_start_url"
             android:id="@+id/etYoutubeURL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

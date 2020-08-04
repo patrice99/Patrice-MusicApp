@@ -298,7 +298,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //save youtube url to Parse as String
-
                     }
                 })
                 .show();
