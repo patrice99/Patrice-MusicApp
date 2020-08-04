@@ -182,7 +182,7 @@ public class ComposePostFragment extends Fragment {
 
 
     private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile) {
-        Post post = new Post();
+        final Post post = new Post();
         post.setCaption(caption);
         if (photoFile != null) {
             post.setImage(new ParseFile(photoFile));
@@ -195,7 +195,7 @@ public class ComposePostFragment extends Fragment {
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e != null){
+                if (e != null) {
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
                 }
@@ -206,6 +206,15 @@ public class ComposePostFragment extends Fragment {
                 pb.setVisibility(ProgressBar.INVISIBLE);
                 User user = new User(currentUser);
                 user.setPostCount(user.getPostCount() + 1);
+
+                post.getUser().saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving post author");
+                        }
+                    }
+                });
             }
         });
     }

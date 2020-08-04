@@ -250,7 +250,7 @@ public class User {
     public static void queryUsers(int limit, ParseUser filterForUser, FindCallback callback){
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         if (filterForUser != null) {
-            query.whereNotEqualTo(KEY_USERNAME, filterForUser);
+            query.whereNotEqualTo(KEY_USERNAME, filterForUser.getUsername());
         }
         query.setLimit(limit);
         query.addDescendingOrder(KEY_POST_COUNT);
