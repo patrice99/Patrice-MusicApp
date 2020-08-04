@@ -153,23 +153,16 @@ public class User {
     }
 
 
-    public List<String> getGenres() throws JSONException {
+    public List<String> getGenres() {
        return parseUser.getList(KEY_GENRE);
 
     }
 
-    public void setGenre(Genres genre){
-        //get the existing genre JSONArray and add a genre to the end of it
-        JSONArray jsonArray = parseUser.getJSONArray(KEY_GENRE);
-        //check to see if null
-        if (jsonArray == null){
-            jsonArray = new JSONArray();
-        }
-        jsonArray.put(genre.toString());
-
+    public void setGenre(List<String> genres){
+        parseUser.addAllUnique(KEY_GENRE, genres);
     }
 
-    public List<String> getInstruments() throws JSONException {
+    public List<String> getInstruments() {
         return parseUser.getList(KEY_INSTRUMENT);
 
     }
@@ -177,6 +170,11 @@ public class User {
     public void setInstrument(Instruments instrument){
         parseUser.addUnique(KEY_INSTRUMENT, instrument.toString());
     }
+
+    public void setInstrumentString(List<String> instruments){
+        parseUser.addAllUnique(KEY_INSTRUMENT, instruments);
+    }
+
 
     public void removeInstrument(Instruments instruments){
         //Loop through array looking for instrument string

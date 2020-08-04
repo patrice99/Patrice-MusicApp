@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/editbackground"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -14,9 +15,9 @@
             android:id="@+id/toolbar_edit_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/light_grey"
             android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@color/pink" />
 
         <ImageView
             android:id="@+id/ivProfilePic"
@@ -128,31 +129,25 @@
             app:chipVerticalSpacing="3dp"/>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tlInstruments"
+        <com.hootsuite.nachos.NachoTextView
+            android:id="@+id/nacho_text_view_instruments"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/nacho_text_view_genres"
-            android:layout_marginTop="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:hint="@string/what_instruments_do_you_play">
-
-            <AutoCompleteTextView
-                android:id="@+id/filled_exposed_dropdown_Instruments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutDirection="inherit"
-                android:inputType="text"
-                android:layout_marginTop="30dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_centerHorizontal="true"
+            android:hint="@string/what_instruments_do_you_play"
+            app:chipBackground="@color/light_pink"
+            app:chipTextColor="@color/black"
+            android:textCursorDrawable="@color/pink"
+            app:chipTextSize="16dp"
+            app:chipHeight="30dp"
+            app:chipVerticalSpacing="3dp"/>
 
         <LinearLayout
             android:id="@+id/socialMediaConnect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tlInstruments"
+            android:layout_below="@id/nacho_text_view_instruments"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
 import org.parceler.Parcels;
 
 import java.io.File;
@@ -66,8 +68,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView tvTakePhoto;
     private TextView tvChoosePhoto;
-    private AutoCompleteTextView editTextFilledExposedDropdownInstruments;
+    private MultiAutoCompleteTextView editTextFilledExposedDropdownInstruments;
     private NachoTextView nachoTextViewGenres;
+    private NachoTextView nachoTextViewInstruments;
 
 
     @Override
@@ -90,8 +93,8 @@ public class EditProfileActivity extends AppCompatActivity {
         etBio = findViewById(R.id.etBio);
         etLocation = findViewById(R.id.etLocation);
         btnDone = findViewById(R.id.btnDone);
-        editTextFilledExposedDropdownInstruments = findViewById(R.id.filled_exposed_dropdown_Instruments);
         nachoTextViewGenres = findViewById(R.id.nacho_text_view_genres);
+        nachoTextViewInstruments = findViewById(R.id.nacho_text_view_instruments);
         btnYoutube = findViewById(R.id.btnYoutube);
         btnInstagram = findViewById(R.id.btnInstagram);
 
@@ -153,9 +156,11 @@ public class EditProfileActivity extends AppCompatActivity {
                         R.layout.dropdown_menu,
                         Arrays.asList(Instruments.values()));
 
-        editTextFilledExposedDropdownInstruments.setAdapter(instrumentAdapter);
+        nachoTextViewInstruments.setAdapter(instrumentAdapter);
+        nachoTextViewInstruments.setText(user.getInstruments());
 
         nachoTextViewGenres.setAdapter(genreAdapter);
+        nachoTextViewGenres.setText(user.getGenres());
 
 
 
@@ -174,6 +179,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 } catch (IOException e) {
                    e.printStackTrace();
                 }
+                user.setGenre(nachoTextViewGenres.getChipValues());
+                user.setInstrumentString(nachoTextViewInstruments.getChipValues());
                 user.save();
                 finish();
 

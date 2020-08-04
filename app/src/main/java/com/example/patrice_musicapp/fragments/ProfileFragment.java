@@ -184,11 +184,7 @@ public class ProfileFragment extends Fragment {
 
 
         List<String> instruments = new ArrayList<>();
-        try {
-            instruments = user.getInstruments();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        instruments = user.getInstruments();
         if (instruments!=null) {
             for (String instrument : instruments) {
                 Chip chip = new Chip(getContext());
