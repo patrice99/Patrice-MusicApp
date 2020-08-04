@@ -73,4 +73,5 @@
     <string name="follow_top_users">Follow top users</string>
     <string name="userprofileimage">userProfileImage</string>
     <string name="connect_your_socials">Connect your socials!</string>
+    <string name="youtube_start_url">https://www.youtube.com/</string>
 </resources>

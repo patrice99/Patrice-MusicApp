@@ -1,16 +1,22 @@
 package com.example.patrice_musicapp.activities;
 
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Outline;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +33,9 @@ import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.hootsuite.nachos.NachoTextView;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -45,6 +54,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private User user;
     private ImageView ivProfilePic;
+    private ImageButton youtubeButton;
     private TextView tvChangePhoto;
     private EditText etName;
     private EditText etUsername;
@@ -81,6 +91,7 @@ public class EditProfileActivity extends AppCompatActivity {
         btnDone = findViewById(R.id.btnDone);
         editTextFilledExposedDropdownInstruments = findViewById(R.id.filled_exposed_dropdown_Instruments);
         nachoTextViewGenres = findViewById(R.id.nacho_text_view_genres);
+        youtubeButton = findViewById(R.id.youtubeButton);
 
 
         bottomSheet = findViewById(R.id.bottom_sheet);
@@ -166,6 +177,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
             }
         });
+
         //user can either tap this
         ivProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,6 +217,12 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        youtubeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popUpEditText();
+            }
+        });
 
 
 
@@ -261,6 +279,29 @@ public class EditProfileActivity extends AppCompatActivity {
                 Log.i(TAG, "Post save was successful!");
             }
         });
+    }
+
+
+    private void popUpEditText() {
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogueView = inflater.inflate(R.layout.custom_dialogue, null);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Enter your YouTube Channel URL")
+                .setView(dialogueView)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //save youtube url to Parse as String
+
+                    }
+                })
+                .show();
     }
 
 
