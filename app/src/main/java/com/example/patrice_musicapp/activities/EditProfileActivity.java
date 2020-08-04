@@ -304,7 +304,11 @@ public class EditProfileActivity extends AppCompatActivity {
         final TextInputEditText input = dialogueView.findViewById(R.id.etInput);
 
         if (indicator == 0) {
-            input.setText(getResources().getString(R.string.youtube_start_url));
+            if (user.getYoutubeUrl() == null) {
+                input.setText(getResources().getString(R.string.youtube_start_url));
+            } else {
+                input.setText(user.getYoutubeUrl());
+            }
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Enter your YouTube Channel URL")
                     .setView(dialogueView)
@@ -322,7 +326,11 @@ public class EditProfileActivity extends AppCompatActivity {
                     })
                     .show();
         } else {
-            input.setText("");
+            if (user.getInstagramUsername() == null) {
+                input.setText("");
+            } else {
+                input.setText(user.getInstagramUsername());
+            }
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Enter your Instagram Username")
                     .setView(dialogueView)

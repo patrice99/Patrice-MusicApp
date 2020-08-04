@@ -26,7 +26,7 @@
             android:layout_below="@+id/toolbar_edit_profile"
             android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="100dp"
             android:contentDescription="@string/profile_pic"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -157,8 +157,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:text="@string/connect_your_socials"/>
+                android:fontFamily="@font/cabin"
+                android:text="@string/connect_your_socials"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <View
                 android:layout_width="15dp"
@@ -170,6 +171,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/youtube_icon" />
+            <View
+                android:layout_width="15dp"
+                android:layout_height="50dp"/>
 
             <ImageButton
                 android:id="@+id/btnInstagram"
@@ -192,7 +196,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="@string/done"
-            android:textColor="#2196F3" />
+            android:textColor="@color/pink" />
 
 
 
