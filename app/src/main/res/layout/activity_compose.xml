@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@android:color/white"/>
+        android:backgroundTint="@color/light_grey"
+        app:titleTextColor="@color/pink"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

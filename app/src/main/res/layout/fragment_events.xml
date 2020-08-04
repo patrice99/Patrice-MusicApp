@@ -10,10 +10,10 @@
         android:id="@+id/toolbar_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/light_grey"
         android:minHeight="?attr/actionBarSize"
         app:menu="@menu/menu_events"
-        app:titleTextColor="@android:color/white"/>
+        app:titleTextColor="@color/pink"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

@@ -11,8 +11,8 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary">
+        app:titleTextColor="@color/pink"
+        android:background="@color/light_grey">
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.SearchView

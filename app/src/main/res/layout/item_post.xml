@@ -46,11 +46,14 @@
                 android:id="@+id/vvPostVideo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
                 android:contentDescription="@string/postedimage"
                 tools:srcCompat="@tools:sample/avatars" />
 
-                <ImageView
+            <ImageView
                     android:alpha="0"
                     android:id="@+id/ivLikeAnim"
                     android:layout_width="70dp"

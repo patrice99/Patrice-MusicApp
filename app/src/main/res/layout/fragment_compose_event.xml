@@ -6,22 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ComposeEventFragment"
+    android:background="@drawable/composebackground4"
     android:orientation="vertical">
 
 
-    <ImageView
-        android:id="@+id/ivEventImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="65dp"
-        android:src="@mipmap/ic_add_image"
-        tools:src="@tools:sample/avatars"
-        android:contentDescription="@string/event_image" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -40,6 +31,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlDescription"
         android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
@@ -58,6 +50,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlDate"
         android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
@@ -79,6 +72,7 @@
         android:id="@+id/tlLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
@@ -91,6 +85,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/ivEventImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ic_gallery_icon"
+        android:contentDescription="@string/event_image"
+        android:backgroundTint="@color/grey"
+        android:scaleType="centerCrop" />
 
     <Button
         android:id="@+id/btnDone"

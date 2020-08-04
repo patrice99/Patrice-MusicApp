@@ -48,7 +48,7 @@ public class ComposePostFragment extends Fragment {
     private ImageButton btnCaptureImage;
     private ImageButton btnCaptureVideo;
     private Button btnSubmit;
-    private Button btnGallery;
+    private ImageButton btnGallery;
     private VideoView mVideoView;
     private ProgressBar pb;
 
@@ -203,7 +203,6 @@ public class ComposePostFragment extends Fragment {
                 Log.i(TAG, "Post save was successful!");
                 etCaption.setText(""); // clear out edit text so user does not save the same post twice
                 ivPostImage.setImageResource(0); //clear the image view
-                pb.setVisibility(ProgressBar.INVISIBLE);
                 User user = new User(currentUser);
                 user.setPostCount(user.getPostCount() + 1);
 
@@ -213,6 +212,8 @@ public class ComposePostFragment extends Fragment {
                         if (e != null) {
                             Log.e(TAG, "Error while saving post author");
                         }
+                        pb.setVisibility(ProgressBar.INVISIBLE);
+
                     }
                 });
             }

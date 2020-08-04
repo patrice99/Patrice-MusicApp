@@ -75,4 +75,9 @@
     <string name="youtube_start_url">https://www.youtube.com/</string>
     <string name="profile">Profile</string>
     <string name="what_instruments_do_you_play">What instruments do you play?</string>
+    <string name="enter_a_post_title">Enter a post title!</string>
+    <string name="add_a_location">Add a location</string>
+    <string name="video_icon">Video Icon</string>
+    <string name="add_a_caption">Add a caption</string>
+    <string name="share">Share</string>
 </resources>

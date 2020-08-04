@@ -21,11 +21,6 @@ import com.google.android.material.tabs.TabLayout;
 public class ComposeActivity extends AppCompatActivity {
     private Toolbar toolbar;
     public static final String TAG = ComposeActivity.class.getSimpleName();
-    private ImageView ivPostImage;
-    private EditText etCaption;
-    private ImageButton btnCaptureImage;
-    private Button btnSubmit;
-    private Button btnGallery;
     private TabLayout tabLayout;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
