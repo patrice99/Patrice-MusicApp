@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -37,6 +38,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     private TextView tvTimeStamp;
     private TextView tvLikeCount;
     private VideoView vvPostVideo;
+    private WebView webviewSoundCloud;
     String addS = "";
     private ParseUser user;
 
@@ -65,6 +67,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         tvTimeStamp = findViewById(R.id.tvTimeStamp);
         tvLikeCount = findViewById(R.id.tvLikeCount);
         vvPostVideo = findViewById(R.id.vvPostVideo);
+        webviewSoundCloud = findViewById(R.id.webviewSoundCloud);
 
 
         //bind views
@@ -84,6 +87,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         ParseFile image = post.getImage();
         if (image != null) {
             vvPostVideo.setVisibility(View.GONE);
+            webviewSoundCloud.setVisibility(View.GONE);
             ivPostImage.setVisibility(View.VISIBLE);
             Glide.with(this).load(post.getImage().getUrl()).into(ivPostImage);
         }
@@ -91,6 +95,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         ParseFile video = post.getVideo();
         if (video != null) {
             ivPostImage.setVisibility(View.GONE);
+            webviewSoundCloud.setVisibility(View.GONE);
             vvPostVideo.setVisibility(View.VISIBLE);
             try {
                 MediaUtil.videoUri = Uri.fromFile(post.getVideo().getFile());
@@ -104,6 +109,13 @@ public class PostDetailsActivity extends AppCompatActivity {
                     mp.setLooping(true);
                 }
             });
+        }
+
+        if(post.getSoundCloudUrl()!= null){
+            ivPostImage.setVisibility(View.GONE);
+            vvPostVideo.setVisibility(View.GONE);
+            webviewSoundCloud.setVisibility(View.VISIBLE);
+            MediaUtil.showSoundCloudPlayer(webviewSoundCloud, post.getSoundCloudUrl());
         }
 
         //check if the user has a valid profilePic
