@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <item
+        android:id="@+id/nearMeButton"
+        android:enabled="true"
+        android:visible="true"
+        android:title="@string/near_me"
+        tools:ignore="MenuTitle"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/activeUsers"
+        android:enabled="true"
+        android:title="@string/most_active"
+        tools:ignore="MenuTitle"
+        android:visible="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/genresButton"
+        android:enabled="true"
+        android:title="@string/genres"
+        tools:ignore="MenuTitle"
+        android:visible="true"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/instrumentsButton"
+        android:enabled="true"
+        android:visible="true"
+        android:title="@string/instruments"
+        tools:ignore="MenuTitle"
+        app:showAsAction="never"/>
+
+</menu>

@@ -80,4 +80,9 @@
     <string name="video_icon">Video Icon</string>
     <string name="add_a_caption">Add a caption</string>
     <string name="share">Share</string>
+    <string name="sort_by">Sort By</string>
+    <string name="instruments">Instruments</string>
+    <string name="genres">Genres</string>
+    <string name="near_me">Near me</string>
+    <string name="most_active">Most active</string>
 </resources>

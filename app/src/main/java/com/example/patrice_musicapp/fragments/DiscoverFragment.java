@@ -3,15 +3,17 @@ package com.example.patrice_musicapp.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,13 +23,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patrice_musicapp.R;
-import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.adapters.SearchAdapter;
 import com.example.patrice_musicapp.adapters.UserAdapter;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -43,32 +45,39 @@ public class DiscoverFragment extends Fragment {
     private SearchAdapter searchAdapter;
     private UserAdapter userAdapter;
     private List<Object> objects;
-
     private List<ParseUser> users; // all the users
     private List<ParseUser> usersToShow; //top 10 from priority queue
-
     private RecyclerView rvSearch;
     private RecyclerView rvUsers;
     private SearchView searchView;
     private PriorityQueue<User> pqGenres;
+    private PriorityQueue<User> pqInstruments;
+    private PriorityQueue<User> pqActive;
+    private PriorityQueue<User> pqProximity;
+
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
+        setHasOptionsMenu(true);
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         toolbar =view.findViewById(R.id.toolbar_discover);
-        if(toolbar != null){
+        if (toolbar != null){
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+            toolbar.setTitle("Discover");
+
         }
-        toolbar.setTitle("Discover");
+        toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_baseline_sort_24));
+        toolbar.getOverflowIcon().setTint(getResources().getColor(R.color.pink));
 
         objects = new ArrayList<>();
         rvSearch = view.findViewById(R.id.rvSearch);
@@ -91,7 +100,8 @@ public class DiscoverFragment extends Fragment {
         rvUsers.setLayoutManager(gridLayoutManager);
 
         pqGenres = new PriorityQueue<User>(10, new UserGenreComparator());
-
+        pqInstruments = new PriorityQueue<User>(10, new UserInstrumentComparator());
+        pqProximity = new PriorityQueue<User>(10, new UserProximityComparator());
 
         if (searchAdapter.getItemCount() == 0){
             rvSearch.setAlpha(0);
@@ -270,20 +280,25 @@ public class DiscoverFragment extends Fragment {
                 }
                 userAdapter.clear();
                 users.addAll(users2Follow);
-
-                for (ParseUser user: users){
-                    User userpq = new User(user);
-                    pqGenres.add(userpq);
-                }
-
-                while (!pqGenres.isEmpty() && pqGenres.size() > (users2Follow.size() - 10)) {
-                    usersToShow.add((pqGenres.poll()).getParseUser());
-                }
-
-                userAdapter.notifyDataSetChanged();
+                sortByPostCount();
             }
+
         });
 
+    }
+
+    private void sortByGenre() {
+        usersToShow.clear();
+        pqGenres.clear();
+            for (ParseUser user: users){
+                User userpq = new User(user);
+                pqGenres.add(userpq);
+            }
+            while (!pqGenres.isEmpty() && pqGenres.size() > (users.size() - 10)) {
+                usersToShow.add((pqGenres.poll()).getParseUser());
+            }
+
+            userAdapter.notifyDataSetChanged();
     }
 
     public class UserGenreComparator implements Comparator<User> {
@@ -323,5 +338,140 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
+    private void sortByInstruments() {
+        usersToShow.clear();
+        pqInstruments.clear();
+        for (ParseUser user: users){
+            User userpq = new User(user);
+            pqInstruments.add(userpq);
+        }
+        while (!pqInstruments.isEmpty() && pqInstruments.size() > (users.size() - 10)) {
+            usersToShow.add((pqInstruments.poll()).getParseUser());
+        }
+
+        userAdapter.notifyDataSetChanged();
+    }
+
+
+    public class UserInstrumentComparator implements Comparator<User> {
+
+        @Override
+        public int compare(User user1, User user2) {
+            User currentUser = new User(ParseUser.getCurrentUser());
+            List<String> currentUserInstrument = currentUser.getInstruments();
+            List<String> user1Instruments = new ArrayList<>();
+            if(user1.getInstruments()!=null) {
+                user1Instruments.addAll(user1.getInstruments());
+            }
+            List<String> user2Instuments = new ArrayList<>();
+            if(user2.getInstruments() !=null) {
+                user2Instuments.addAll(user2.getInstruments());
+            }
+
+            List<String> commonInstrument1 = new ArrayList<>();
+            commonInstrument1.addAll(user1Instruments);
+            List<String> commonInstrument2 = new ArrayList<>();
+            commonInstrument2.addAll(user2Instuments);
+
+            commonInstrument1.retainAll(currentUserInstrument);
+            commonInstrument2.retainAll(currentUserInstrument);
+
+            int matches1 = commonInstrument1.size();
+            int matches2 = commonInstrument2.size();
+
+            if (matches1 > matches2){
+                return -1;
+            } else if (matches2 > matches1) {
+                return 1;
+            }
+
+            return 0;
+        }
+    }
+
+    private void sortByPostCount() {
+        usersToShow.clear();
+        for (int i = 0 ; i < 10; i++){
+            usersToShow.add(users.get(i));
+        }
+
+        userAdapter.notifyDataSetChanged();
+
+    }
+
+    private void sortByProximity(){
+        usersToShow.clear();
+        pqProximity.clear();
+        for (ParseUser user: users){
+            User userpq = new User(user);
+            pqProximity.add(userpq);
+        }
+        while (!pqProximity.isEmpty() && pqProximity.size() > (users.size() - 10)) {
+            usersToShow.add((pqProximity.poll()).getParseUser());
+        }
+
+        userAdapter.notifyDataSetChanged();
+
+    }
+
+    public class UserProximityComparator implements Comparator<User> {
+
+        @Override
+        public int compare(User user1, User user2) {
+            User currentUser = new User(ParseUser.getCurrentUser());
+
+            ParseGeoPoint currentUserLocation = new ParseGeoPoint();
+            if (currentUser.getLocation()!=null) {
+               currentUserLocation = currentUser.getLocation();
+            }
+            ParseGeoPoint user1Location = new ParseGeoPoint();
+            if(user1.getLocation()!=null) {
+               user1Location = user1.getLocation();
+            }
+            ParseGeoPoint user2Location = new ParseGeoPoint();
+            if(user2.getLocation() !=null) {
+                user2Location = user2.getLocation();
+            }
+
+            double distance1 = user1Location.distanceInMilesTo(currentUserLocation);
+            double distance2 = user2Location.distanceInMilesTo(currentUserLocation);
+
+            if (distance1 > distance2){
+                return 1;
+            } else if (distance2 > distance1) {
+                return -1;
+            }
+            return 0;
+
+        }
+    }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_discover, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.genresButton:
+                sortByGenre();
+                break;
+            case R.id.instrumentsButton:
+                sortByInstruments();
+                break;
+            case R.id.nearMeButton:
+                sortByProximity();
+                break;
+            case R.id.activeUsers:
+                sortByPostCount();
+                break;
+        }
+        return true;
+    }
 
 }
