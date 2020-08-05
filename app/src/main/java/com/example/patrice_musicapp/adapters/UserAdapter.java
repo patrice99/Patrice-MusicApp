@@ -1,6 +1,7 @@
 package com.example.patrice_musicapp.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,14 +33,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context context;
     private List<ParseUser> users;
     private Followers follow;
+    private onClickListener clickListener;
 
     public interface onClickListener {
-        void onFollowClick(int position);
+        void onUserClick(int position);
     }
 
-    public UserAdapter(Context context, List<ParseUser> users){
+    public UserAdapter(Context context, List<ParseUser> users, onClickListener clickListener){
         this.context = context;
         this.users = users;
+        this.clickListener = clickListener;
 
     }
 
@@ -49,6 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.ViewHolder holder, int position) {
         User user = new User(users.get(position));
@@ -60,10 +65,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return users.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivProfilePic;
         private TextView tvUsername;
         private TextView tvBio;
+        private TextView tvGenres;
         private Button btnFollow;
 
 
@@ -72,10 +78,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvBio = itemView.findViewById(R.id.tvBio);
+            tvGenres = itemView.findViewById(R.id.tvGenres);
             btnFollow = itemView.findViewById(R.id.btnFollow);
+            itemView.setOnClickListener(this);
 
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         public void bind(User user) {
             //check if the user has a valid profilePic
             ParseFile image = user.getImage();
@@ -93,6 +102,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
             tvUsername.setText(user.getUsername());
             tvBio.setText(user.getBio());
+
+            if (user.getGenres() != null) {
+                String genreStr = String.join(", ", user.getGenres());
+                genreStr = genreStr.replaceAll("_", " ").toLowerCase();
+                tvGenres.setText(genreStr);
+            }
 
             final User subjectUser = new User(ParseUser.getCurrentUser());
             final User user2follow = new User(user.getParseUser());
@@ -166,6 +181,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         }
 
+        @Override
+        public void onClick(View view) {
+            //go to profile fragment
+            clickListener.onUserClick(getAdapterPosition());
+        }
     }
 
     public void clear() {
