@@ -57,6 +57,13 @@
             android:contentDescription="@string/postedimage"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <WebView
+            android:padding="-20dp"
+            android:id="@+id/webviewSoundCloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="WebViewLayout" />
+
     </RelativeLayout>
 
 

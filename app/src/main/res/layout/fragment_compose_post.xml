@@ -42,7 +42,7 @@
 
     <RelativeLayout
         android:id="@+id/relLayout"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="230dp"
         android:layout_below="@id/tlTitle"
         android:layout_centerHorizontal="true"
@@ -63,6 +63,12 @@
             android:id="@+id/videoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <WebView
+            android:id="@+id/webviewSoundCloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -109,6 +115,18 @@
             android:layout_weight="1"
             android:background="@drawable/ic_gallery_icon"
             android:backgroundTint="@color/light_grey" />
+
+        <View
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+        <ImageButton
+            android:id="@+id/btnSoundCloud"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/soundcloud_icon"/>
+
+
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout

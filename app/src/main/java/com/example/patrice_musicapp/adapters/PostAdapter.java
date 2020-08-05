@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -86,6 +87,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private TextView tvTimeStamp;
         private TextView tvLikeCount;
         private VideoView vvPostVideo;
+        private WebView webviewSoundCloud;
         private AnimatedVectorDrawableCompat avd;
         private AnimatedVectorDrawable avd2;
 
@@ -102,6 +104,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
             tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
             vvPostVideo = itemView.findViewById(R.id.vvPostVideo);
+            webviewSoundCloud = itemView.findViewById(R.id.webviewSoundCloud);
             itemView.setOnClickListener(this);
         }
 
@@ -129,6 +132,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             ParseFile image = post.getImage();
             if (image != null) {
                 vvPostVideo.setVisibility(View.GONE);
+                webviewSoundCloud.setVisibility(View.GONE);
                 ivPostImage.setVisibility(View.VISIBLE);
                 Glide.with(context).load(post.getImage().getUrl()).into(ivPostImage);
             }
@@ -136,6 +140,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             ParseFile video = post.getVideo();
             if(video != null){
                 ivPostImage.setVisibility(View.GONE);
+                webviewSoundCloud.setVisibility(View.GONE);
                 vvPostVideo.setVisibility(View.VISIBLE);
                 try {
                     MediaUtil.videoUri = Uri.fromFile(post.getVideo().getFile());
@@ -149,6 +154,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         mp.setLooping(true);
                     }
                 });
+            }
+
+            if(post.getSoundCloudUrl() != null){
+                ivPostImage.setVisibility(View.GONE);
+                vvPostVideo.setVisibility(View.GONE);
+                webviewSoundCloud.setVisibility(View.VISIBLE);
+                MediaUtil.showSoundCloudPlayer(webviewSoundCloud, post.getSoundCloudUrl());
             }
 
             //check if the user has a valid profilePic
