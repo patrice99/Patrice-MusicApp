@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +30,7 @@ import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
+import com.example.patrice_musicapp.utils.SocialsUtils;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -43,13 +45,16 @@ import static android.app.Activity.RESULT_OK;
 
 public class ComposePostFragment extends Fragment {
     public static final String TAG = ComposeActivity.class.getSimpleName();
+    private ParseUser user;
     private ImageView ivPostImage;
     private EditText etCaption;
     private ImageButton btnCaptureImage;
     private ImageButton btnCaptureVideo;
+    private ImageButton btnSoundCloud;
     private Button btnSubmit;
     private ImageButton btnGallery;
     private VideoView mVideoView;
+    private WebView webviewSoundCloud;
     private ProgressBar pb;
 
 
@@ -73,7 +78,9 @@ public class ComposePostFragment extends Fragment {
         btnCaptureVideo = view.findViewById(R.id.btnCaptureVideo);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnGallery = view.findViewById(R.id.btnGallery);
+        btnSoundCloud = view.findViewById(R.id.btnSoundCloud);
         mVideoView = view.findViewById(R.id.videoView);
+        webviewSoundCloud = view.findViewById(R.id.webviewSoundCloud);
         pb = view.findViewById(R.id.pbLoading);
 
         mVideoView.setVisibility(View.GONE);
@@ -85,6 +92,8 @@ public class ComposePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mVideoView.setVisibility(View.GONE);
+                webviewSoundCloud.setVisibility(View.GONE);
+                ivPostImage.setVisibility(View.VISIBLE);
                 MediaUtil.onLaunchCamera(getContext());
             }
         });
@@ -93,8 +102,20 @@ public class ComposePostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ivPostImage.setVisibility(View.GONE);
+                webviewSoundCloud.setVisibility(View.GONE);
                 mVideoView.setVisibility(View.VISIBLE);
                 MediaUtil.startRecordingVideo(getContext());
+            }
+        });
+
+        btnSoundCloud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivPostImage.setVisibility(View.GONE);
+                mVideoView.setVisibility(View.GONE);
+                webviewSoundCloud.setVisibility(View.VISIBLE);
+                SocialsUtils.popUpEditText(getContext(), 2, new User(user));
+                MediaUtil.showSoundCloudPlayer(webviewSoundCloud, SocialsUtils.soundCloudUrl);
             }
         });
 
@@ -109,13 +130,13 @@ public class ComposePostFragment extends Fragment {
                     return;
                 }
                 //get the user
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                if((MediaUtil.photoFile == null || ivPostImage.getDrawable() == null) && MediaUtil.videoFile == null) {
+                user = ParseUser.getCurrentUser();
+                if((MediaUtil.photoFile == null || ivPostImage.getDrawable() == null) && MediaUtil.videoFile == null && SocialsUtils.soundCloudUrl == null) {
                     Toast.makeText(getContext(), "There is no media", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //save the post into
-                savePosts(description, currentUser, MediaUtil.photoFile, MediaUtil.videoFile);
+                savePosts(description, user, MediaUtil.photoFile, MediaUtil.videoFile, SocialsUtils.soundCloudUrl);
                 //go back to post fragment(which is in MainActivity)
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
@@ -133,6 +154,8 @@ public class ComposePostFragment extends Fragment {
 
 
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -181,7 +204,7 @@ public class ComposePostFragment extends Fragment {
 
 
 
-    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile) {
+    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile, final String soundCloudUrl) {
         final Post post = new Post();
         post.setCaption(caption);
         if (photoFile != null) {
@@ -190,6 +213,9 @@ public class ComposePostFragment extends Fragment {
         post.setUser(currentUser);
         if (videoFile != null) {
             post.setVideo(new ParseFile(videoFile));
+        }
+        if(soundCloudUrl != null){
+            post.setSoundCloudUrl(soundCloudUrl);
         }
         pb.setVisibility(ProgressBar.VISIBLE);
         post.saveInBackground(new SaveCallback() {
