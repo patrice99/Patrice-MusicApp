@@ -34,6 +34,7 @@ import com.example.patrice_musicapp.models.Genres;
 import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
+import com.example.patrice_musicapp.utils.SocialsUtils;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
@@ -235,14 +236,14 @@ public class EditProfileActivity extends AppCompatActivity {
         btnYoutube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popUpEditText(0);
+                SocialsUtils.popUpEditText(EditProfileActivity.this, 0, user);
             }
         });
 
         btnInstagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popUpEditText(1);
+                SocialsUtils.popUpEditText(EditProfileActivity.this, 1, user);
             }
         });
 
@@ -303,58 +304,6 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-
-    private void popUpEditText(int indicator) {
-        final LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogueView = inflater.inflate(R.layout.custom_dialogue, null);
-        final TextInputEditText input = dialogueView.findViewById(R.id.etInput);
-
-        if (indicator == 0) {
-            if (user.getYoutubeUrl() == null) {
-                input.setText(getResources().getString(R.string.youtube_start_url));
-            } else {
-                input.setText(user.getYoutubeUrl());
-            }
-            new MaterialAlertDialogBuilder(this)
-                    .setTitle("Enter your YouTube Channel URL")
-                    .setView(dialogueView)
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    })
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            user.setYoutubeUrl(input.getText().toString());
-                        }
-                    })
-                    .show();
-        } else {
-            if (user.getInstagramUsername() == null) {
-                input.setText("");
-            } else {
-                input.setText(user.getInstagramUsername());
-            }
-            new MaterialAlertDialogBuilder(this)
-                    .setTitle("Enter your Instagram Username")
-                    .setView(dialogueView)
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    })
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            user.setInstagramUsername(input.getText().toString());
-                        }
-                    })
-                    .show();
-        }
-    }
 
 
 
