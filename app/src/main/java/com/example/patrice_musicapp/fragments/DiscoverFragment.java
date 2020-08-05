@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,11 +15,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.adapters.SearchAdapter;
+import com.example.patrice_musicapp.adapters.UserAdapter;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
 import com.parse.FindCallback;
@@ -34,8 +38,11 @@ public class DiscoverFragment extends Fragment {
     public static final String TAG = DiscoverFragment.class.getSimpleName();
     private Toolbar toolbar;
     private SearchAdapter searchAdapter;
+    private UserAdapter userAdapter;
     private List<Object> objects;
+    private List<ParseUser> users;
     private RecyclerView rvSearch;
+    private RecyclerView rvUsers;
     private SearchView searchView;
 
 
@@ -63,8 +70,27 @@ public class DiscoverFragment extends Fragment {
         rvSearch.setAdapter(searchAdapter);
 
         //set layout manager on recycler view
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvSearch.setLayoutManager(linearLayoutManager);
+
+
+        users = new ArrayList<>();
+        rvUsers = view.findViewById(R.id.rvUsers);
+        userAdapter = new UserAdapter(getContext(), users, clickListenerUser);
+        rvUsers.setAdapter(userAdapter);
+
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        rvUsers.setLayoutManager(gridLayoutManager);
+
+        if (searchAdapter.getItemCount() == 0){
+            rvSearch.setAlpha(0);
+            rvUsers.setAlpha(1);
+            queryUsers();
+        } else {
+            rvUsers.setAlpha(0);
+            rvSearch.setAlpha(1);
+        }
+
 
         searchView = view.findViewById(R.id.searchView);
 
@@ -76,10 +102,34 @@ public class DiscoverFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filter(newText);
+                if (newText.length()!= 0) {
+                    rvUsers.setAlpha(0);
+                    rvUsers.setVisibility(View.GONE);
+                    rvUsers.setLayoutManager(null);
+                    rvUsers.setAdapter(null);
+                    rvSearch.setAlpha(1);
+                    rvSearch.setVisibility(View.VISIBLE);
+                    rvSearch.setLayoutManager(linearLayoutManager);
+                    rvSearch.setAdapter(searchAdapter);
+                    filter(newText);
+                } else {
+                    rvSearch.setAlpha(0);
+                    rvSearch.setVisibility(View.GONE);
+                    rvSearch.setLayoutManager(null);
+                    rvSearch.setAdapter(null);
+                    rvUsers.setAlpha(1);
+                    rvUsers.setVisibility(View.VISIBLE);
+                    rvUsers.setLayoutManager(gridLayoutManager);
+                    rvUsers.setAdapter(userAdapter);
+                }
                 return true;
             }
         });
+
+
+
+
+
 
     }
 
@@ -175,5 +225,44 @@ public class DiscoverFragment extends Fragment {
 
         }
     };
+
+    UserAdapter.onClickListener clickListenerUser = new UserAdapter.onClickListener() {
+        @Override
+        public void onUserClick(int position) {
+            //go to profile Fragment
+            //get user of that specific post
+            ParseUser user = users.get(position);
+
+            //pass this info to profile fragment
+            Fragment fragment = new ProfileFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("user", user);
+            fragment.setArguments(bundle);
+
+            //Go from this fragment to profile fragment
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContainer, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    };
+
+
+    private void queryUsers() {
+        User.queryUsers(10, ParseUser.getCurrentUser(), new FindCallback<ParseUser>(){
+            @Override
+            public void done(List<ParseUser> users2Follow, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issues with getting users to follow", e);
+                }
+                userAdapter.clear();
+                users.addAll(users2Follow);
+                userAdapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
 
 }
