@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,8 +32,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.PriorityQueue;
 
 public class DiscoverFragment extends Fragment {
     public static final String TAG = DiscoverFragment.class.getSimpleName();
@@ -40,10 +43,14 @@ public class DiscoverFragment extends Fragment {
     private SearchAdapter searchAdapter;
     private UserAdapter userAdapter;
     private List<Object> objects;
-    private List<ParseUser> users;
+
+    private List<ParseUser> users; // all the users
+    private List<ParseUser> usersToShow; //top 10 from priority queue
+
     private RecyclerView rvSearch;
     private RecyclerView rvUsers;
     private SearchView searchView;
+    private PriorityQueue<User> pqGenres;
 
 
     @Override
@@ -75,12 +82,16 @@ public class DiscoverFragment extends Fragment {
 
 
         users = new ArrayList<>();
+        usersToShow = new ArrayList<>();
         rvUsers = view.findViewById(R.id.rvUsers);
-        userAdapter = new UserAdapter(getContext(), users, clickListenerUser);
+        userAdapter = new UserAdapter(getContext(), usersToShow, clickListenerUser);
         rvUsers.setAdapter(userAdapter);
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         rvUsers.setLayoutManager(gridLayoutManager);
+
+        pqGenres = new PriorityQueue<User>(10, new UserGenreComparator());
+
 
         if (searchAdapter.getItemCount() == 0){
             rvSearch.setAlpha(0);
@@ -90,6 +101,9 @@ public class DiscoverFragment extends Fragment {
             rvUsers.setAlpha(0);
             rvSearch.setAlpha(1);
         }
+
+
+
 
 
         searchView = view.findViewById(R.id.searchView);
@@ -128,10 +142,8 @@ public class DiscoverFragment extends Fragment {
 
 
 
-
-
-
     }
+
 
     public void filter(String characterText) {
         final List<ParseUser> allParseUsers = new ArrayList<>();
@@ -231,7 +243,7 @@ public class DiscoverFragment extends Fragment {
         public void onUserClick(int position) {
             //go to profile Fragment
             //get user of that specific post
-            ParseUser user = users.get(position);
+            ParseUser user = usersToShow.get(position);
 
             //pass this info to profile fragment
             Fragment fragment = new ProfileFragment();
@@ -250,7 +262,7 @@ public class DiscoverFragment extends Fragment {
 
 
     private void queryUsers() {
-        User.queryUsers(10, ParseUser.getCurrentUser(), new FindCallback<ParseUser>(){
+        User.queryUsers(35, ParseUser.getCurrentUser(), new FindCallback<ParseUser>(){
             @Override
             public void done(List<ParseUser> users2Follow, ParseException e) {
                 if (e != null) {
@@ -258,10 +270,57 @@ public class DiscoverFragment extends Fragment {
                 }
                 userAdapter.clear();
                 users.addAll(users2Follow);
+
+                for (ParseUser user: users){
+                    User userpq = new User(user);
+                    pqGenres.add(userpq);
+                }
+
+                while (!pqGenres.isEmpty() && pqGenres.size() > (users2Follow.size() - 10)) {
+                    usersToShow.add((pqGenres.poll()).getParseUser());
+                }
+
                 userAdapter.notifyDataSetChanged();
             }
         });
 
+    }
+
+    public class UserGenreComparator implements Comparator<User> {
+        // Overriding compare()method of Comparator
+
+        @Override
+        public int compare(User user1, User user2) {
+            User currentUser = new User(ParseUser.getCurrentUser());
+            List<String> currentUserGenre = currentUser.getGenres();
+            List<String> user1Genre = new ArrayList<>();
+            if(user1.getGenres()!=null) {
+                user1Genre.addAll(user1.getGenres());
+            }
+            List<String> user2Genre = new ArrayList<>();
+            if(user2.getGenres() !=null) {
+                user2Genre.addAll(user2.getGenres());
+            }
+
+            List<String> commonGenre1 = new ArrayList<>();
+            commonGenre1.addAll(user1Genre);
+            List<String> commonGenre2 = new ArrayList<>();
+            commonGenre2.addAll(user2Genre);
+
+            commonGenre1.retainAll(currentUserGenre);
+            commonGenre2.retainAll(currentUserGenre);
+
+            int matches1 = commonGenre1.size();
+            int matches2 = commonGenre2.size();
+
+            if (matches1 > matches2){
+                return -1;
+            } else if (matches2 > matches1) {
+                return 1;
+            }
+
+            return 0;
+        }
     }
 
 
