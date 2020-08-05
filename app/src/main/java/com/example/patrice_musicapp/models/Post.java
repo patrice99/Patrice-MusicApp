@@ -33,8 +33,8 @@ public class Post extends ParseObject {
     public static final String KEY_CAPTION = "caption";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_LIKES_COUNT = "likesCount";
-    public static final String KEY_IS_NOTICE = "isNotice";
     public static final String KEY_LIKES_ARRAY = "likesUserArray";
+    public static final String KEY_SOUND_CLOUD_URL = "soundCloudUrl";
     public static final String TAG = Post.class.getSimpleName();
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
@@ -116,6 +116,14 @@ public class Post extends ParseObject {
         put(KEY_LOCATION, parseGeoPoint);
     }
 
+    public String getSoundCloudUrl(){
+        return getString(KEY_SOUND_CLOUD_URL);
+    }
+
+    public void setSoundCloudUrl(String soundCloudUrl) {
+        put(KEY_SOUND_CLOUD_URL, soundCloudUrl);
+    }
+
     public static void query(int page, int limit, ParseUser filterForUser, FindCallback callback, List<ParseUser> following){
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
@@ -186,4 +194,5 @@ public class Post extends ParseObject {
         Address address = addresses.get(0); //get the first address for right now
         return address.getLocality();
     }
+
 }
