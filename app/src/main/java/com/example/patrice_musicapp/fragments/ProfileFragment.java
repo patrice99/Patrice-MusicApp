@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Location;
@@ -74,6 +75,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvBio;
     private TextView tvFollowing;
     private TextView tvFollowers;
+    private TextView tvGenres;
     private Button btnEditProfile;
     private Button btnFollow;
     private ChipGroup chipGroupInstruments;
@@ -92,6 +94,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         toolbar =view.findViewById(R.id.toolbar_profile);
@@ -145,6 +148,7 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvLocation = view.findViewById(R.id.tvLocation);
         tvBio = view.findViewById(R.id.tvBio);
+        tvGenres = view.findViewById(R.id.tvGenres);
         tvFollowers = view.findViewById(R.id.tvFollowers);
         tvFollowing = view.findViewById(R.id.tvFollowing);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
@@ -158,6 +162,9 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText(user.getUsername());
         tvName.setText(user.getName());
         tvBio.setText(user.getBio());
+        String genreStr = String.join(", ", user.getGenres());
+        genreStr = genreStr.replaceAll("_", " ").toLowerCase();
+        tvGenres.setText(genreStr);
         tvFollowing.setText(String.valueOf(user.getFollowingCount()));
         final List<ParseUser> followers = new ArrayList<>();
         Followers.getFollowers(user.getParseUser(), new FindCallback<Followers>() {
@@ -191,6 +198,7 @@ public class ProfileFragment extends Fragment {
         if (instruments!=null) {
             for (String instrument : instruments) {
                 Chip chip = new Chip(getContext());
+                instrument = instrument.replace("_", " ");
                 chip.setText(instrument);
                 chip.isCheckable();
                 chipGroupInstruments.addView(chip);

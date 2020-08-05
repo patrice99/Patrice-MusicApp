@@ -102,7 +102,7 @@
                             android:id="@+id/tvLocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:drawableStart="@drawable/ic_outline_location_on_24"
                             android:gravity="center_horizontal"
                             android:textColor="#2196F3"
@@ -126,11 +126,34 @@
                         tools:text="Here is my bio" />
 
 
+                    <HorizontalScrollView
+                        android:id="@+id/hsvGenres"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvBio"
+                        android:layout_alignStart="@+id/tvBio"
+                        android:layout_alignEnd="@+id/tvBio"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="-3dp"
+                        android:layout_marginEnd="20dp">
+
+                        <TextView
+                            android:id="@+id/tvGenres"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="0dp"
+                            android:fontFamily="@font/cambay"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            tools:text="Blues, Reggae" />
+                    </HorizontalScrollView>
+
                     <LinearLayout
                         android:id="@+id/layoutFollow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tvBio"
+                        android:layout_below="@id/hsvGenres"
                         android:layout_alignStart="@+id/tvBio"
                         android:layout_alignEnd="@+id/tvBio"
                         android:gravity="center"
