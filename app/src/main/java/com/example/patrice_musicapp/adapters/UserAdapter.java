@@ -104,9 +104,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvBio.setText(user.getBio());
 
             if (user.getGenres() != null) {
+                tvGenres.setVisibility(View.VISIBLE);
                 String genreStr = String.join(", ", user.getGenres());
                 genreStr = genreStr.replaceAll("_", " ").toLowerCase();
                 tvGenres.setText(genreStr);
+            } else {
+                tvGenres.setVisibility(View.INVISIBLE);
             }
 
             final User subjectUser = new User(ParseUser.getCurrentUser());
