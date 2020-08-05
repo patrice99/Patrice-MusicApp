@@ -162,9 +162,11 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText(user.getUsername());
         tvName.setText(user.getName());
         tvBio.setText(user.getBio());
-        String genreStr = String.join(", ", user.getGenres());
-        genreStr = genreStr.replaceAll("_", " ").toLowerCase();
-        tvGenres.setText(genreStr);
+        if (user.getGenres() != null) {
+            String genreStr = String.join(", ", user.getGenres());
+            genreStr = genreStr.replaceAll("_", " ").toLowerCase();
+            tvGenres.setText(genreStr);
+        }
         tvFollowing.setText(String.valueOf(user.getFollowingCount()));
         final List<ParseUser> followers = new ArrayList<>();
         Followers.getFollowers(user.getParseUser(), new FindCallback<Followers>() {
