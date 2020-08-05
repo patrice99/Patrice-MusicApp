@@ -159,7 +159,7 @@ public class User {
     }
 
     public void setGenre(List<String> genres){
-        parseUser.addAllUnique(KEY_GENRE, genres);
+        parseUser.put(KEY_GENRE, genres);
     }
 
     public List<String> getInstruments() {
