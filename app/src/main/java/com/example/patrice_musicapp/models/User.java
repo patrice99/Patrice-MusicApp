@@ -267,6 +267,14 @@ public class User {
 
     public static void queryUsers(int limit, ParseUser filterForUser, FindCallback callback){
         ParseQuery<ParseUser> query = ParseUser.getQuery();
+        User user = new User(filterForUser);
+        try {
+            if (user.getFollowingIds()!= null){
+                query.whereNotContainedIn("objectId", user.getFollowingIds());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         if (filterForUser != null) {
             query.whereNotEqualTo(KEY_USERNAME, filterForUser.getUsername());
         }
