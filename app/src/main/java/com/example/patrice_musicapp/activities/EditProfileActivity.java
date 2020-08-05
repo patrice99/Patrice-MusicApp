@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -73,6 +74,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private NachoTextView nachoTextViewInstruments;
 
 
+
+    private WebView mSoundCloudPlayer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +102,7 @@ public class EditProfileActivity extends AppCompatActivity {
         nachoTextViewInstruments = findViewById(R.id.nacho_text_view_instruments);
         btnYoutube = findViewById(R.id.btnYoutube);
         btnInstagram = findViewById(R.id.btnInstagram);
+
 
 
         bottomSheet = findViewById(R.id.bottom_sheet);
