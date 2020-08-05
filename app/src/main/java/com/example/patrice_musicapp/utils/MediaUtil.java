@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -129,6 +131,25 @@ public class MediaUtil {
         mVideoView.requestFocus();
         mVideoView.start();
     }
+
+    public static void showSoundCloudPlayer(WebView webviewSoundCloud, String soundCloudUrl) {
+        String SOUND_URL = soundCloudUrl;
+
+        String html = "<!DOCTYPE html><html> <head> <meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"target-densitydpi=high-dpi\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <link rel=\"stylesheet\" media=\"screen and (-webkit-device-pixel-ratio:1.5)\" href=\"hdpi.css\" /></head> <body style=\"background:black;margin:0 0 0 0; padding:0 0 0 0;\"> <iframe id=\"sc-widget " +
+                "\" width=\"100%\" height=\"166\"" + // Set Appropriate Width and Height that you want for SoundCloud Player
+                " src=\"https://w.soundcloud.com/player/?url=" + SOUND_URL + "&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"
+                + "\" frameborder=\"no\" scrolling=\"no\"></iframe>" +
+                "<script src=\"https://w.soundcloud.com/player/?\" type=\"text/javascript\"></script> </body> </html> ";
+
+        webviewSoundCloud.setVisibility(View.VISIBLE);
+        webviewSoundCloud.getSettings().setJavaScriptEnabled(true);
+        webviewSoundCloud.getSettings().setLoadWithOverviewMode(true);
+        webviewSoundCloud.getSettings().setUseWideViewPort(true);
+        webviewSoundCloud.loadDataWithBaseURL("",html,"text/html", "UTF-8", "");
+
+    }
+
+
 
 
 
