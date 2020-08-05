@@ -48,7 +48,7 @@ public class OnboardingFragment4 extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         rvUsers.setLayoutManager(layoutManager);
         users = new ArrayList<>();
-        adapter = new UserAdapter(getContext(), users);
+        adapter = new UserAdapter(getContext(), users,clickListener );
         rvUsers.setAdapter(adapter);
 
         queryUsers();
@@ -69,5 +69,12 @@ public class OnboardingFragment4 extends Fragment {
         });
 
     }
+
+    UserAdapter.onClickListener clickListener = new UserAdapter.onClickListener() {
+        @Override
+        public void onUserClick(int position) {
+            //do nothing
+        }
+    };
 
 }
