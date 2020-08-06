@@ -26,19 +26,29 @@ import android.widget.VideoView;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
+import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.example.patrice_musicapp.utils.SocialsUtils;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -48,6 +58,7 @@ public class ComposePostFragment extends Fragment {
     private ParseUser user;
     private ImageView ivPostImage;
     private EditText etCaption;
+    private EditText etLocation;
     private ImageButton btnCaptureImage;
     private ImageButton btnCaptureVideo;
     private ImageButton btnSoundCloud;
@@ -56,6 +67,7 @@ public class ComposePostFragment extends Fragment {
     private VideoView mVideoView;
     private WebView webviewSoundCloud;
     private ProgressBar pb;
+    private ParseGeoPoint geoPoint;
 
 
     @Nullable
@@ -74,6 +86,7 @@ public class ComposePostFragment extends Fragment {
         //find views
         ivPostImage = view.findViewById(R.id.ivPostImage);
         etCaption = view.findViewById(R.id.etCaption);
+        etLocation = view.findViewById(R.id.etLocation);
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         btnCaptureVideo = view.findViewById(R.id.btnCaptureVideo);
         btnSubmit = view.findViewById(R.id.btnSubmit);
@@ -85,6 +98,24 @@ public class ComposePostFragment extends Fragment {
 
         mVideoView.setVisibility(View.GONE);
         ivPostImage.setImageDrawable(getResources().getDrawable(R.drawable.image_placeholder));
+
+
+        //initalize Google Places API
+        Places.initialize(getContext(), getResources().getString(R.string.google_maps_key));
+        etLocation.setFocusable(false);
+        etLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Initialize place field list
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+
+                //Create intent
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList)
+                        .build(getContext());
+                startActivityForResult(intent, 100);
+
+            }
+        });
 
 
 
@@ -114,8 +145,8 @@ public class ComposePostFragment extends Fragment {
                 ivPostImage.setVisibility(View.GONE);
                 mVideoView.setVisibility(View.GONE);
                 webviewSoundCloud.setVisibility(View.VISIBLE);
-                SocialsUtils.popUpEditText(getContext(), 2, new User(user));
-                MediaUtil.showSoundCloudPlayer(webviewSoundCloud, SocialsUtils.soundCloudUrl);
+                SocialsUtils.popUpEditText(getContext(), 2, new User(user), webviewSoundCloud);
+
             }
         });
 
@@ -136,7 +167,7 @@ public class ComposePostFragment extends Fragment {
                     return;
                 }
                 //save the post into
-                savePosts(description, user, MediaUtil.photoFile, MediaUtil.videoFile, SocialsUtils.soundCloudUrl);
+                savePosts(description, user, MediaUtil.photoFile, MediaUtil.videoFile, SocialsUtils.soundCloudUrl, geoPoint);
                 //go back to post fragment(which is in MainActivity)
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
@@ -199,12 +230,23 @@ public class ComposePostFragment extends Fragment {
             } else {
                 Toast.makeText(getContext(), "Failed to record video",  Toast.LENGTH_LONG).show();
             }
+        } else if(requestCode == 100 && resultCode == RESULT_OK){
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            geoPoint = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+            etLocation.setText(place.getName());
+        } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Log.i(TAG, status.getStatusMessage());
+            Toast.makeText(getContext(), status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+        } else if (resultCode == RESULT_CANCELED) {
+            // The user canceled the operation.
+            return;
         }
     }
 
 
 
-    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile, final String soundCloudUrl) {
+    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile, final String soundCloudUrl, ParseGeoPoint geoPoint) {
         final Post post = new Post();
         post.setCaption(caption);
         if (photoFile != null) {
@@ -216,6 +258,10 @@ public class ComposePostFragment extends Fragment {
         }
         if(soundCloudUrl != null){
             post.setSoundCloudUrl(soundCloudUrl);
+        }
+
+        if(geoPoint!=null){
+            post.setLocation(geoPoint);
         }
         pb.setVisibility(ProgressBar.VISIBLE);
         post.saveInBackground(new SaveCallback() {

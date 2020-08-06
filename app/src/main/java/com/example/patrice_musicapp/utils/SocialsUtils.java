@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.User;
@@ -13,7 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class SocialsUtils {
     public static String soundCloudUrl;
 
-    public static void popUpEditText(Context context, final int indicator, final User user) {
+    public static void popUpEditText(final Context context, final int indicator, final User user, final WebView webviewSoundCloud) {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogueView = inflater.inflate(R.layout.custom_dialogue, null);
         final TextInputEditText input = dialogueView.findViewById(R.id.etInput);
@@ -77,6 +78,8 @@ public class SocialsUtils {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             soundCloudUrl = input.getText().toString();
+                            MediaUtil.showSoundCloudPlayer(webviewSoundCloud, SocialsUtils.soundCloudUrl);
+
                         }
                     })
                     .show();
