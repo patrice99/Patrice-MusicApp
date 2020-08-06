@@ -112,7 +112,6 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/cabin"
-            android:gravity="start"
             android:textAlignment="center"
             android:textSize="16sp"
             tools:text="Here is the caption of my post" />
@@ -137,6 +136,7 @@
             android:layout_marginEnd="15dp"
             android:layout_toStartOf="@+id/tvTimeStamp"
             android:drawableStart="@drawable/ic_outline_location_on_24"
+            android:textColor="@color/blue"
             tools:text="Bridgetown, Barbados" />
 
         <ImageView
