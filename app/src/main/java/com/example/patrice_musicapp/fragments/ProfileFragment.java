@@ -60,6 +60,7 @@ import java.util.List;
 
 
 public class ProfileFragment extends Fragment {
+    private static final int RESULT_OK = 10001 ;
     private User user;
     private Toolbar toolbar;
     private RecyclerView rvProfileContent;
@@ -238,7 +239,7 @@ public class ProfileFragment extends Fragment {
                     Intent intent = new Intent(getContext(), EditProfileActivity.class);
                     //pass info from that post into Details Activity
                     intent.putExtra("user", Parcels.wrap(user));
-                    getContext().startActivity(intent);
+                    startActivityForResult(intent, RESULT_OK);
                 }
             });
         } else {
@@ -477,4 +478,16 @@ public class ProfileFragment extends Fragment {
 
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if((requestCode == 10001) && (resultCode == EditProfileActivity.RESULT_OK)) {
+            Fragment frag = new ProfileFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.flContainer, frag);
+            ft.commit();
+        }
+
+    }
 }

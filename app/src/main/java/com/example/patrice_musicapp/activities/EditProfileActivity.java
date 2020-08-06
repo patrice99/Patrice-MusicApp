@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -27,9 +28,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.fragments.ProfileFragment;
 import com.example.patrice_musicapp.models.Genres;
 import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
@@ -189,6 +193,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 user.setGenre(nachoTextViewGenres.getChipValues());
                 user.setInstrumentString(nachoTextViewInstruments.getChipValues());
                 user.save();
+                setResult(EditProfileActivity.RESULT_OK);
                 finish();
 
             }
