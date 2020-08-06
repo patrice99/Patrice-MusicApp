@@ -39,6 +39,12 @@ import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.example.patrice_musicapp.utils.SocialsUtils;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
@@ -46,6 +52,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.hootsuite.nachos.NachoTextView;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.SaveCallback;
 
 import org.json.JSONException;
@@ -55,7 +62,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class EditProfileActivity extends AppCompatActivity {
     public static final String TAG = EditProfileActivity.class.getSimpleName();
@@ -144,6 +153,25 @@ public class EditProfileActivity extends AppCompatActivity {
         if (bio != null){
             etBio.setText(bio);
         }
+
+        //initalize Google Places API
+        Places.initialize(getApplicationContext(), getResources().getString(R.string.google_maps_key));
+
+        etLocation.setFocusable(false);
+        etLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 //Initialize place field list
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+
+                //Create intent
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList)
+                        .build(EditProfileActivity.this);
+                startActivityForResult(intent, 100);
+
+            }
+        });
+
 
         //make sure the location isn't null or [0,0]
         try {
@@ -241,14 +269,14 @@ public class EditProfileActivity extends AppCompatActivity {
         btnYoutube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SocialsUtils.popUpEditText(EditProfileActivity.this, 0, user);
+                SocialsUtils.popUpEditText(EditProfileActivity.this, 0, user, null);
             }
         });
 
         btnInstagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SocialsUtils.popUpEditText(EditProfileActivity.this, 1, user);
+                SocialsUtils.popUpEditText(EditProfileActivity.this, 1, user, null);
             }
         });
 
@@ -290,6 +318,18 @@ public class EditProfileActivity extends AppCompatActivity {
             //Compress the image further 
             selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
 
+        } else if(requestCode == 100 && resultCode == RESULT_OK){
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            ParseGeoPoint geoPoint = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+            user.setLocation(geoPoint);
+            etLocation.setText(place.getName());
+        } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Log.i(TAG, status.getStatusMessage());
+            Toast.makeText(this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+        } else if (resultCode == RESULT_CANCELED) {
+            // The user canceled the operation.
+            return;
         }
     }
 
@@ -308,6 +348,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 
