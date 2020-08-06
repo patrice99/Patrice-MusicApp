@@ -62,7 +62,6 @@ public class DiscoverFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
         setHasOptionsMenu(true);
-
         return view;
     }
 
@@ -222,6 +221,7 @@ public class DiscoverFragment extends Fragment {
             newFragment.setArguments(bundle);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.flContainer, newFragment);
+            transaction.disallowAddToBackStack();
             // Commit the transaction
             transaction.commit();
         }
@@ -242,7 +242,7 @@ public class DiscoverFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.flContainer, fragment);
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.disallowAddToBackStack();
             fragmentTransaction.commit();
 
         }
@@ -265,7 +265,7 @@ public class DiscoverFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.flContainer, fragment);
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.disallowAddToBackStack();
             fragmentTransaction.commit();
         }
     };

@@ -208,7 +208,7 @@ public class FeedFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.flContainer, fragment);
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.disallowAddToBackStack();
             fragmentTransaction.commit();
         }
 
@@ -255,6 +255,7 @@ public class FeedFragment extends Fragment {
             newFragment.setArguments(bundle);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.flContainer, newFragment);
+            transaction.disallowAddToBackStack();
             transaction.commit();
         }
 

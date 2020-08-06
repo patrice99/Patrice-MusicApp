@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:fadeScrollbars="true"
     android:padding="0dp"
+    android:background="@color/white"
     android:scrollbarSize="50dp"
     android:scrollbarStyle="insideInset"
     android:scrollbars="horizontal">

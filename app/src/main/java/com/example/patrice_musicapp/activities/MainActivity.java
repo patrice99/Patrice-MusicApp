@@ -20,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
+    Fragment feedFragment = new FeedFragment();
+    Fragment discoverFragment = new DiscoverFragment();
+    Fragment eventsFragment = new EventsFragment();
+    Fragment profileFragment = new ProfileFragment();
 
 
     @Override
@@ -28,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
-
-        final Fragment feedFragment = new FeedFragment();
-        final Fragment discoverFragment = new DiscoverFragment();
-        final Fragment eventsFragment = new EventsFragment();
-        final Fragment profileFragment = new ProfileFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
                         displayFragment(eventsFragment,feedFragment, discoverFragment, profileFragment);
                         break;
                     case R.id.action_profile:
-                    default:
                         displayFragment(profileFragment,feedFragment, discoverFragment, eventsFragment);
                         break;
                 }
