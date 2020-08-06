@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -166,6 +167,8 @@ public class ProfileFragment extends Fragment {
             String genreStr = String.join(", ", user.getGenres());
             genreStr = genreStr.replaceAll("_", " ").toLowerCase();
             tvGenres.setText(genreStr);
+            tvGenres.setMovementMethod(new ScrollingMovementMethod());
+
         }
         tvFollowing.setText(String.valueOf(user.getFollowingCount()));
         final List<ParseUser> followers = new ArrayList<>();
@@ -195,7 +198,7 @@ public class ProfileFragment extends Fragment {
         }
 
 
-        List<String> instruments = new ArrayList<>();
+        List<String> instruments;
         instruments = user.getInstruments();
         if (instruments!=null) {
             for (String instrument : instruments) {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,14 +19,19 @@ import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Followers;
 import com.example.patrice_musicapp.models.User;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONException;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
@@ -70,7 +76,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         private TextView tvUsername;
         private TextView tvBio;
         private TextView tvGenres;
+        private TextView tvDistance;
         private Button btnFollow;
+        private ChipGroup chipGroupInstruments;
+        private HorizontalScrollView hsvInstruments;
+        private HorizontalScrollView hsvGenres;
+
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -78,8 +89,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvBio = itemView.findViewById(R.id.tvBio);
+            tvDistance = itemView.findViewById(R.id.tvDistance);
             tvGenres = itemView.findViewById(R.id.tvGenres);
             btnFollow = itemView.findViewById(R.id.btnFollow);
+            chipGroupInstruments = itemView.findViewById(R.id.chip_group_instruments);
+            hsvInstruments = itemView.findViewById(R.id.hsvInstruments);
+            hsvGenres = itemView.findViewById(R.id.hsvGenres);
+
+
             itemView.setOnClickListener(this);
 
         }
@@ -103,13 +120,48 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvUsername.setText(user.getUsername());
             tvBio.setText(user.getBio());
 
+            User currentUser = new User(ParseUser.getCurrentUser());
+            if (user.getLocation() != null && currentUser.getLocation() != null){
+                tvDistance.setVisibility(View.VISIBLE);
+                double distance = user.getLocation().distanceInMilesTo(currentUser.getLocation());
+
+                BigDecimal bd = new BigDecimal(distance);
+                bd = bd.round(new MathContext(1));
+                int rounded = (int) bd.doubleValue();
+
+                String str = String.valueOf(rounded);
+                tvDistance.setText(str + " miles away");
+            } else {
+                tvDistance.setVisibility(View.INVISIBLE);
+            }
+
             if (user.getGenres() != null) {
+                hsvGenres.setVisibility(View.VISIBLE);
                 tvGenres.setVisibility(View.VISIBLE);
                 String genreStr = String.join(", ", user.getGenres());
                 genreStr = genreStr.replaceAll("_", " ").toLowerCase();
                 tvGenres.setText(genreStr);
             } else {
+                hsvGenres.setVisibility(View.INVISIBLE);
                 tvGenres.setVisibility(View.INVISIBLE);
+            }
+
+            List<String> instruments;
+            if (user.getInstruments()!=null) {
+                hsvInstruments.setVisibility(View.VISIBLE);
+                chipGroupInstruments.setVisibility(View.VISIBLE);
+                instruments = user.getInstruments();
+                chipGroupInstruments.removeAllViews();
+                for (String instrument : instruments) {
+                    Chip chip = new Chip(context);
+                    instrument = instrument.replace("_", " ");
+                    chip.setText(instrument);
+                    chip.isCheckable();
+                    chipGroupInstruments.addView(chip);
+                }
+            } else {
+                hsvInstruments.setVisibility(View.INVISIBLE);
+                chipGroupInstruments.setVisibility(View.INVISIBLE);
             }
 
             final User subjectUser = new User(ParseUser.getCurrentUser());

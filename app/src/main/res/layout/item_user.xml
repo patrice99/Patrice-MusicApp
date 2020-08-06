@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -18,8 +19,9 @@
 
         <ImageView
             android:id="@+id/ivProfilePic"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
             android:contentDescription="@string/userprofileimage"
             android:padding="10dp"
             android:scaleType="centerCrop" />
@@ -45,24 +47,51 @@
                 android:gravity="center_horizontal"
                 tools:text="hey there :)" />
 
+            <TextView
+                android:id="@+id/tvDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cabin"
+                android:gravity="center_horizontal"
+                android:textColor="#2196F3"
+                android:textStyle="bold"
+                tools:text="10 miles away" />
+
             <HorizontalScrollView
                 android:id="@+id/hsvGenres"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp">
+                android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:fillViewport="true"
+                android:scrollbars="vertical">
 
                 <TextView
                     android:id="@+id/tvGenres"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:fontFamily="@font/cambay"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    tools:text="blues, jazz" />
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:id="@+id/hsvInstruments"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:scrollbars="none"
+                android:layout_marginEnd="5dp">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_instruments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="0dp"
-                    android:fontFamily="@font/cambay"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    tools:text="Blues, Reggae" />
+                    app:singleLine="true" />
             </HorizontalScrollView>
 
             <Button

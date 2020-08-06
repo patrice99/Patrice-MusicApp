@@ -52,7 +52,6 @@ public class DiscoverFragment extends Fragment {
     private SearchView searchView;
     private PriorityQueue<User> pqGenres;
     private PriorityQueue<User> pqInstruments;
-    private PriorityQueue<User> pqActive;
     private PriorityQueue<User> pqProximity;
 
 
@@ -98,6 +97,7 @@ public class DiscoverFragment extends Fragment {
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         rvUsers.setLayoutManager(gridLayoutManager);
+        rvUsers.setHasFixedSize(true);
 
         pqGenres = new PriorityQueue<User>(10, new UserGenreComparator());
         pqInstruments = new PriorityQueue<User>(10, new UserInstrumentComparator());
@@ -280,7 +280,8 @@ public class DiscoverFragment extends Fragment {
                 }
                 userAdapter.clear();
                 users.addAll(users2Follow);
-                sortByPostCount();
+
+                sortByProximity();
             }
 
         });
@@ -299,6 +300,47 @@ public class DiscoverFragment extends Fragment {
             }
 
             userAdapter.notifyDataSetChanged();
+    }
+
+
+    private void sortByInstruments() {
+        usersToShow.clear();
+        pqInstruments.clear();
+        for (ParseUser user: users){
+            User userpq = new User(user);
+            pqInstruments.add(userpq);
+        }
+        while (!pqInstruments.isEmpty() && pqInstruments.size() > (users.size() - 10)) {
+            usersToShow.add((pqInstruments.poll()).getParseUser());
+        }
+
+        userAdapter.notifyDataSetChanged();
+    }
+
+
+    private void sortByPostCount() {
+        usersToShow.clear();
+        for (int i = 0 ; i < 10; i++){
+            usersToShow.add(users.get(i));
+        }
+
+        userAdapter.notifyDataSetChanged();
+
+    }
+
+    private void sortByProximity(){
+        usersToShow.clear();
+        pqProximity.clear();
+        for (ParseUser user: users){
+            User userpq = new User(user);
+            pqProximity.add(userpq);
+        }
+        while (!pqProximity.isEmpty() && pqProximity.size() > (users.size() - 10)) {
+            usersToShow.add((pqProximity.poll()).getParseUser());
+        }
+
+        userAdapter.notifyDataSetChanged();
+
     }
 
     public class UserGenreComparator implements Comparator<User> {
@@ -338,21 +380,6 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
-    private void sortByInstruments() {
-        usersToShow.clear();
-        pqInstruments.clear();
-        for (ParseUser user: users){
-            User userpq = new User(user);
-            pqInstruments.add(userpq);
-        }
-        while (!pqInstruments.isEmpty() && pqInstruments.size() > (users.size() - 10)) {
-            usersToShow.add((pqInstruments.poll()).getParseUser());
-        }
-
-        userAdapter.notifyDataSetChanged();
-    }
-
-
     public class UserInstrumentComparator implements Comparator<User> {
 
         @Override
@@ -387,31 +414,6 @@ public class DiscoverFragment extends Fragment {
 
             return 0;
         }
-    }
-
-    private void sortByPostCount() {
-        usersToShow.clear();
-        for (int i = 0 ; i < 10; i++){
-            usersToShow.add(users.get(i));
-        }
-
-        userAdapter.notifyDataSetChanged();
-
-    }
-
-    private void sortByProximity(){
-        usersToShow.clear();
-        pqProximity.clear();
-        for (ParseUser user: users){
-            User userpq = new User(user);
-            pqProximity.add(userpq);
-        }
-        while (!pqProximity.isEmpty() && pqProximity.size() > (users.size() - 10)) {
-            usersToShow.add((pqProximity.poll()).getParseUser());
-        }
-
-        userAdapter.notifyDataSetChanged();
-
     }
 
     public class UserProximityComparator implements Comparator<User> {
