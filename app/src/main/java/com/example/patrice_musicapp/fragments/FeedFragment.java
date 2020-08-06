@@ -25,6 +25,7 @@ import com.example.patrice_musicapp.adapters.PostAdapter;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.EndlessRecyclerViewScrollListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -241,6 +242,20 @@ public class FeedFragment extends Fragment {
                 }
             });
             adapter.notifyItemChanged(position);
+        }
+
+        @Override
+        public void onLocationAction(int position) {
+            Post post = allPosts.get(position);
+            //go to maps fragment at that location
+            LatLng location = new LatLng(post.getLocation().getLatitude(), post.getLocation().getLongitude());
+            Fragment newFragment = new MapsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("location", location);
+            newFragment.setArguments(bundle);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.flContainer, newFragment);
+            transaction.commit();
         }
 
         @Override
