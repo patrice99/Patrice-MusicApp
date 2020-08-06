@@ -467,6 +467,11 @@ public class ProfileFragment extends Fragment {
         }
 
         @Override
+        public void onLocationAction(int position) {
+
+        }
+
+        @Override
         public void onCommentAction(int position) {
 
         }

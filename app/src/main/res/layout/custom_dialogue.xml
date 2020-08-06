@@ -13,6 +13,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etInput"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/youtube_start_url"

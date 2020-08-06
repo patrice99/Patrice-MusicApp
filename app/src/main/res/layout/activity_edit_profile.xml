@@ -198,19 +198,6 @@
             android:text="@string/done"
             android:textColor="@color/pink" />
 
-        <LinearLayout
-            android:layout_below="@id/btnDone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <WebView
-                android:id="@+id/webviewSoundCloud"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-        </LinearLayout>
-
 
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
