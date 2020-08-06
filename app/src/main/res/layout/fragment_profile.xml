@@ -137,7 +137,7 @@
 
 
                         <HorizontalScrollView
-                            android:id="@+id/hsvGenres"
+                            android:id="@+id/hsvInstruments"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingEnd="10dp"
@@ -148,12 +148,13 @@
                             android:scrollbars="vertical">
 
                             <TextView
-                                android:id="@+id/tvGenres"
+                                android:id="@+id/tvInstruments"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1.0"
+                                android:drawableStart="@drawable/ic_music_note2"
                                 android:fontFamily="@font/cambay"
-                                android:gravity="center_horizontal"
+                                android:gravity="center"
                                 android:textColor="@color/black"
                                 tools:text="blues, jazz" />
                         </HorizontalScrollView>
@@ -244,7 +245,7 @@
                     </LinearLayout>
 
                     <HorizontalScrollView
-                        android:id="@+id/hsvInstruments"
+                        android:id="@+id/hsvGenres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/linearLayout"
@@ -253,7 +254,7 @@
                         android:layout_toEndOf="@+id/linearLayout2">
 
                         <com.google.android.material.chip.ChipGroup
-                            android:id="@+id/chip_group_instruments"
+                            android:id="@+id/chip_group_genres"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:singleLine="true" />
@@ -264,7 +265,7 @@
                         android:id="@+id/btnEditProfile"
                         android:layout_width="200dp"
                         android:layout_height="45dp"
-                        android:layout_below="@+id/hsvInstruments"
+                        android:layout_below="@+id/hsvGenres"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="5dp"
@@ -277,7 +278,7 @@
                         android:id="@+id/btnFollow"
                         android:layout_width="200dp"
                         android:layout_height="45dp"
-                        android:layout_below="@+id/hsvInstruments"
+                        android:layout_below="@+id/hsvGenres"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="5dp"

@@ -167,13 +167,15 @@ public class User {
 
     }
 
+    //for onboarding fragment
     public void setInstrument(Instruments instrument){
         parseUser.addUnique(KEY_INSTRUMENT, instrument.toString());
     }
 
-    public void setInstrumentString(List<String> instruments){
-        parseUser.addAllUnique(KEY_INSTRUMENT, instruments);
+    public void setInstrumentList(List<String> instrumentList){
+        parseUser.put(KEY_INSTRUMENT, instrumentList);
     }
+
 
 
     public void removeInstrument(Instruments instruments){

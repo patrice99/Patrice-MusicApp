@@ -219,10 +219,15 @@ public class EditProfileActivity extends AppCompatActivity {
                    e.printStackTrace();
                 }
                 user.setGenre(nachoTextViewGenres.getChipValues());
-                user.setInstrumentString(nachoTextViewInstruments.getChipValues());
-                user.save();
-                setResult(EditProfileActivity.RESULT_OK);
-                finish();
+                user.setInstrumentList(nachoTextViewInstruments.getChipValues());
+                user.getParseUser().saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        setResult(EditProfileActivity.RESULT_OK);
+                        finish();
+                    }
+                });
+
 
             }
         });

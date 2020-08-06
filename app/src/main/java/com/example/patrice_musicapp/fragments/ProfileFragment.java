@@ -77,10 +77,10 @@ public class ProfileFragment extends Fragment {
     private TextView tvBio;
     private TextView tvFollowing;
     private TextView tvFollowers;
-    private TextView tvGenres;
+    private TextView tvInstruments;
     private Button btnEditProfile;
     private Button btnFollow;
-    private ChipGroup chipGroupInstruments;
+    private ChipGroup chipGroupGenres;
     private AutoCompleteTextView editTextFilledExposedDropdown;
     public static final int DISPLAY_LIMIT= 20;
     public static final String TAG = ProfileFragment.class.getSimpleName();
@@ -150,12 +150,12 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvLocation = view.findViewById(R.id.tvLocation);
         tvBio = view.findViewById(R.id.tvBio);
-        tvGenres = view.findViewById(R.id.tvGenres);
+        tvInstruments = view.findViewById(R.id.tvInstruments);
         tvFollowers = view.findViewById(R.id.tvFollowers);
         tvFollowing = view.findViewById(R.id.tvFollowing);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
         btnFollow = view.findViewById(R.id.btnFollow);
-        chipGroupInstruments = view.findViewById(R.id.chip_group_instruments);
+        chipGroupGenres = view.findViewById(R.id.chip_group_genres);
         ivYoutube = view.findViewById(R.id.ivYoutube);
         ivInstagram = view.findViewById(R.id.ivInstagram);
 
@@ -164,11 +164,11 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText(user.getUsername());
         tvName.setText(user.getName());
         tvBio.setText(user.getBio());
-        if (user.getGenres() != null) {
-            String genreStr = String.join(", ", user.getGenres());
-            genreStr = genreStr.replaceAll("_", " ").toLowerCase();
-            tvGenres.setText(genreStr);
-            tvGenres.setMovementMethod(new ScrollingMovementMethod());
+        if (user.getInstruments() != null) {
+            String instrumentStr = String.join(", ", user.getInstruments());
+            instrumentStr= instrumentStr.replaceAll("_", " ").toLowerCase();
+            tvInstruments.setText(instrumentStr);
+            tvInstruments.setMovementMethod(new ScrollingMovementMethod());
 
         }
         tvFollowing.setText(String.valueOf(user.getFollowingCount()));
@@ -199,15 +199,22 @@ public class ProfileFragment extends Fragment {
         }
 
 
-        List<String> instruments;
-        instruments = user.getInstruments();
-        if (instruments!=null) {
-            for (String instrument : instruments) {
+        List<String> genres;
+        genres = user.getGenres();
+        if (genres!=null) {
+            for (String genre : genres) {
                 Chip chip = new Chip(getContext());
-                instrument = instrument.replace("_", " ");
-                chip.setText(instrument);
+                genre = genre.replace("_", " ");
+                chip.setText(genre);
                 chip.isCheckable();
-                chipGroupInstruments.addView(chip);
+                chip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //go to discover fragment and sortByGenre
+
+                    }
+                });
+                chipGroupGenres.addView(chip);
             }
         }
 
