@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import com.example.patrice_musicapp.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private BottomNavigationView bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -27,30 +29,31 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
 
+        final Fragment feedFragment = new FeedFragment();
+        final Fragment discoverFragment = new DiscoverFragment();
+        final Fragment eventsFragment = new EventsFragment();
+        final Fragment profileFragment = new ProfileFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment;
+
                 switch (menuItem.getItemId()) {
+
                     case R.id.action_feed:
-                        fragment = new FeedFragment();
+                        displayFragment(feedFragment,eventsFragment, discoverFragment, profileFragment);
                         break;
                     case R.id.action_discover:
-                        fragment = new DiscoverFragment();
+                        displayFragment(discoverFragment,feedFragment, eventsFragment, profileFragment);
                         break;
                     case R.id.action_map:
-                        fragment = new EventsFragment();
+                        displayFragment(eventsFragment,feedFragment, discoverFragment, profileFragment);
                         break;
                     case R.id.action_profile:
                     default:
-                        fragment = new ProfileFragment();
+                        displayFragment(profileFragment,feedFragment, discoverFragment, eventsFragment);
                         break;
                 }
-                fragmentManager
-                        .beginTransaction()
-                        .replace(R.id.flContainer, fragment)
-                        .commit();
                 return true;
             }
         });
@@ -61,6 +64,30 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    }
+
+    private void displayFragment(Fragment showFragment, Fragment hideFragment1, Fragment hideFragment2, Fragment hideFragment3) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        if (showFragment.isAdded()){
+            ft.show(showFragment);
+        } else {
+            ft.add(R.id.flContainer, showFragment, TAG);
+        }
+
+        if(hideFragment1.isAdded()){
+            ft.hide(hideFragment1);
+        }
+
+        if(hideFragment2.isAdded()){
+            ft.hide(hideFragment2);
+        }
+
+        if(hideFragment3.isAdded()){
+            ft.hide(hideFragment3);
+        }
+
+        ft.commit();
 
     }
 }
