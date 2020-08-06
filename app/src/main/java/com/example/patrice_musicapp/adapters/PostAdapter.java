@@ -46,6 +46,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         void onProfilePicAction(int position);
         void onLikeAction(int position);
         void onUnlikeAction(int position);
+        void onLocationAction(int position);
         void onCommentAction(int position);
     }
 
@@ -117,7 +118,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvTimeStamp.setText(post.getRelativeTimeAgo(post.getCreatedAt().toString()));
             try {
                 if (post.getLocation()!=null) {
+                    tvLocation.setVisibility(View.VISIBLE);
                     tvLocation.setText(Post.getStringFromLocation(post.getLocation(), context));
+                } else {
+                    tvLocation.setVisibility(View.INVISIBLE);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -236,6 +240,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
                 }
 
+            });
+
+            tvLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onLocationAction(getAdapterPosition());
+                }
             });
 
         }
