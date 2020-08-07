@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,12 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +31,8 @@ import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
 import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.MainActivity;
+import com.example.patrice_musicapp.models.Genres;
+import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
@@ -38,6 +43,8 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -47,6 +54,8 @@ import com.parse.SaveCallback;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,6 +77,9 @@ public class ComposePostFragment extends Fragment {
     private WebView webviewSoundCloud;
     private ProgressBar pb;
     private ParseGeoPoint geoPoint;
+    private ChipGroup chipGroup;
+    private List<String> checkedGenres = new ArrayList<>();
+
 
 
     @Nullable
@@ -76,6 +88,25 @@ public class ComposePostFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_compose_post, container, false);
         setHasOptionsMenu(true);
+
+        chipGroup = view.findViewById(R.id.chip_group_genres);
+        List<Genres> genres = Arrays.asList(Genres.values());
+        for(Genres genre: genres) {
+            final Chip chip = (Chip) inflater.inflate(R.layout.filter_chip, chipGroup, false);
+            chip.setText(genre.toString());
+            chip.isCheckable();
+            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b){
+                        checkedGenres.add(chip.getText().toString());
+                    } else {
+                        checkedGenres.remove(chip.getText().toString());
+                    }
+                }
+            });
+            chipGroup.addView(chip);
+        }
         return view;
     }
 
@@ -116,6 +147,7 @@ public class ComposePostFragment extends Fragment {
 
             }
         });
+
 
 
 
@@ -167,7 +199,7 @@ public class ComposePostFragment extends Fragment {
                     return;
                 }
                 //save the post into
-                savePosts(description, user, MediaUtil.photoFile, MediaUtil.videoFile, SocialsUtils.soundCloudUrl, geoPoint);
+                savePosts(description, user, MediaUtil.photoFile, MediaUtil.videoFile, SocialsUtils.soundCloudUrl, geoPoint, checkedGenres);
                 //go back to post fragment(which is in MainActivity)
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
@@ -246,7 +278,7 @@ public class ComposePostFragment extends Fragment {
 
 
 
-    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile, final String soundCloudUrl, ParseGeoPoint geoPoint) {
+    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile, final String soundCloudUrl, ParseGeoPoint geoPoint, List<String> checkedGenres) {
         final Post post = new Post();
         post.setCaption(caption);
         if (photoFile != null) {
@@ -262,6 +294,9 @@ public class ComposePostFragment extends Fragment {
 
         if(geoPoint!=null){
             post.setLocation(geoPoint);
+        }
+        if (checkedGenres!= null){
+            post.setGenreFilter(checkedGenres);
         }
         pb.setVisibility(ProgressBar.VISIBLE);
         post.saveInBackground(new SaveCallback() {
