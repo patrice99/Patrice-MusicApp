@@ -190,7 +190,7 @@ public class DiscoverFragment extends Fragment {
                     allParseUsers.addAll(allUsers);
 
                     for (ParseUser parseUser: allParseUsers) {
-                        if (parseUser.getUsername().toLowerCase(Locale.getDefault()).contains(finalCharacterText)) {
+                        if (parseUser.getUsername().toLowerCase(Locale.getDefault()).startsWith(finalCharacterText)) {
                             objects.add(new User(parseUser));
                         }
                     }
@@ -211,7 +211,7 @@ public class DiscoverFragment extends Fragment {
                     allEvents.addAll(events);
 
                     for  (Event event: events){
-                        if (event.getName().toLowerCase(Locale.getDefault()).contains(finalCharacterText)) {
+                        if (event.getName().toLowerCase(Locale.getDefault()).startsWith(finalCharacterText)) {
                             objects.add(event);
                         }
                     }
@@ -233,7 +233,7 @@ public class DiscoverFragment extends Fragment {
                     for  (Post post: posts){
                         if (post.getGenreFilters()!=null) {
                             for (String genre : post.getGenreFilters()) {
-                                if (genre.toLowerCase(Locale.getDefault()).contains(finalCharacterText)) {
+                                if (genre.toLowerCase(Locale.getDefault()).startsWith(finalCharacterText)) {
                                     objects.add(post);
                                 }
                             }
