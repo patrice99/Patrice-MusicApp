@@ -105,14 +105,15 @@ public class MapsFragment extends Fragment {
         } else {
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             //pan camera to the location of the user. make this marker green
-            LatLng userLatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-            googleMap.addMarker(new MarkerOptions()
-                    .position(userLatLng)
-                    .title("Me")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-
-            //change the view to the user location with a view of 15
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));
+            if (userLocation!= null) {
+                LatLng userLatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+                googleMap.addMarker(new MarkerOptions()
+                        .position(userLatLng)
+                        .title("Me")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                //change the view to the user location with a view of 15
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15));
+            }
         }
 
         //for each event location, add a specific color for events
