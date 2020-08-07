@@ -13,20 +13,26 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.PostDetailsActivity;
+import com.example.patrice_musicapp.fragments.DiscoverFragment;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.example.patrice_musicapp.utils.OnDoubleTapListener;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -47,6 +53,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         void onLikeAction(int position);
         void onUnlikeAction(int position);
         void onLocationAction(int position);
+        void onChipAction(String chipGenre);
         void onCommentAction(int position);
     }
 
@@ -81,7 +88,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private ImageView ivPostImage;
         private ImageView ivLike;
         private ImageView ivLikeAnim;
-        private TextView tvTitle;
         private TextView tvUsername;
         private TextView tvCaption;
         private TextView tvLocation;
@@ -91,6 +97,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private WebView webviewSoundCloud;
         private AnimatedVectorDrawableCompat avd;
         private AnimatedVectorDrawable avd2;
+        private ChipGroup chipGroupGenres;
+        private HorizontalScrollView hsvGenres;
 
         public ViewHolder (@NonNull View itemView){
             super(itemView);
@@ -98,7 +106,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
             ivLike = itemView.findViewById(R.id.ivLike);
             ivLikeAnim = itemView.findViewById(R.id.ivLikeAnim);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvLocation = itemView.findViewById(R.id.tvLocation);
@@ -106,13 +113,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
             vvPostVideo = itemView.findViewById(R.id.vvPostVideo);
             webviewSoundCloud = itemView.findViewById(R.id.webviewSoundCloud);
+            chipGroupGenres = itemView.findViewById(R.id.chip_group_genres);
+            hsvGenres = itemView.findViewById(R.id.hsvGenres);
+
             itemView.setOnClickListener(this);
         }
 
         @SuppressLint("ClickableViewAccessibility")
         public void bind(final Post post) {
             //here is where we bind views
-            tvTitle.setText(post.getTitle());
             tvUsername.setText(post.getUser().getUsername());
             tvCaption.setText(post.getCaption());
             tvTimeStamp.setText(post.getRelativeTimeAgo(post.getCreatedAt().toString()));
@@ -131,6 +140,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 addS = "s";
             }
             tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
+
+            List<String> genres;
+            genres = post.getGenreFilters();
+            if (genres!=null) {
+                hsvGenres.setVisibility(View.VISIBLE);
+                chipGroupGenres.setVisibility(View.VISIBLE);
+                chipGroupGenres.removeAllViews();
+                for (String genre : genres) {
+                    Chip chip = new Chip(context);
+                    final String finalGenre = genre;
+                    chip.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            clickListener.onChipAction(finalGenre);
+                        }
+                    });
+                    genre = genre.replace("_", " ");
+                    chip.setText(genre);
+                    chip.isCheckable();
+                    chipGroupGenres.addView(chip);
+                }
+            } else {
+                hsvGenres.setVisibility(View.INVISIBLE);
+                chipGroupGenres.setVisibility(View.INVISIBLE);
+            }
 
             //check if the post has a valid image
             ParseFile image = post.getImage();
