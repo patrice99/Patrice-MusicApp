@@ -35,6 +35,8 @@ public class Post extends ParseObject {
     public static final String KEY_LIKES_COUNT = "likesCount";
     public static final String KEY_LIKES_ARRAY = "likesUserArray";
     public static final String KEY_SOUND_CLOUD_URL = "soundCloudUrl";
+    public static final String KEY_GENRE_FILTER= "genreFilter";
+
     public static final String TAG = Post.class.getSimpleName();
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
@@ -122,6 +124,14 @@ public class Post extends ParseObject {
 
     public void setSoundCloudUrl(String soundCloudUrl) {
         put(KEY_SOUND_CLOUD_URL, soundCloudUrl);
+    }
+
+    public List<String> getGenreFilters(){
+        return getList(KEY_GENRE_FILTER);
+    }
+
+    public void setGenreFilter(List<String> genreFilters){
+        put (KEY_GENRE_FILTER, genreFilters);
     }
 
     public static void query(int page, int limit, ParseUser filterForUser, FindCallback callback, List<ParseUser> following){
