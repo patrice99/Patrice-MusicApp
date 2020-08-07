@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Patrice-MusicApp</string>
+    <string name="app_name">Echo</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile_pic">Profile Pic</string>
     <string name="username">username</string>
