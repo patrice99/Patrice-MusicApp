@@ -110,7 +110,7 @@ public class ChatActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
                 if (firstLoad) {
-                    rvChat.scrollToPosition(0);
+                    rvChat.scrollToPosition(messages.size()-1);
                     firstLoad = false;
                 }
             }
