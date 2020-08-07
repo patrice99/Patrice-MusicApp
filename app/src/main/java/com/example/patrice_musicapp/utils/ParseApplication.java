@@ -46,5 +46,8 @@ public class ParseApplication extends Application {
                 .clientBuilder(builder)
                 .server("https://patrice-music-app.herokuapp.com/parse").build());
 
+
+
+
     }
 }
