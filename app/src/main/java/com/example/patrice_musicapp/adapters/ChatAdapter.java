@@ -24,12 +24,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     private List<Message> messages;
     private Context context;
-    private String userId;
 
-    public ChatAdapter(Context context, String userId, List<Message> messages) {
-        messages = messages;
-        this.userId = userId;
-        context = context;
+    public ChatAdapter(Context context, List<Message> messages) {
+        this.messages = messages;
+        this.context = context;
     }
 
     @Override
@@ -92,10 +90,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         @Override
         public void bindMessage(Message message) {
             User user = new User(message.getSendingUser());
-            Glide.with(context)
-                    .load(user.getImage())
-                    .circleCrop()
-                    .into(imageOther);
+            if (user.getImage() != null) {
+                Glide.with(context)
+                        .load(user.getImage().getUrl())
+                        .circleCrop()
+                        .into(imageOther);
+            } else {
+                Glide.with(context)
+                        .load(context.getResources().getString(R.string.DEFAULT_PROFILE_PIC))
+                        .circleCrop()
+                        .into(imageOther);
+            }
             body.setText(message.getMessageText());
             name.setText(message.getSendingUser().getUsername());
         }
@@ -114,11 +119,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         @Override
         public void bindMessage(Message message) {
             User user = new User(message.getSendingUser());
-            Glide.with(context)
-                    .load(user.getImage())
-                    .circleCrop()
-                    .into(imageMe);
+            if (user.getImage() != null) {
+                Glide.with(context)
+                        .load(user.getImage().getUrl())
+                        .circleCrop()
+                        .into(imageMe);
+            } else {
+                Glide.with(context)
+                        .load(context.getResources().getString(R.string.DEFAULT_PROFILE_PIC))
+                        .circleCrop()
+                        .into(imageMe);
+            }
             body.setText(message.getMessageText());
+
         }
     }
 
