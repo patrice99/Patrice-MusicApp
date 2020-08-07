@@ -14,6 +14,7 @@ import com.example.patrice_musicapp.fragments.DiscoverFragment;
 import com.example.patrice_musicapp.fragments.FeedFragment;
 import com.example.patrice_musicapp.fragments.EventsFragment;
 import com.example.patrice_musicapp.fragments.ProfileFragment;
+import com.example.patrice_musicapp.utils.FragmentUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,16 +41,16 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
 
                     case R.id.action_feed:
-                        displayFragment(feedFragment,eventsFragment, discoverFragment, profileFragment);
+                        FragmentUtils.displayFragment(fragmentManager, feedFragment,eventsFragment, discoverFragment, profileFragment);
                         break;
                     case R.id.action_discover:
-                        displayFragment(discoverFragment,feedFragment, eventsFragment, profileFragment);
+                        FragmentUtils.displayFragment(fragmentManager, discoverFragment,feedFragment, eventsFragment, profileFragment);
                         break;
                     case R.id.action_map:
-                        displayFragment(eventsFragment,feedFragment, discoverFragment, profileFragment);
+                        FragmentUtils.displayFragment(fragmentManager, eventsFragment,feedFragment, discoverFragment, profileFragment);
                         break;
                     case R.id.action_profile:
-                        displayFragment(profileFragment,feedFragment, discoverFragment, eventsFragment);
+                        FragmentUtils.displayFragment(fragmentManager, profileFragment,feedFragment, discoverFragment, eventsFragment);
                         break;
                 }
                 return true;
@@ -65,27 +66,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void displayFragment(Fragment showFragment, Fragment hideFragment1, Fragment hideFragment2, Fragment hideFragment3) {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        if (showFragment.isAdded()){
-            ft.show(showFragment);
-        } else {
-            ft.add(R.id.flContainer, showFragment, TAG);
-        }
-
-        if(hideFragment1.isAdded()){
-            ft.hide(hideFragment1);
-        }
-
-        if(hideFragment2.isAdded()){
-            ft.hide(hideFragment2);
-        }
-
-        if(hideFragment3.isAdded()){
-            ft.hide(hideFragment3);
-        }
-
-        ft.commit();
-
-    }
 }
