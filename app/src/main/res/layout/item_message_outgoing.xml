@@ -26,7 +26,6 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentEnd="true"
-        android:contentDescription="@string/profile_me"
-        android:src="@mipmap/ic_launcher" />
+        android:contentDescription="@string/profile_me" />
 
 </RelativeLayout>
