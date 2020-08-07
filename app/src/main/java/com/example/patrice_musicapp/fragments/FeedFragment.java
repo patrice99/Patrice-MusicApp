@@ -59,7 +59,6 @@ public class FeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
-
         toolbar = (Toolbar) view.findViewById(R.id.toolbar_feed);
         toolbar.setTitle("Feed");
         return view;
@@ -257,6 +256,19 @@ public class FeedFragment extends Fragment {
             transaction.replace(R.id.flContainer, newFragment);
             transaction.disallowAddToBackStack();
             transaction.commit();
+        }
+
+        @Override
+        public void onChipAction(String chipGenre) {
+            Fragment newFragment = new DiscoverFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("chipGenre", chipGenre);
+            newFragment.setArguments(bundle);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.flContainer, newFragment);
+            fragmentTransaction.disallowAddToBackStack();
+            fragmentTransaction.commit();
+
         }
 
         @Override
