@@ -58,7 +58,7 @@
                 tools:text="10 miles away" />
 
             <HorizontalScrollView
-                android:id="@+id/hsvGenres"
+                android:id="@+id/hsvInstruments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
@@ -69,7 +69,7 @@
                 android:scrollbars="vertical">
 
                 <TextView
-                    android:id="@+id/tvGenres"
+                    android:id="@+id/tvInstruments"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
@@ -80,7 +80,7 @@
             </HorizontalScrollView>
 
             <HorizontalScrollView
-                android:id="@+id/hsvInstruments"
+                android:id="@+id/hsvGenres"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
@@ -88,7 +88,7 @@
                 android:layout_marginEnd="5dp">
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group_instruments"
+                    android:id="@+id/chip_group_genres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:singleLine="true" />

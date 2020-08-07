@@ -75,10 +75,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         private ImageView ivProfilePic;
         private TextView tvUsername;
         private TextView tvBio;
-        private TextView tvGenres;
+        private TextView tvInstruments;
         private TextView tvDistance;
         private Button btnFollow;
-        private ChipGroup chipGroupInstruments;
+        private ChipGroup chipGroupGenres;
         private HorizontalScrollView hsvInstruments;
         private HorizontalScrollView hsvGenres;
 
@@ -90,9 +90,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvBio = itemView.findViewById(R.id.tvBio);
             tvDistance = itemView.findViewById(R.id.tvDistance);
-            tvGenres = itemView.findViewById(R.id.tvGenres);
+            tvInstruments = itemView.findViewById(R.id.tvInstruments);
             btnFollow = itemView.findViewById(R.id.btnFollow);
-            chipGroupInstruments = itemView.findViewById(R.id.chip_group_instruments);
+            chipGroupGenres = itemView.findViewById(R.id.chip_group_genres);
             hsvInstruments = itemView.findViewById(R.id.hsvInstruments);
             hsvGenres = itemView.findViewById(R.id.hsvGenres);
 
@@ -135,33 +135,33 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 tvDistance.setVisibility(View.INVISIBLE);
             }
 
-            if (user.getGenres() != null) {
-                hsvGenres.setVisibility(View.VISIBLE);
-                tvGenres.setVisibility(View.VISIBLE);
-                String genreStr = String.join(", ", user.getGenres());
-                genreStr = genreStr.replaceAll("_", " ").toLowerCase();
-                tvGenres.setText(genreStr);
-            } else {
-                hsvGenres.setVisibility(View.INVISIBLE);
-                tvGenres.setVisibility(View.INVISIBLE);
-            }
-
-            List<String> instruments;
-            if (user.getInstruments()!=null) {
+            if (user.getInstruments() != null) {
                 hsvInstruments.setVisibility(View.VISIBLE);
-                chipGroupInstruments.setVisibility(View.VISIBLE);
-                instruments = user.getInstruments();
-                chipGroupInstruments.removeAllViews();
-                for (String instrument : instruments) {
-                    Chip chip = new Chip(context);
-                    instrument = instrument.replace("_", " ");
-                    chip.setText(instrument);
-                    chip.isCheckable();
-                    chipGroupInstruments.addView(chip);
-                }
+                tvInstruments.setVisibility(View.VISIBLE);
+                String instrumentStr = String.join(", ", user.getInstruments());
+                instrumentStr = instrumentStr.replaceAll("_", " ").toLowerCase();
+                tvInstruments.setText(instrumentStr);
             } else {
                 hsvInstruments.setVisibility(View.INVISIBLE);
-                chipGroupInstruments.setVisibility(View.INVISIBLE);
+                tvInstruments.setVisibility(View.INVISIBLE);
+            }
+
+            List<String> genres;
+            if (user.getGenres()!=null) {
+                hsvGenres.setVisibility(View.VISIBLE);
+                chipGroupGenres.setVisibility(View.VISIBLE);
+                genres = user.getGenres();
+                chipGroupGenres.removeAllViews();
+                for (String genre : genres) {
+                    Chip chip = new Chip(context);
+                    genre = genre.replace("_", " ");
+                    chip.setText(genre);
+                    chip.isCheckable();
+                    chipGroupGenres.addView(chip);
+                }
+            } else {
+                hsvGenres.setVisibility(View.INVISIBLE);
+                chipGroupGenres.setVisibility(View.INVISIBLE);
             }
 
             final User subjectUser = new User(ParseUser.getCurrentUser());
