@@ -16,38 +16,14 @@
         android:layout_gravity="center"
         android:visibility="invisible" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tlTitle"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pbLoading"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="-30dp"
-        android:layout_marginRight="16dp"
-        android:hint="@string/enter_a_post_title">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="2dp"
-            android:ems="10"
-            android:inputType="textLongMessage"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
 
     <RelativeLayout
         android:id="@+id/relLayout"
         android:layout_width="300dp"
         android:layout_height="230dp"
-        android:layout_below="@id/tlTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical">
 
@@ -131,12 +107,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlCaption"
-        android:layout_width="match_parent"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_below="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="0dp"
         android:layout_marginRight="16dp"
         android:hint="@string/add_a_caption">
 
@@ -145,7 +121,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="2dp"
             android:drawableStart="@drawable/ic_baseline_chat_bubble_outline_24"
             android:drawablePadding="10dp"
@@ -156,12 +131,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlLocation"
-        android:layout_width="match_parent"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_below="@+id/tlCaption"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tlCaption"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
         android:hint="@string/add_a_location">
 
@@ -178,6 +153,33 @@
             android:inputType="textLongMessage"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tlLocation"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/add_genre_filters"
+        android:textColor="#454545"
+        android:textSize="15sp" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsvGenreFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFilter"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="5dp">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true" />
+    </HorizontalScrollView>
 
 
     <Button
