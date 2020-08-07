@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.OnboardingActivity"/>
+        <activity android:name=".activities.ChatActivity"></activity>
+        <activity android:name=".activities.OnboardingActivity" />
 
         <service
             android:name=".utils.ParseApplication"
@@ -47,6 +48,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MainActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.musicApp.fileprovider"

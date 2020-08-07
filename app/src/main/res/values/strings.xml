@@ -86,4 +86,6 @@
     <string name="near_me">Near me</string>
     <string name="most_active">Most active</string>
     <string name="add_genre_filters">Add genre filters!</string>
+    <string name="enter_a_message">Enter a message</string>
+    <string name="send">Send</string>
 </resources>

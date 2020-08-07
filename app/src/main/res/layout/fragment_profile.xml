@@ -116,6 +116,7 @@
 
                     </LinearLayout>
 
+
                     <LinearLayout
                         android:id="@+id/linearLayout2"
                         android:layout_width="wrap_content"
@@ -226,8 +227,8 @@
                         android:orientation="horizontal">
 
                         <View
-                            android:layout_width="35dp"
-                            android:layout_height="35dp" />
+                            android:layout_width="10dp"
+                            android:layout_height="10dp" />
 
                         <ImageView
                             android:id="@+id/ivYoutube"
@@ -242,6 +243,16 @@
                             android:padding="5dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/instagram_icon" />
+
+                        <ImageView
+                            android:id="@+id/ivChat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:paddingLeft="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_baseline_mail_outline2_24"
+                            android:tint="@color/black" />
                     </LinearLayout>
 
                     <HorizontalScrollView

@@ -3,8 +3,10 @@ package com.example.patrice_musicapp.utils;
 import android.app.Application;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.models.Chat;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Followers;
+import com.example.patrice_musicapp.models.Message;
 import com.example.patrice_musicapp.models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -32,6 +34,8 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Event.class);
         ParseObject.registerSubclass(Followers.class);
+        ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(Chat.class);
 
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured

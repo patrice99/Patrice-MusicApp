@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.ChatActivity;
+import com.example.patrice_musicapp.activities.ComposeActivity;
 import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.activities.SettingsActivity;
@@ -73,6 +76,7 @@ public class ProfileFragment extends Fragment {
     private ImageView ivProfilePic;
     private ImageView ivYoutube;
     private ImageView ivInstagram;
+    private ImageView ivChat;
     private TextView tvName;
     private TextView tvLocation;
     private TextView tvBio;
@@ -159,6 +163,7 @@ public class ProfileFragment extends Fragment {
         chipGroupGenres = view.findViewById(R.id.chip_group_genres);
         ivYoutube = view.findViewById(R.id.ivYoutube);
         ivInstagram = view.findViewById(R.id.ivInstagram);
+        ivChat = view.findViewById(R.id.ivChat);
 
 
 
@@ -245,6 +250,7 @@ public class ProfileFragment extends Fragment {
 
         //set on click listeners an visibility
         if (user.getParseUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            ivChat.setVisibility(View.GONE);
             btnFollow.setVisibility(View.GONE);
             btnEditProfile.setVisibility(View.VISIBLE);
             //some EditProfile functionality
@@ -259,6 +265,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
         } else {
+            ivChat.setVisibility(View.VISIBLE);
             btnEditProfile.setVisibility(View.GONE);
             btnFollow.setVisibility(View.VISIBLE);
             btnFollow.setOnClickListener(new View.OnClickListener() {
@@ -380,6 +387,15 @@ public class ProfileFragment extends Fragment {
                 }
             });
         }
+
+        ivChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra("user", user.getParseUser());
+                startActivity(intent);
+            }
+        });
 
 
     }
