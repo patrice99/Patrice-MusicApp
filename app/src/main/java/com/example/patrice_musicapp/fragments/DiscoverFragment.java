@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,10 +24,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.PostDetailsActivity;
+import com.example.patrice_musicapp.adapters.PostAdapter;
 import com.example.patrice_musicapp.adapters.SearchAdapter;
 import com.example.patrice_musicapp.adapters.UserAdapter;
 import com.example.patrice_musicapp.models.Event;
+import com.example.patrice_musicapp.models.Genres;
+import com.example.patrice_musicapp.models.Instruments;
+import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -53,6 +60,7 @@ public class DiscoverFragment extends Fragment {
     private PriorityQueue<User> pqGenres;
     private PriorityQueue<User> pqInstruments;
     private PriorityQueue<User> pqProximity;
+    private String chipGenre;
 
 
 
@@ -76,6 +84,8 @@ public class DiscoverFragment extends Fragment {
         }
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_baseline_sort_24));
         toolbar.getOverflowIcon().setTint(getResources().getColor(R.color.pink));
+
+
 
         objects = new ArrayList<>();
         rvSearch = view.findViewById(R.id.rvSearch);
@@ -113,9 +123,8 @@ public class DiscoverFragment extends Fragment {
 
 
 
-
-
         searchView = view.findViewById(R.id.searchView);
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -149,6 +158,14 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            if (bundle.getString("chipGenre") != null) {
+                chipGenre = bundle.getString("chipGenre");
+                searchView.setQuery(chipGenre, false);
+            }
+        }
+
 
 
     }
@@ -160,7 +177,7 @@ public class DiscoverFragment extends Fragment {
         characterText = characterText.toLowerCase(Locale.getDefault());
         searchAdapter.clear();
         if (characterText.length() != 0) {
-            //get all users
+            //search through users
             ParseQuery<ParseUser> queryUser = ParseUser.getQuery();
             final String finalCharacterText = characterText;
             queryUser.findInBackground(new FindCallback<ParseUser>() {
@@ -181,7 +198,7 @@ public class DiscoverFragment extends Fragment {
                 }
             });
 
-
+            //search through events
             ParseQuery<Event> queryEvent = ParseQuery.getQuery("Event");
             queryEvent.include("Host");
             queryEvent.findInBackground(new FindCallback<Event>() {
@@ -198,6 +215,31 @@ public class DiscoverFragment extends Fragment {
                             objects.add(event);
                         }
                     }
+                    searchAdapter.notifyDataSetChanged();
+                }
+            });
+
+            //search through posts
+            ParseQuery<Post> queryPost = ParseQuery.getQuery("Post");
+            queryPost.include("user");
+            queryPost.findInBackground(new FindCallback<Post>() {
+                @Override
+                public void done(List<Post> posts, ParseException e) {
+                    if (e!= null){
+                        Log.e(TAG, "Issue with getting all posts from Parse");
+                    }
+                    Log.i(TAG, "Got all posts from parse Successfully");
+
+                    for  (Post post: posts){
+                        if (post.getGenreFilters()!=null) {
+                            for (String genre : post.getGenreFilters()) {
+                                if (genre.toLowerCase(Locale.getDefault()).contains(finalCharacterText)) {
+                                    objects.add(post);
+                                }
+                            }
+                        }
+                    }
+
                     searchAdapter.notifyDataSetChanged();
                 }
             });
@@ -245,6 +287,20 @@ public class DiscoverFragment extends Fragment {
             fragmentTransaction.disallowAddToBackStack();
             fragmentTransaction.commit();
 
+        }
+
+        @Override
+        public void onPostClick(int position) {
+            Post post = (Post) objects.get(position);
+            //go to post details activity
+            Log.i(PostAdapter.class.getSimpleName(), "Post at Position " + position + "clicked.");
+            //if any post clicked, take to the PostDetailsActivity with the post
+            Intent intent = new Intent(getContext(), PostDetailsActivity.class);
+            //pass post into PostDetailsActivity
+            intent.putExtra("post", post);
+            intent.putExtra("user", post.getUser());
+
+            getContext().startActivity(intent);
         }
     };
 
@@ -452,6 +508,7 @@ public class DiscoverFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.menu_discover, menu);
     }
 
