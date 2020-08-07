@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -207,11 +208,19 @@ public class ProfileFragment extends Fragment {
                 genre = genre.replace("_", " ");
                 chip.setText(genre);
                 chip.isCheckable();
+                final String chipGenre = genre;
                 chip.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //go to discover fragment and sortByGenre
-
+                        Fragment newFragment = new DiscoverFragment();
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("chipGenre", chipGenre);
+                        newFragment.setArguments(bundle2);
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.flContainer, newFragment);
+                        fragmentTransaction.disallowAddToBackStack();
+                        fragmentTransaction.commit();
                     }
                 });
                 chipGroupGenres.addView(chip);
@@ -395,6 +404,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menu.clear();
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_settings, menu);
     }
@@ -479,6 +489,12 @@ public class ProfileFragment extends Fragment {
         }
 
         @Override
+        public void onChipAction(String chipGenre) {
+
+
+        }
+
+        @Override
         public void onCommentAction(int position) {
 
         }
@@ -502,4 +518,5 @@ public class ProfileFragment extends Fragment {
         }
 
     }
+
 }
