@@ -1,0 +1,10 @@
+{
+  "name": "patrice-music-app",
+  "description": "parse-server for Patrice-Music-App",
+  "scripts": {
+    "start": "parse-server config.json"
+  },
+  "dependencies": {
+    "parse-server": "^3.9.0"
+  }
+}
