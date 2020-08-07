@@ -86,6 +86,7 @@ public class EventsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menu.clear();
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_events, menu);
     }
@@ -101,4 +102,5 @@ public class EventsFragment extends Fragment {
         }
         return true;
     }
+
 }
