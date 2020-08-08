@@ -5,7 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -27,6 +32,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.User;
@@ -45,6 +54,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -67,6 +77,8 @@ public class MapsFragment extends Fragment {
     private BottomSheetBehavior bottomSheetEventBehavior;
     private FusedLocationProviderClient fusedLocationClient;
     private Location userLocation;
+    private Bitmap bmp;
+    private Bitmap resizedBitmap;
 
     //Bottomsheet Views
     private TextView tvName;
@@ -141,13 +153,34 @@ public class MapsFragment extends Fragment {
                         if (user.getLocation()!= null) {
                             final LatLng latLng = new LatLng(user.getLocation().getLatitude(), user.getLocation().getLongitude());
 
-
                             if (user.getImage()!= null) {
+                                ParseFile image = user.getImage();
+                                image.getDataInBackground(new GetDataCallback() {
+                                    @Override
+                                    public void done(byte[] data, ParseException e) {
+                                        if (e == null) {
+                                            // Decode the Byte[] into
+                                            // Bitmap
+                                            bmp = BitmapFactory
+                                                    .decodeByteArray(
+                                                            data, 0,
+                                                            data.length);
+                                            float aspectRatio = bmp.getWidth()/ (float) bmp.getHeight();
+                                            int newWidth = 120;
+                                            int newHeight = Math.round(newWidth/aspectRatio);
+                                            resizedBitmap = Bitmap.createScaledBitmap(bmp, newWidth, newHeight, false);
+                                            resizedBitmap = getCroppedBitmap(resizedBitmap);
+                                        }
+                                        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(resizedBitmap);
+                                        googleMap.addMarker(new MarkerOptions().position(latLng).title(user.getUsername()).icon(icon));
 
-                            } else{
-                                BitmapDescriptor icon = bitmapDescriptorFromVector(getContext(), R.drawable.ic_ufi_heart);
+                                    }
+                                });
+                            } else {
+                                BitmapDescriptor icon = bitmapDescriptorFromVector(getContext(), R.drawable.ic_google_maps_person_icon);
                                 googleMap.addMarker(new MarkerOptions().position(latLng).title(user.getUsername()).icon(icon));
                             }
+
                         }
                     }
 
@@ -310,6 +343,29 @@ public class MapsFragment extends Fragment {
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
+
+
+    private Bitmap getCroppedBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
+    }
+
+
 
 
 }
