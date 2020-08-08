@@ -160,7 +160,7 @@ public class MapsFragment extends Fragment {
                                     public void done(byte[] data, ParseException e) {
                                         if (e == null) {
                                             // Decode the Byte[] into
-                                            // Bitmap
+
                                             bmp = BitmapFactory
                                                     .decodeByteArray(
                                                             data, 0,
@@ -169,7 +169,8 @@ public class MapsFragment extends Fragment {
                                             int newWidth = 120;
                                             int newHeight = Math.round(newWidth/aspectRatio);
                                             resizedBitmap = Bitmap.createScaledBitmap(bmp, newWidth, newHeight, false);
-                                            resizedBitmap = getCroppedBitmap(resizedBitmap);
+                                            resizedBitmap = getBitmapRoundedCorners(resizedBitmap);
+
                                         }
                                         BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(resizedBitmap);
                                         googleMap.addMarker(new MarkerOptions().position(latLng).title(user.getUsername()).icon(icon));
@@ -177,7 +178,7 @@ public class MapsFragment extends Fragment {
                                     }
                                 });
                             } else {
-                                BitmapDescriptor icon = bitmapDescriptorFromVector(getContext(), R.drawable.ic_google_maps_person_icon);
+                                BitmapDescriptor icon = bitmapDescriptorFromVector(getContext(), R.drawable.ic_user_map_icon);
                                 googleMap.addMarker(new MarkerOptions().position(latLng).title(user.getUsername()).icon(icon));
                             }
 
@@ -345,14 +346,14 @@ public class MapsFragment extends Fragment {
     }
 
 
-    private Bitmap getCroppedBitmap(Bitmap bitmap) {
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+    private Bitmap getBitmapRoundedCorners(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(resizedBitmap.getWidth(),
+                resizedBitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
 
         final int color = 0xff424242;
         final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final Rect rect = new Rect(0, 0, resizedBitmap.getWidth(), bitmap.getHeight());
 
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
@@ -363,6 +364,7 @@ public class MapsFragment extends Fragment {
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
+
     }
 
 
