@@ -81,7 +81,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            tvEventDate.setText(event.getDate().toString());
+            tvEventDate.setText(event.getDate());
             tvHostUsername.setText(event.getHost().getUsername());
 
             ParseFile image = event.getImage();

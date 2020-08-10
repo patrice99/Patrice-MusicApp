@@ -14,6 +14,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -69,8 +70,9 @@ public class Event extends ParseObject {
 
     }
 
-    public Date getDate() {
-        return getDate(KEY_DATE);
+    public String getDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy hh:mm aa");
+        return formatter.format(getDate(KEY_DATE));
     }
 
     public void setDate(Date date){
