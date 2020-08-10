@@ -92,6 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_city"
+            android:focusable="false"
+            android:drawableStart="@drawable/ic_outline_location_on_24"
             android:inputType="text"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>

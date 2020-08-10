@@ -25,6 +25,12 @@ import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.utils.MediaUtil;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -36,10 +42,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 
@@ -54,6 +63,7 @@ public class ComposeEventFragment extends Fragment {
     ImageView ivEventImage;
     Button btnDone;
     Event event = new Event();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,6 +109,23 @@ public class ComposeEventFragment extends Fragment {
             }
         });
 
+        //initalize Google Places API
+        Places.initialize(getContext(), getResources().getString(R.string.google_maps_key));
+        etLocation.setFocusable(false);
+        etLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Initialize place field list
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+
+                //Create intent
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList)
+                        .build(getContext());
+                startActivityForResult(intent, 100);
+
+            }
+        });
+
         //set on click listeners
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,16 +140,10 @@ public class ComposeEventFragment extends Fragment {
                 //get the user
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 //save the location
-                String locationString = etLocation.getText().toString();
-                ParseGeoPoint location = null;
-                try {
-                    location = Event.getLocationFromString(locationString, getContext());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
                 String name = etName.getText().toString();
                 //save the post into
-                saveEvents(description, currentUser, MediaUtil.photoFile, location, date, name);
+                saveEvents(description, currentUser, MediaUtil.photoFile, date, name);
                 //go back to post fragment(which is in MainActivity)
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
@@ -138,11 +159,10 @@ public class ComposeEventFragment extends Fragment {
     }
 
 
-    private void saveEvents(String description, ParseUser currentUser, File photoFile, ParseGeoPoint location, Date date, String name) {
+    private void saveEvents(String description, ParseUser currentUser, File photoFile, Date date, String name) {
        event.setDescription(description);
        event.setName(name);
        event.setDate(date);
-       event.setLocation(location);
        event.setHost(currentUser);
        if (photoFile != null){
            event.setImage(new ParseFile(photoFile));
@@ -201,6 +221,18 @@ public class ComposeEventFragment extends Fragment {
             //Compress the image further 
             selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
 
+        }  else if(requestCode == 100 && resultCode == RESULT_OK){
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            ParseGeoPoint geoPoint = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+            event.setLocation(geoPoint);
+            etLocation.setText(place.getName());
+        } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Log.i(TAG, status.getStatusMessage());
+            Toast.makeText(getContext(), status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+        } else if (resultCode == RESULT_CANCELED) {
+            // The user canceled the operation.
+            return;
         }
     }
 }

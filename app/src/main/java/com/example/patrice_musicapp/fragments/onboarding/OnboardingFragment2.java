@@ -1,5 +1,6 @@
 package com.example.patrice_musicapp.fragments.onboarding;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,17 +16,32 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.models.User;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 public class OnboardingFragment2 extends Fragment {
     public static final String TAG = OnboardingFragment2.class.getSimpleName();
@@ -55,6 +71,7 @@ public class OnboardingFragment2 extends Fragment {
             }
         }
         Collections.sort(countries);
+        countries.add(0, "United States of America");
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(
@@ -74,11 +91,20 @@ public class OnboardingFragment2 extends Fragment {
                 btnSave.setBackgroundColor(getResources().getColor(R.color.white));
             }
         });
+
+        //initalize Google Places API
+        Places.initialize(getContext(), getResources().getString(R.string.google_maps_key));
         etCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnSave.setText("Save");
                 btnSave.setBackgroundColor(getResources().getColor(R.color.white));
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+
+                //Create intent
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList)
+                        .build(getContext());
+                startActivityForResult(intent, 100);
             }
         });
 
@@ -86,14 +112,7 @@ public class OnboardingFragment2 extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //save location of the new user in their city
-                User user = new User(ParseUser.getCurrentUser());
-                try {
-                    user.setLocation(User.getLocationFromString(String.valueOf(etCity.getText()), getContext()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                user.getParseUser().saveInBackground(new SaveCallback() {
+                ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e!=null){
@@ -106,5 +125,24 @@ public class OnboardingFragment2 extends Fragment {
                 });
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100 && resultCode == RESULT_OK){
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            ParseGeoPoint geoPoint = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+            User user = new User(ParseUser.getCurrentUser());
+            user.setLocation(geoPoint);
+            etCity.setText(place.getName());
+        } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Log.i(TAG, status.getStatusMessage());
+            Toast.makeText(getContext(), status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+        } else if (resultCode == RESULT_CANCELED) {
+            // The user canceled the operation.
+            return;
+        }
     }
 }

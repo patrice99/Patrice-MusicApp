@@ -4,7 +4,10 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 
+import com.android.volley.toolbox.HttpResponse;
+import com.example.patrice_musicapp.R;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -13,7 +16,13 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -108,8 +117,15 @@ public class Event extends ParseObject {
         if (fromWhere == MapFragment.class.getSimpleName()){
             return address.getAddressLine(0);
         }
-        return address.getFeatureName();
+
+        if (!address.getFeatureName().matches("[0-9]+")){
+            return address.getFeatureName();
+        } else {
+            return address.getLocality();
+        }
     }
+
+
 
 
 
