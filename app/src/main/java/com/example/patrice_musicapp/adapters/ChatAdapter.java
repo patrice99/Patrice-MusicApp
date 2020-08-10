@@ -137,11 +137,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     private boolean isMe(int position) {
         Message message = messages.get(position);
-        if (message.getSendingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-            return true;
-        } else {
-            return false;
-        }
+        return message.getSendingUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId());
     }
 
 }

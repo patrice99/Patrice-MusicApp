@@ -69,29 +69,25 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fab = view.findViewById(R.id.floatingActionButton);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //respond to fab click
-                //go to compose Activity
-                Intent intent = new Intent(getContext(), ComposeActivity.class);
-                startActivity(intent);
-            }
-        });
-
         rvFeedPosts = view.findViewById(R.id.rvFeedPosts);
         swipeContainer = view.findViewById(R.id.swipeContainer);
 
 
         allPosts = new ArrayList<>();
-        //instantiate the adapter
         adapter = new PostAdapter(getContext(), allPosts, onClickListener);
-        //set adapter on recycler view
         rvFeedPosts.setAdapter(adapter);
-        //set layout manager on recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvFeedPosts.setLayoutManager(linearLayoutManager);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //go to compose Activity
+                Intent intent = new Intent(getContext(), ComposeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //turn off blinking when adapter is notified of a data set change
         RecyclerView.ItemAnimator animator = rvFeedPosts.getItemAnimator();
@@ -100,7 +96,7 @@ public class FeedFragment extends Fragment {
         }
 
 
-        //get the posts from the parse dashboard
+        //get the user following and their posts from the parse dashboard
         try {
             getUserFollowing();
         } catch (JSONException e) {
@@ -145,8 +141,6 @@ public class FeedFragment extends Fragment {
             }
         };
         rvFeedPosts.addOnScrollListener(scrollListener);
-
-
     }
 
     private void getUserFollowing() throws JSONException {

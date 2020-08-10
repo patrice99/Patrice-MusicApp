@@ -1,17 +1,10 @@
 package com.example.patrice_musicapp.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,17 +15,18 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.ComposeActivity;
-import com.example.patrice_musicapp.activities.EditProfileActivity;
 import com.example.patrice_musicapp.activities.MainActivity;
 import com.example.patrice_musicapp.models.Genres;
-import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
 import com.example.patrice_musicapp.utils.MediaUtil;
@@ -54,7 +48,6 @@ import com.parse.SaveCallback;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,7 +83,7 @@ public class ComposePostFragment extends Fragment {
         setHasOptionsMenu(true);
 
         chipGroup = view.findViewById(R.id.chip_group_genres);
-        List<Genres> genres = Arrays.asList(Genres.values());
+        Genres[] genres = Genres.values();
         for(Genres genre: genres) {
             final Chip chip = (Chip) inflater.inflate(R.layout.filter_chip, chipGroup, false);
             chip.setText(genre.toString());
@@ -150,7 +143,6 @@ public class ComposePostFragment extends Fragment {
 
 
 
-
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,6 +174,13 @@ public class ComposePostFragment extends Fragment {
             }
         });
 
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MediaUtil.onChoosePhoto(getContext());
+            }
+        });
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,16 +205,57 @@ public class ComposePostFragment extends Fragment {
             }
         });
 
-        btnGallery.setOnClickListener(new View.OnClickListener() {
+
+
+    }
+
+    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile, final String soundCloudUrl, ParseGeoPoint geoPoint, List<String> checkedGenres) {
+        final Post post = new Post();
+        post.setCaption(caption);
+        if (photoFile != null) {
+            post.setImage(new ParseFile(photoFile));
+        }
+        post.setUser(currentUser);
+        if (videoFile != null) {
+            post.setVideo(new ParseFile(videoFile));
+        }
+        if(soundCloudUrl != null){
+            post.setSoundCloudUrl(soundCloudUrl);
+        }
+
+        if(geoPoint!=null){
+            post.setLocation(geoPoint);
+        }
+        if (checkedGenres!= null){
+            post.setGenreFilter(checkedGenres);
+        }
+        pb.setVisibility(ProgressBar.VISIBLE);
+        post.saveInBackground(new SaveCallback() {
             @Override
-            public void onClick(View view) {
-                MediaUtil.onChoosePhoto(getContext());
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
+                }
+
+                Log.i(TAG, "Post save was successful!");
+                etCaption.setText(""); // clear out edit text so user does not save the same post twice
+                ivPostImage.setImageResource(0); //clear the image view
+                User user = new User(currentUser);
+                user.setPostCount(user.getPostCount() + 1);
+
+                post.getUser().saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving post author");
+                        }
+                        pb.setVisibility(ProgressBar.INVISIBLE);
+
+                    }
+                });
             }
         });
-
-
-
-
     }
 
 
@@ -277,55 +317,6 @@ public class ComposePostFragment extends Fragment {
     }
 
 
-
-    private void savePosts(String caption, final ParseUser currentUser, File photoFile, final File videoFile, final String soundCloudUrl, ParseGeoPoint geoPoint, List<String> checkedGenres) {
-        final Post post = new Post();
-        post.setCaption(caption);
-        if (photoFile != null) {
-            post.setImage(new ParseFile(photoFile));
-        }
-        post.setUser(currentUser);
-        if (videoFile != null) {
-            post.setVideo(new ParseFile(videoFile));
-        }
-        if(soundCloudUrl != null){
-            post.setSoundCloudUrl(soundCloudUrl);
-        }
-
-        if(geoPoint!=null){
-            post.setLocation(geoPoint);
-        }
-        if (checkedGenres!= null){
-            post.setGenreFilter(checkedGenres);
-        }
-        pb.setVisibility(ProgressBar.VISIBLE);
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
-                }
-
-                Log.i(TAG, "Post save was successful!");
-                etCaption.setText(""); // clear out edit text so user does not save the same post twice
-                ivPostImage.setImageResource(0); //clear the image view
-                User user = new User(currentUser);
-                user.setPostCount(user.getPostCount() + 1);
-
-                post.getUser().saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null) {
-                            Log.e(TAG, "Error while saving post author");
-                        }
-                        pb.setVisibility(ProgressBar.INVISIBLE);
-
-                    }
-                });
-            }
-        });
-    }
 
 
 

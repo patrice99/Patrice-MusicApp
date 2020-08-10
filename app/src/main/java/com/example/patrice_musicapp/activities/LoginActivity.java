@@ -77,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                             .repeat(0)
                             .playOn(findViewById(R.id.linearLayout2));
                     Toast.makeText(LoginActivity.this, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
-                    return;
                 } else {
                     goMainActivity();
                     Toast.makeText(LoginActivity.this, "Successfully logged in!", Toast.LENGTH_SHORT).show();

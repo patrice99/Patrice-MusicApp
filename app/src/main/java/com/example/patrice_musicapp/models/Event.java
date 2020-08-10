@@ -4,10 +4,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 
-import com.android.volley.toolbox.HttpResponse;
-import com.example.patrice_musicapp.R;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -16,13 +13,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -79,6 +70,22 @@ public class Event extends ParseObject {
 
     }
 
+    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context, String fromWhere) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
+        Address address = addresses.get(0); //get the first address for right now
+
+        if (fromWhere == MapFragment.class.getSimpleName()){
+            return address.getAddressLine(0);
+        }
+
+        if (!address.getFeatureName().matches("[0-9]+")){
+            return address.getFeatureName();
+        } else {
+            return address.getLocality();
+        }
+    }
+
     public String getDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy hh:mm aa");
         return formatter.format(getDate(KEY_DATE));
@@ -98,31 +105,6 @@ public class Event extends ParseObject {
         query.setSkip(page * limit);
         query.addDescendingOrder(Event.KEY_CREATED_AT);
         query.findInBackground(callback);
-    }
-
-    public static ParseGeoPoint getLocationFromString(String location, Context context) throws IOException {
-        Geocoder geocoder = new Geocoder(context, Locale.US);
-        List<Address> addresses = geocoder.getFromLocationName(location, 5);
-        Address address = addresses.get(0); //get the first address for right now
-
-        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
-
-    }
-
-    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context, String fromWhere) throws IOException {
-        Geocoder geocoder = new Geocoder(context, Locale.US);
-        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
-        Address address = addresses.get(0); //get the first address for right now
-
-        if (fromWhere == MapFragment.class.getSimpleName()){
-            return address.getAddressLine(0);
-        }
-
-        if (!address.getFeatureName().matches("[0-9]+")){
-            return address.getFeatureName();
-        } else {
-            return address.getLocality();
-        }
     }
 
 

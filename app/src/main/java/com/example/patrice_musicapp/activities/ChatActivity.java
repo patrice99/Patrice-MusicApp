@@ -25,18 +25,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ChatActivity extends AppCompatActivity {
-    private static final String USER_ID_KEY = "userId";
-    private static final String BODY_KEY = "body";
     private static final String TAG = ChatActivity.class.getSimpleName();
     private ParseUser sendingUser;
     private ParseUser receivingUser;
 
     private EditText etMessage;
-    private ImageButton btSend;
     private RecyclerView rvChat;
     private List<Message> messages;
     private ChatAdapter adapter;
-    private Toolbar toolbar;
     private boolean firstLoad;
 
     @Override
@@ -44,10 +40,11 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+
         etMessage = findViewById(R.id.etMessage);
-        btSend = findViewById(R.id.btSend);
+        ImageButton btSend = findViewById(R.id.btSend);
         rvChat = findViewById(R.id.rvChat);
-        toolbar = findViewById(R.id.toolbar_chat);
+        Toolbar toolbar = findViewById(R.id.toolbar_chat);
 
 
         //get Intent extras
@@ -112,6 +109,7 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    //poll for messages
     static final long POLL_INTERVAL = TimeUnit.SECONDS.toMillis(3);
     Handler myHandler = new android.os.Handler();
     Runnable mRefreshMessagesRunnable = new Runnable() {

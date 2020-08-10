@@ -90,4 +90,5 @@
     <string name="send">Send</string>
     <string name="profile_other">Profile Other</string>
     <string name="profile_me" />
+    <string name="add_profile_pic">Add Profile Pic</string>
 </resources>

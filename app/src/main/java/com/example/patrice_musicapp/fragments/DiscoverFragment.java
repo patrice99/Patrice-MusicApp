@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,11 +28,8 @@ import com.example.patrice_musicapp.adapters.PostAdapter;
 import com.example.patrice_musicapp.adapters.SearchAdapter;
 import com.example.patrice_musicapp.adapters.UserAdapter;
 import com.example.patrice_musicapp.models.Event;
-import com.example.patrice_musicapp.models.Genres;
-import com.example.patrice_musicapp.models.Instruments;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.models.User;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -172,8 +168,6 @@ public class DiscoverFragment extends Fragment {
 
 
     public void filter(String characterText) {
-        final List<ParseUser> allParseUsers = new ArrayList<>();
-        final List<Event> allEvents = new ArrayList<>();
         characterText = characterText.toLowerCase(Locale.getDefault());
         searchAdapter.clear();
         if (characterText.length() != 0) {
@@ -187,9 +181,8 @@ public class DiscoverFragment extends Fragment {
                         Log.e(TAG, "Issue with getting all users from Parse");
                     }
                     Log.i(TAG, "Got all users from parse Successfully");
-                    allParseUsers.addAll(allUsers);
 
-                    for (ParseUser parseUser: allParseUsers) {
+                    for (ParseUser parseUser: allUsers) {
                         if (parseUser.getUsername().toLowerCase(Locale.getDefault()).startsWith(finalCharacterText)) {
                             objects.add(new User(parseUser));
                         }
@@ -208,7 +201,6 @@ public class DiscoverFragment extends Fragment {
                         Log.e(TAG, "Issue with getting all events from Parse");
                     }
                     Log.i(TAG, "Got all events from parse Successfully");
-                    allEvents.addAll(events);
 
                     for  (Event event: events){
                         if (event.getName().toLowerCase(Locale.getDefault()).startsWith(finalCharacterText)) {

@@ -3,7 +3,6 @@ package com.example.patrice_musicapp.utils;
 import android.app.Application;
 
 import com.example.patrice_musicapp.R;
-import com.example.patrice_musicapp.models.Chat;
 import com.example.patrice_musicapp.models.Event;
 import com.example.patrice_musicapp.models.Followers;
 import com.example.patrice_musicapp.models.Message;
