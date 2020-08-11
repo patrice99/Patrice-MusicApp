@@ -19,15 +19,12 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.activities.PostDetailsActivity;
-import com.example.patrice_musicapp.fragments.DiscoverFragment;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.example.patrice_musicapp.utils.OnDoubleTapListener;

@@ -4,35 +4,27 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.databinding.ActivityOnboardingBinding;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment1;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment2;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment3;
 import com.example.patrice_musicapp.fragments.onboarding.OnboardingFragment4;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class OnboardingActivity extends AppCompatActivity {
-    private ViewPager pager;
-    private SmartTabLayout indicator;
-    private Button skip;
-    private Button next;
+    private ActivityOnboardingBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboarding);
+        binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        pager = findViewById(R.id.pager);
-        indicator = findViewById(R.id.indicator);
-        skip = findViewById(R.id.skip);
-        next = findViewById(R.id.next);
 
         FragmentStatePagerAdapter adapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -56,27 +48,27 @@ public class OnboardingActivity extends AppCompatActivity {
         };
 
 
-        pager.setAdapter(adapter);
-        indicator.setViewPager(pager);
+        binding.pager.setAdapter(adapter);
+        binding.indicator.setViewPager(binding.pager);
 
 
         //set on click listeners
 
-        skip.setOnClickListener(new View.OnClickListener() {
+        binding.skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finishOnboarding();
             }
         });
 
-        next.setOnClickListener(new View.OnClickListener() {
+        binding.next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pager.getCurrentItem() == 3) { // The last screen
+                if(binding.pager.getCurrentItem() == 3) { // The last screen
                     finishOnboarding();
                 } else {
-                    pager.setCurrentItem(
-                            pager.getCurrentItem() + 1,
+                    binding.pager.setCurrentItem(
+                            binding.pager.getCurrentItem() + 1,
                             true
                     );
                 }
@@ -84,15 +76,15 @@ public class OnboardingActivity extends AppCompatActivity {
         });
 
 
-        indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        binding.indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 if(position == 3){
-                    skip.setVisibility(View.GONE);
-                    next.setText("Done");
+                    binding.skip.setVisibility(View.GONE);
+                    binding.next.setText("Done");
                 } else {
-                    skip.setVisibility(View.VISIBLE);
-                    next.setText("Next");
+                    binding.skip.setVisibility(View.VISIBLE);
+                    binding.next.setText("Next");
                 }
             }
         });

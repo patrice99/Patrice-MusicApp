@@ -4,40 +4,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.databinding.ActivitySignUpBinding;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class SignUpActivity extends AppCompatActivity {
     public static final String TAG = SignUpActivity.class.getSimpleName();
-    private EditText etUsername;
-    private EditText etPassword;
-    private EditText etEmail;
-    private Button btnSignUp;
+    private ActivitySignUpBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        etEmail = findViewById(R.id.etEmail);
-        btnSignUp = findViewById(R.id.btnSignUp);
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick SignUp button");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                String email = etEmail.getText().toString();
+                String username = binding.etUsername.getText().toString();
+                String password = binding.etPassword.getText().toString();
+                String email = binding.etEmail.getText().toString();
                 signUpUser(username, password, email);
             }
         });

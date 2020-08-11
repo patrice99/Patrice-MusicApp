@@ -1,20 +1,17 @@
 package com.example.patrice_musicapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.databinding.ActivityPostDetailsBinding;
 import com.example.patrice_musicapp.models.Post;
 import com.example.patrice_musicapp.utils.MediaUtil;
 import com.parse.ParseException;
@@ -28,17 +25,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     public static final String TAG = PostDetailsActivity.class.getSimpleName();
     private Toolbar toolbar;
     private Post post;
-    private ImageView ivProfilePic;
-    private ImageView ivPostImage;
-    private ImageView ivLike;
-    private TextView tvTitle;
-    private TextView tvUsername;
-    private TextView tvCaption;
-    private TextView tvLocation;
-    private TextView tvTimeStamp;
-    private TextView tvLikeCount;
-    private VideoView vvPostVideo;
-    private WebView webviewSoundCloud;
+    private ActivityPostDetailsBinding binding;
     String addS = "";
     private ParseUser user;
 
@@ -46,7 +33,8 @@ public class PostDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_details);
+        binding = ActivityPostDetailsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         //toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar_post_details);
@@ -56,54 +44,41 @@ public class PostDetailsActivity extends AppCompatActivity {
         post = getIntent().getParcelableExtra("post");
         user = getIntent().getParcelableExtra("user");
 
-        //find views
-        ivProfilePic = findViewById(R.id.ivProfilePic);
-        ivPostImage = findViewById(R.id.ivPostImage);
-        ivLike = findViewById(R.id.ivLike);
-        tvTitle = findViewById(R.id.tvTitle);
-        tvUsername = findViewById(R.id.tvUsername);
-        tvCaption = findViewById(R.id.tvCaption);
-        tvLocation = findViewById(R.id.tvLocation);
-        tvTimeStamp = findViewById(R.id.tvTimeStamp);
-        tvLikeCount = findViewById(R.id.tvLikeCount);
-        vvPostVideo = findViewById(R.id.vvPostVideo);
-        webviewSoundCloud = findViewById(R.id.webviewSoundCloud);
-
 
         //bind views
-        tvTitle.setText(post.getTitle());
-        tvUsername.setText(user.getUsername());
-        tvCaption.setText(post.getCaption());
-        tvTimeStamp.setText(post.getTimeStamp());
+        binding.tvTitle.setText(post.getTitle());
+        binding.tvUsername.setText(user.getUsername());
+        binding.tvCaption.setText(post.getCaption());
+        binding.tvTimeStamp.setText(post.getTimeStamp());
 
         if (post.getLikesCount() != 1) {
             addS = "s";
         }
-        tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
+        binding.tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
 
 
 
         //check if the post has a valid image
         ParseFile image = post.getImage();
         if (image != null) {
-            vvPostVideo.setVisibility(View.GONE);
-            webviewSoundCloud.setVisibility(View.GONE);
-            ivPostImage.setVisibility(View.VISIBLE);
-            Glide.with(this).load(post.getImage().getUrl()).into(ivPostImage);
+            binding.vvPostVideo.setVisibility(View.GONE);
+            binding.webviewSoundCloud.setVisibility(View.GONE);
+            binding.ivPostImage.setVisibility(View.VISIBLE);
+            Glide.with(this).load(post.getImage().getUrl()).into(binding.ivPostImage);
         }
 
         ParseFile video = post.getVideo();
         if (video != null) {
-            ivPostImage.setVisibility(View.GONE);
-            webviewSoundCloud.setVisibility(View.GONE);
-            vvPostVideo.setVisibility(View.VISIBLE);
+            binding.ivPostImage.setVisibility(View.GONE);
+            binding.webviewSoundCloud.setVisibility(View.GONE);
+            binding.vvPostVideo.setVisibility(View.VISIBLE);
             try {
                 MediaUtil.videoUri = Uri.fromFile(post.getVideo().getFile());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            MediaUtil.playbackRecordedVideo(vvPostVideo, this);
-            vvPostVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            MediaUtil.playbackRecordedVideo(binding.vvPostVideo, this);
+            binding.vvPostVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     mp.setLooping(true);
@@ -112,10 +87,10 @@ public class PostDetailsActivity extends AppCompatActivity {
         }
 
         if(post.getSoundCloudUrl()!= null){
-            ivPostImage.setVisibility(View.GONE);
-            vvPostVideo.setVisibility(View.GONE);
-            webviewSoundCloud.setVisibility(View.VISIBLE);
-            MediaUtil.showSoundCloudPlayer(webviewSoundCloud, post.getSoundCloudUrl());
+            binding.ivPostImage.setVisibility(View.GONE);
+            binding.vvPostVideo.setVisibility(View.GONE);
+            binding.webviewSoundCloud.setVisibility(View.VISIBLE);
+            MediaUtil.showSoundCloudPlayer(binding.webviewSoundCloud, post.getSoundCloudUrl());
         }
 
         //check if the user has a valid profilePic
@@ -124,20 +99,20 @@ public class PostDetailsActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(user.getParseFile("profileImage").getUrl())
                     .circleCrop()
-                    .into(ivProfilePic);
+                    .into(binding.ivProfilePic);
         } else {
             Glide.with(this)
                     .load(getResources().getString(R.string.DEFAULT_PROFILE_PIC))
                     .circleCrop()
-                    .into(ivProfilePic);
+                    .into(binding.ivProfilePic);
         }
 
         //change image for ivLike for liked and unliked
         try {
             if (post.isLiked(ParseUser.getCurrentUser())) {
-                Glide.with(this).load(getDrawable(R.drawable.ic_ufi_heart_active)).into(ivLike);
+                Glide.with(this).load(getDrawable(R.drawable.ic_ufi_heart_active)).into(binding.ivLike);
             } else {
-                Glide.with(this).load(getDrawable(R.drawable.ic_ufi_heart)).into(ivLike);
+                Glide.with(this).load(getDrawable(R.drawable.ic_ufi_heart)).into(binding.ivLike);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -145,28 +120,28 @@ public class PostDetailsActivity extends AppCompatActivity {
 
 
         //set onClick listeners
-        ivLike.setOnClickListener(new View.OnClickListener() {
+        binding.ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     if (post.isLiked(ParseUser.getCurrentUser())) {
                         //unlike post
                         post.destroyLike(ParseUser.getCurrentUser());
-                        Glide.with(PostDetailsActivity.this).load(getDrawable(R.drawable.ic_ufi_heart)).into(ivLike);
+                        Glide.with(PostDetailsActivity.this).load(getDrawable(R.drawable.ic_ufi_heart)).into(binding.ivLike);
                         addS = "";
                         if ((post.getLikesCount()) != 1) {
                             addS = "s";
                         }
-                        tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
+                        binding.tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
                     } else {
                         //like post
                         post.addLike(ParseUser.getCurrentUser());
-                        Glide.with(PostDetailsActivity.this).load(getDrawable(R.drawable.ic_ufi_heart_active)).into(ivLike);
+                        Glide.with(PostDetailsActivity.this).load(getDrawable(R.drawable.ic_ufi_heart_active)).into(binding.ivLike);
                         addS = "";
                         if ((post.getLikesCount()) != 1) {
                             addS = "s";
                         }
-                        tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
+                        binding.tvLikeCount.setText(String.valueOf(post.getLikesCount()) + " Like" + addS);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
