@@ -4,15 +4,12 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -102,6 +99,23 @@ public class User {
         parseUser.put(KEY_LOCATION, parseGeoPoint);
     }
 
+    public static ParseGeoPoint getLocationFromString(String location, Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocationName(location, 5);
+        Address address = addresses.get(0); //get the first address for right now
+
+        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
+
+    }
+
+    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context, Locale.US);
+        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
+        Address address = addresses.get(0); //get the first address for right now
+        return address.getLocality();
+    }
+
+
     public int getFollowingCount() {
         if (parseUser.getJSONArray(KEY_FOLLOWING) == null){
             return 0;
@@ -152,6 +166,20 @@ public class User {
         query.findInBackground(callback);
     }
 
+    public boolean isFollowed(User following) throws JSONException {
+        JSONArray jsonArray = ParseUser.getCurrentUser().getJSONArray(KEY_FOLLOWING);
+        if (jsonArray!= null && jsonArray.length() != 0) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                String objectId = jsonObject.getString("objectId");
+                if (objectId.equals(following.getParseUser().getObjectId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public List<String> getGenres() {
        return parseUser.getList(KEY_GENRE);
@@ -175,7 +203,6 @@ public class User {
     public void setInstrumentList(List<String> instrumentList){
         parseUser.put(KEY_INSTRUMENT, instrumentList);
     }
-
 
 
     public void removeInstrument(Instruments instruments){
@@ -207,65 +234,6 @@ public class User {
 
     }
 
-    public float getHourRate() {
-        return (float) parseUser.getNumber(KEY_HOUR_RATE);
-    }
-
-    public void setHourRate(float hourRate) {
-        parseUser.put(KEY_HOUR_RATE, hourRate);
-    }
-
-    public boolean getSoloArtist() {
-        return parseUser.getBoolean(KEY_SOLO_ARTIST);
-    }
-
-    public void setSoloArtist(boolean bool) {
-        parseUser.put(KEY_SOLO_ARTIST, bool);
-    }
-
-    public void save(){
-        parseUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null){
-                    Log.e(User.class.getSimpleName(), "Issue with save", e);
-                }
-                Log.i(User.class.getSimpleName(), "Save complete");
-            }
-        });
-    }
-
-
-    public static ParseGeoPoint getLocationFromString(String location, Context context) throws IOException {
-        Geocoder geocoder = new Geocoder(context, Locale.US);
-        List<Address> addresses = geocoder.getFromLocationName(location, 5);
-        Address address = addresses.get(0); //get the first address for right now
-
-        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
-
-    }
-
-    public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context) throws IOException {
-        Geocoder geocoder = new Geocoder(context, Locale.US);
-        List<Address> addresses = geocoder.getFromLocation(parseGeoPoint.getLatitude(), parseGeoPoint.getLongitude(), 5);
-        Address address = addresses.get(0); //get the first address for right now
-        return address.getLocality();
-    }
-
-
-    public boolean isFollowed(User following) throws JSONException {
-        JSONArray jsonArray = ParseUser.getCurrentUser().getJSONArray(KEY_FOLLOWING);
-        if (jsonArray!= null && jsonArray.length() != 0) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                String objectId = jsonObject.getString("objectId");
-                if (objectId.equals(following.getParseUser().getObjectId())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     public static void queryUsers(int limit, ParseUser filterForUser, FindCallback callback){
         ParseQuery<ParseUser> query = ParseUser.getQuery();

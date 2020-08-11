@@ -50,8 +50,7 @@ public class MediaUtil {
         Uri fileProvider = FileProvider.getUriForFile(context, "com.musicApp.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
-        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
-        // So as long as the result is not null, it's safe to use the intent.
+
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             // Start the image capture intent to take photo
             ((Activity)context).startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
@@ -135,6 +134,7 @@ public class MediaUtil {
     public static void showSoundCloudPlayer(WebView webviewSoundCloud, String soundCloudUrl) {
         String SOUND_URL = soundCloudUrl;
 
+        //html for soundcloud embedded player
         String html = "<!DOCTYPE html><html> <head> <meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"target-densitydpi=high-dpi\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <link rel=\"stylesheet\" media=\"screen and (-webkit-device-pixel-ratio:1.5)\" href=\"hdpi.css\" /></head> <body style=\"background:black;margin:0 0 0 0; padding:0 0 0 0;\"> <iframe id=\"sc-widget " +
                 "\" width=\"100%\" height=\"166\"" + // Set Appropriate Width and Height that you want for SoundCloud Player
                 " src=\"https://w.soundcloud.com/player/?url=" + SOUND_URL + "&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"

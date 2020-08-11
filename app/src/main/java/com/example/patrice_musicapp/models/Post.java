@@ -109,45 +109,6 @@ public class Post extends ParseObject {
         return (int) getNumber(KEY_LIKES_COUNT);
     }
 
-
-    public ParseGeoPoint getLocation(){
-        return getParseGeoPoint(KEY_LOCATION);
-    }
-
-    public void setLocation(ParseGeoPoint parseGeoPoint){
-        put(KEY_LOCATION, parseGeoPoint);
-    }
-
-    public String getSoundCloudUrl(){
-        return getString(KEY_SOUND_CLOUD_URL);
-    }
-
-    public void setSoundCloudUrl(String soundCloudUrl) {
-        put(KEY_SOUND_CLOUD_URL, soundCloudUrl);
-    }
-
-    public List<String> getGenreFilters(){
-        return getList(KEY_GENRE_FILTER);
-    }
-
-    public void setGenreFilter(List<String> genreFilters){
-        put (KEY_GENRE_FILTER, genreFilters);
-    }
-
-    public static void query(int page, int limit, ParseUser filterForUser, FindCallback callback, List<ParseUser> following){
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        if(filterForUser != null) {
-            query.whereEqualTo(Post.KEY_USER, filterForUser);
-        } else{
-            query.whereContainedIn(KEY_USER, following);
-        }
-        query.setLimit(limit);
-        query.setSkip(page * limit);
-        query.addDescendingOrder(Post.KEY_CREATED_AT);
-        query.findInBackground(callback);
-    }
-
     public void addLike(ParseUser parseUser){
         //increase like count
         put(KEY_LIKES_COUNT, getLikesCount()+ 1);
@@ -188,14 +149,12 @@ public class Post extends ParseObject {
     }
 
 
+    public ParseGeoPoint getLocation(){
+        return getParseGeoPoint(KEY_LOCATION);
+    }
 
-    public static ParseGeoPoint getLocationFromString(String location, Context context) throws IOException {
-        Geocoder geocoder = new Geocoder(context, Locale.US);
-        List<Address> addresses = geocoder.getFromLocationName(location, 5);
-        Address address = addresses.get(0); //get the first address for right now
-
-        return new ParseGeoPoint(address.getLatitude(), address.getLongitude());
-
+    public void setLocation(ParseGeoPoint parseGeoPoint){
+        put(KEY_LOCATION, parseGeoPoint);
     }
 
     public static String getStringFromLocation(ParseGeoPoint parseGeoPoint, Context context) throws IOException {
@@ -204,5 +163,37 @@ public class Post extends ParseObject {
         Address address = addresses.get(0); //get the first address for right now
         return address.getLocality();
     }
+
+    public String getSoundCloudUrl(){
+        return getString(KEY_SOUND_CLOUD_URL);
+    }
+
+    public void setSoundCloudUrl(String soundCloudUrl) {
+        put(KEY_SOUND_CLOUD_URL, soundCloudUrl);
+    }
+
+    public List<String> getGenreFilters(){
+        return getList(KEY_GENRE_FILTER);
+    }
+
+    public void setGenreFilter(List<String> genreFilters){
+        put (KEY_GENRE_FILTER, genreFilters);
+    }
+
+    public static void query(int page, int limit, ParseUser filterForUser, FindCallback callback, List<ParseUser> following){
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        if(filterForUser != null) {
+            query.whereEqualTo(Post.KEY_USER, filterForUser);
+        } else{
+            query.whereContainedIn(KEY_USER, following);
+        }
+        query.setLimit(limit);
+        query.setSkip(page * limit);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(callback);
+    }
+
+
 
 }

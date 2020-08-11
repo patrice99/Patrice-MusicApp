@@ -34,7 +34,6 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Event.class);
         ParseObject.registerSubclass(Followers.class);
         ParseObject.registerSubclass(Message.class);
-        ParseObject.registerSubclass(Chat.class);
 
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured

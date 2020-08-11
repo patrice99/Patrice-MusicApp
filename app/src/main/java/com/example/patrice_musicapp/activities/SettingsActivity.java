@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.example.patrice_musicapp.R;
+import com.example.patrice_musicapp.databinding.ActivitySettingsBinding;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -21,12 +22,15 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_settings);
+        ActivitySettingsBinding binding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
+        toolbar = findViewById(R.id.toolbar_settings);
         toolbar.setTitle("Settings");
 
 
-        cardView = findViewById(R.id.cardView);
+        cardView = binding.cardView;
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
