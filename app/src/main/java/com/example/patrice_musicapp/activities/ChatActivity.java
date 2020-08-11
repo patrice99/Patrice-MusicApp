@@ -4,16 +4,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patrice_musicapp.R;
 import com.example.patrice_musicapp.adapters.ChatAdapter;
+import com.example.patrice_musicapp.databinding.ActivityChatBinding;
 import com.example.patrice_musicapp.models.Message;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -29,21 +27,17 @@ public class ChatActivity extends AppCompatActivity {
     private ParseUser sendingUser;
     private ParseUser receivingUser;
 
-    private EditText etMessage;
-    private RecyclerView rvChat;
     private List<Message> messages;
     private ChatAdapter adapter;
     private boolean firstLoad;
+    private ActivityChatBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        binding = ActivityChatBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-
-        etMessage = findViewById(R.id.etMessage);
-        ImageButton btSend = findViewById(R.id.btSend);
-        rvChat = findViewById(R.id.rvChat);
         Toolbar toolbar = findViewById(R.id.toolbar_chat);
 
 
@@ -58,19 +52,19 @@ public class ChatActivity extends AppCompatActivity {
         messages = new ArrayList<>();
         firstLoad = true;
         adapter = new ChatAdapter(ChatActivity.this, messages);
-        rvChat.setAdapter(adapter);
+        binding.rvChat.setAdapter(adapter);
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
-        rvChat.setLayoutManager(linearLayoutManager);
+        binding.rvChat.setLayoutManager(linearLayoutManager);
 
         queryPosts();
 
 
         // When send button is clicked, create message object on Parse
-        btSend.setOnClickListener(new View.OnClickListener() {
+        binding.btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String messageText = etMessage.getText().toString();
+                String messageText = binding.etMessage.getText().toString();
                 Message message = new Message();
                 message.setMessageText(messageText);
                 message.setSendingUser(sendingUser);
@@ -83,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
                         }
                     }
                 });
-                etMessage.setText(null);
+                binding.etMessage.setText(null);
             }
         });
 
@@ -101,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
                 if (firstLoad) {
-                    rvChat.scrollToPosition(messages.size()-1);
+                    binding.rvChat.scrollToPosition(messages.size()-1);
                     firstLoad = false;
                 }
             }

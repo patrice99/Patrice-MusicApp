@@ -15,20 +15,22 @@ import com.example.patrice_musicapp.fragments.ComposePostFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class ComposeActivity extends AppCompatActivity {
+    private Toolbar toolbar;
     public static final String TAG = ComposeActivity.class.getSimpleName();
+    private TabLayout tabLayout;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
-        Toolbar toolbar = findViewById(R.id.toolbar_compose);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_compose);
         toolbar.setTitle("Compose");
         setupTabs();
     }
 
     private void setupTabs() {
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout = findViewById(R.id.tabLayout);
         final Fragment fragmentComposePost = new ComposePostFragment();
         final Fragment fragmentComposeEvent = new ComposeEventFragment();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
