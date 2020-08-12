@@ -65,7 +65,6 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
-        setHasOptionsMenu(true);
         return view;
     }
 
@@ -73,14 +72,29 @@ public class DiscoverFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         toolbar =view.findViewById(R.id.toolbar_discover);
-        if (toolbar != null){
-            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-            toolbar.setTitle("Discover");
-
-        }
+        toolbar.setTitle("Discover");
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_baseline_sort_24));
         toolbar.getOverflowIcon().setTint(getResources().getColor(R.color.pink));
-
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {int id = item.getItemId();
+                switch (id) {
+                    case R.id.genresButton:
+                        sortByGenre();
+                        break;
+                    case R.id.instrumentsButton:
+                        sortByInstruments();
+                        break;
+                    case R.id.nearMeButton:
+                        sortByProximity();
+                        break;
+                    case R.id.activeUsers:
+                        sortByPostCount();
+                        break;
+                }
+                return true;
+            }
+        });
 
 
         objects = new ArrayList<>();
@@ -497,32 +511,5 @@ public class DiscoverFragment extends Fragment {
     }
 
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.menu_discover, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.genresButton:
-                sortByGenre();
-                break;
-            case R.id.instrumentsButton:
-                sortByInstruments();
-                break;
-            case R.id.nearMeButton:
-                sortByProximity();
-                break;
-            case R.id.activeUsers:
-                sortByPostCount();
-                break;
-        }
-        return true;
-    }
 
 }

@@ -30,20 +30,26 @@ public class EventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events, container, false);
-        setHasOptionsMenu(true);
         return view;
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toolbar =view.findViewById(R.id.toolbar_events);
-        if(toolbar != null){
-            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-            toolbar.setTitle("Events");
-        }
+        toolbar = view.findViewById(R.id.toolbar_events);
+        toolbar.setTitle("Events");
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.addEventButton) {
+                    //go to compose activity
+                    Intent intent = new Intent(getContext(), ComposeActivity.class);
+                    startActivity(intent);
+                }
+                return true;
+            }
+        });
 
 
         fragmentManager = getFragmentManager();
@@ -80,27 +86,7 @@ public class EventsFragment extends Fragment {
         tabLayout.getTabAt(0).select();
 
 
-
     }
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        menu.clear();
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_events, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here
-        int id = item.getItemId();
-        if (id == R.id.addEventButton) {
-            //go to compose activity
-            Intent intent = new Intent(getContext(), ComposeActivity.class);
-            startActivity(intent);
-        }
-        return true;
-    }
 
 }
