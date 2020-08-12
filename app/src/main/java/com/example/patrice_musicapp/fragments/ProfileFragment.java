@@ -505,10 +505,6 @@ public class ProfileFragment extends Fragment {
 
         }
 
-        @Override
-        public void onCommentAction(int position) {
-
-        }
     };
 
     EventAdapter.onClickListener onClickListenerEvent = new EventAdapter.onClickListener() {

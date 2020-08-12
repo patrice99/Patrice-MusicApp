@@ -51,7 +51,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         void onUnlikeAction(int position);
         void onLocationAction(int position);
         void onChipAction(String chipGenre);
-        void onCommentAction(int position);
     }
 
     //constructor

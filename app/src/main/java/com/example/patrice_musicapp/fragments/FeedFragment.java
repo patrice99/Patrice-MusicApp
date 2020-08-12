@@ -265,10 +265,6 @@ public class FeedFragment extends Fragment {
 
         }
 
-        @Override
-        public void onCommentAction(int position) {
-
-        }
 
     };
 
