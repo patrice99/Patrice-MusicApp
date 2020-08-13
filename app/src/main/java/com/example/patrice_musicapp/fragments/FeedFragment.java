@@ -50,7 +50,6 @@ public class FeedFragment extends Fragment {
     private ParseUser filterForUser;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
-    private int page;
 
 
 
@@ -98,7 +97,7 @@ public class FeedFragment extends Fragment {
 
         //get the user following and their posts from the parse dashboard
         try {
-            getUserFollowing();
+            getUserFollowing(0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -107,7 +106,8 @@ public class FeedFragment extends Fragment {
             @Override
             public void onRefresh() {
                 try {
-                    getUserFollowing();
+                    allPosts.clear();
+                    getUserFollowing(0);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -133,8 +133,7 @@ public class FeedFragment extends Fragment {
             public void onLoadMore(int pages, int totalItemsCount, RecyclerView view) {
                 //get the next 20 posts
                 try {
-                    page = pages;
-                    getUserFollowing();
+                    getUserFollowing(pages);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -143,7 +142,8 @@ public class FeedFragment extends Fragment {
         rvFeedPosts.addOnScrollListener(scrollListener);
     }
 
-    private void getUserFollowing() throws JSONException {
+    private void getUserFollowing(final int onPage) throws JSONException {
+        following.clear();
         following.add(ParseUser.getCurrentUser());
         user.queryUserFollowing(new FindCallback<ParseUser>() {
             @Override
@@ -154,7 +154,7 @@ public class FeedFragment extends Fragment {
                 Log.i(TAG, "Got the followers successfully");
                 following.addAll(objects);
                 try {
-                    queryPosts(page);
+                    queryPosts(onPage);
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }

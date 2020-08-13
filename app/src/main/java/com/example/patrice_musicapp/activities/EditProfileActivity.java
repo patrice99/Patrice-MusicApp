@@ -206,8 +206,6 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 MediaUtil.onLaunchCamera(EditProfileActivity.this);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                //save photo in parse
-                saveProfilePic(MediaUtil.photoFile);
             }
         });
 
@@ -216,8 +214,6 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 MediaUtil.onChoosePhoto(EditProfileActivity.this);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                //save photo in parse
-                saveProfilePic(MediaUtil.photoFile);
 
             }
         });
@@ -251,6 +247,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 Bitmap takenImage = BitmapFactory.decodeFile(MediaUtil.photoFile.getAbsolutePath());
                 // Load the taken image into a preview
                 binding.ivProfilePic.setImageBitmap(takenImage);
+                saveProfilePic(MediaUtil.photoFile);
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -299,7 +296,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(EditProfileActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
                 }
-                
+
                 Log.i(TAG, "Post save was successful!");
             }
         });

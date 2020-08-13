@@ -79,7 +79,9 @@ public class User {
         parseUser.put(KEY_BIO, bio);
     }
 
-    public String getName(){return parseUser.getString(KEY_NAME);}
+    public String getName(){
+        return parseUser.getString(KEY_NAME);
+    }
 
     public void setName(String name) { parseUser.put(KEY_NAME, name);}
 
