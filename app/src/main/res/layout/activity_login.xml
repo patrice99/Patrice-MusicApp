@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:contentDescription="@string/applogo"
-        app:srcCompat="@mipmap/ic_echo_logo2"
+        app:srcCompat="@drawable/echo_logo_canva"
         tools:srcCompat="@tools:sample/avatars" />
 
     <LinearLayout

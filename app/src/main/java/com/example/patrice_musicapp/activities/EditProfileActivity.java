@@ -139,8 +139,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 R.layout.dropdown_menu,
                 Arrays.asList(Genres.values()));
 
-//        editTextFilledExposedDropdownGenres.setAdapter(genreAdapter);
-
         ArrayAdapter<Instruments> instrumentAdapter = new ArrayAdapter<>
                 (this,
                         R.layout.dropdown_menu,
@@ -270,6 +268,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
             //Compress the image further 
             selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+            saveProfilePic(MediaUtil.photoFile);
 
         } else if(requestCode == 100 && resultCode == RESULT_OK){
             Place place = Autocomplete.getPlaceFromIntent(data);

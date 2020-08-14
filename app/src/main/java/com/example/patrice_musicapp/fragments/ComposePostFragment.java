@@ -177,6 +177,9 @@ public class ComposePostFragment extends Fragment {
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mVideoView.setVisibility(View.GONE);
+                webviewSoundCloud.setVisibility(View.GONE);
+                ivPostImage.setVisibility(View.VISIBLE);
                 MediaUtil.onChoosePhoto(getContext());
             }
         });

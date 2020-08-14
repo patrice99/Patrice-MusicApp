@@ -15,7 +15,8 @@
         android:layout_height="188dp"
         android:layout_gravity="center"
         android:contentDescription="@string/applogo"
-        app:srcCompat="@mipmap/ic_echo_logo2" />
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/echo_logo_canva" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tlUsername"
